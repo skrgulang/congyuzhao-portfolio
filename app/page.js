@@ -1,388 +1,258 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 
-const projects = [
+const work = [
   {
-    id: '01',
+    number: '01',
     title: 'Aspire 101',
-    eyebrow: 'FOUNDER / PRODUCT / SOFTWARE',
-    description:
-      'A student-focused marketplace and connection platform designed around campus trust, flexible fulfillment, and real-world community needs.',
-    tags: ['Next.js', 'Supabase', 'Stripe', 'Product'],
-    href: 'https://aspires101.com/',
-    visual: 'aspire'
+    eyebrow: 'FOUNDER · PRODUCT · SOFTWARE',
+    body: 'A student-focused marketplace and connection platform built around campus trust, flexible fulfillment, and real-world community needs.',
+    tags: ['Founder', 'Next.js', 'Supabase', 'Stripe'],
+    href: 'https://www.aspires101.com/',
+    kind: 'aspire'
   },
   {
-    id: '02',
-    title: 'Interactive Game Systems',
-    eyebrow: 'UNITY / UNREAL / GAMEPLAY',
-    description:
-      'Playable systems, first-person interactions, character logic, UI flows, triggers, and game prototypes built around clear player feedback.',
-    tags: ['Unity', 'C#', 'Unreal', 'Blueprints'],
-    visual: 'game'
-  },
-  {
-    id: '03',
-    title: 'Unity Fire Simulator',
-    eyebrow: 'SIMULATION / TRAINING',
-    description:
-      'An emergency-survival training experience with objective UI, tutorial flow, dialogue interactions, and environment-based progression.',
-    tags: ['Unity', 'Systems', '3D', 'UX'],
-    href: 'https://2131790781.itch.io/escaping-from-emergencey',
-    visual: 'fire'
-  },
-  {
-    id: '04',
+    number: '02',
     title: 'Tempus Lineus',
-    eyebrow: 'WORLD / VISUAL STORYTELLING',
-    description:
-      'A narrative game world combining environment art, interface design, presentation systems, and visual storytelling.',
-    tags: ['Narrative', 'UI', '3D', 'Art Direction'],
-    visual: 'tempus'
+    eyebrow: 'GAME WORLD · VISUAL STORYTELLING',
+    body: 'A narrative game world shaped through environment modeling, interface direction, and a time-fractured visual identity.',
+    tags: ['3D', 'Environment', 'UI', 'Narrative'],
+    kind: 'tempus'
+  },
+  {
+    number: '03',
+    title: 'Gameplay Systems',
+    eyebrow: 'UNITY · INTERACTION · PROTOTYPING',
+    body: 'Quest logic, tutorial states, NPC dialogue, task tracking, and level progression documented through working prototype screens.',
+    tags: ['Unity', 'C#', 'Systems', 'UX'],
+    kind: 'unity'
   }
 ];
 
-const capabilities = [
-  ['01', 'Product Systems', 'Turn ambiguous ideas into flows, interfaces, and shippable product logic.'],
-  ['02', 'Game Development', 'Build interactive mechanics, state, movement, feedback loops, and player-facing systems.'],
-  ['03', 'Software', 'Develop modern web experiences with frontend, backend services, payments, and integrations.'],
-  ['04', 'Visual Direction', 'Shape the way a product feels through layout, motion, hierarchy, and presentation.']
-];
-
-function ProjectVisual({ type }) {
-  if (type === 'aspire') {
+function ProjectMedia({ kind }) {
+  if (kind === 'aspire') {
     return (
-      <div className="visual visualAspire">
-        <div className="orbit orbitOne" />
-        <div className="orbit orbitTwo" />
-        <div className="aspireMark">A</div>
-        <div className="miniWindow aspireWindow">
-          <span>MARKETPLACE</span>
-          <strong>Campus commerce, rebuilt.</strong>
-          <div className="miniRows">
-            <i /><i /><i />
-          </div>
-        </div>
-        <div className="signalBars"><i /><i /><i /><i /></div>
-      </div>
-    );
-  }
-
-  if (type === 'game') {
-    return (
-      <div className="visual visualGame">
-        <div className="crosshair"><i /><i /></div>
-        <div className="hud hudA">PLAYER_01</div>
-        <div className="hud hudB">SYSTEM READY</div>
-        <div className="worldGrid" />
-        <div className="playerDot" />
-        <div className="questCard">
-          <span>ACTIVE QUEST</span>
-          <strong>Build the interaction.</strong>
-          <div className="progress"><i /></div>
+      <div className="media mediaAspire">
+        <img src="/images/aspire-wide.webp" alt="Aspire 101 campaign concept featuring students on a campus" />
+        <div className="mediaCaption">
+          <span>CAMPAIGN VISUAL</span>
+          <b>Connecting students through real campus needs.</b>
         </div>
       </div>
     );
   }
 
-  if (type === 'fire') {
+  if (kind === 'tempus') {
     return (
-      <div className="visual visualFire">
-        <div className="fireGlow" />
-        <div className="simPanel">
-          <div className="simTop"><span>TRAINING SIM</span><b>LIVE</b></div>
-          <div className="simScene">
-            <i className="door" />
-            <i className="npc" />
-            <i className="hazard" />
-          </div>
-          <div className="objective"><span>OBJECTIVE</span><strong>Find a safe route →</strong></div>
-        </div>
+      <div className="mediaSplit">
+        <figure className="media">
+          <img src="/images/tempus-title.webp" alt="Tempus Lineus game title screen" />
+          <figcaption>Title screen / visual identity</figcaption>
+        </figure>
+        <figure className="media">
+          <img src="/images/tempus-building.webp" alt="Tempus Lineus 3D bakery environment model" />
+          <figcaption>Environment modeling / world building</figcaption>
+        </figure>
       </div>
     );
   }
 
   return (
-    <div className="visual visualTempus">
-      <div className="moon" />
-      <div className="mountain mountainOne" />
-      <div className="mountain mountainTwo" />
-      <div className="temple"><i /><i /><i /></div>
-      <div className="tempusTitle"><span>WORLD_04</span><strong>TEMPUS<br />LINEUS</strong></div>
+    <div className="media mediaUnity">
+      <img src="/images/unity-tutorial.webp" alt="Unity gameplay tutorial level interface" />
+      <div className="mediaCaption dark">
+        <span>WORKING PROTOTYPE</span>
+        <b>Tutorial flow, objectives, interaction, and player feedback.</b>
+      </div>
     </div>
   );
 }
 
 export default function Home() {
-  const [mode, setMode] = useState('build');
-  const [time, setTime] = useState('');
-  const [hovered, setHovered] = useState(null);
-
-  useEffect(() => {
-    const onMove = (event) => {
-      document.documentElement.style.setProperty('--mx', event.clientX + 'px');
-      document.documentElement.style.setProperty('--my', event.clientY + 'px');
-    };
-    window.addEventListener('mousemove', onMove);
-
-    const updateTime = () => {
-      setTime(new Intl.DateTimeFormat('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      }).format(new Date()));
-    };
-    updateTime();
-    const timer = setInterval(updateTime, 1000);
-
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      clearInterval(timer);
-    };
-  }, []);
-
-  const copy = useMemo(() => mode === 'game'
-    ? {
-        kicker: 'PLAYER PROFILE // CREATIVE TECH',
-        titleTop: 'BUILD.',
-        titleBottom: 'PLAY. SHIP.',
-        intro: 'I design the systems behind interactive experiences — from gameplay logic to startup products. Pick a quest and explore the work.'
-      }
-    : {
-        kicker: 'FOUNDER · DEVELOPER · GAME SYSTEMS',
-        titleTop: 'I BUILD',
-        titleBottom: 'THINGS THAT MOVE.',
-        intro: 'Products, software, and interactive experiences — combining technical execution, game thinking, and a bias toward shipping.'
-      }, [mode]);
+  const [gameMode, setGameMode] = useState(false);
 
   return (
-    <main className={mode === 'game' ? 'site gameMode' : 'site'}>
-      <div className="noise" />
-      <div className="cursorGlow" />
-      <div className="ambient ambientA" />
-      <div className="ambient ambientB" />
-
-      <nav className="topbar shell">
-        <a className="brandLockup" href="#top">
-          <span className="brandOrb">CZ</span>
-          <span>
-            <b>Congyu Zhao</b>
-            <small>Portfolio / 2026</small>
-          </span>
+    <main className={gameMode ? 'site gameMode' : 'site'}>
+      <div className="grain" aria-hidden="true" />
+      <nav className="nav shell">
+        <a className="brand" href="#top">
+          <span>CZ</span>
+          <b>Congyu Zhao</b>
         </a>
 
         <div className="navLinks">
           <a href="#work">Work</a>
-          <a href="#lab">Lab</a>
           <a href="#about">About</a>
+          <a href="#contact">Contact</a>
         </div>
 
-        <div className="navRight">
-          <span className="liveStatus"><i /> BUILDING NOW</span>
-          <button className="modeToggle" onClick={() => setMode(mode === 'build' ? 'game' : 'build')}>
-            <span>{mode === 'build' ? 'GAME MODE' : 'BUILD MODE'}</span>
-            <i className={mode === 'game' ? 'toggleDot active' : 'toggleDot'} />
-          </button>
-        </div>
+        <button className="gameButton" onClick={() => setGameMode(!gameMode)}>
+          {gameMode ? 'Exit Game Mode' : 'Enter Game Mode'} <span>↗</span>
+        </button>
       </nav>
 
+      {gameMode && (
+        <section className="questBar shell" aria-live="polite">
+          <span className="questStatus"><i /> GAME MODE ACTIVE</span>
+          <p>Side quest unlocked: explore the three project worlds below.</p>
+          <div className="questSteps">
+            <a href="#aspire"><span>01</span> Aspire</a>
+            <a href="#tempus"><span>02</span> Tempus</a>
+            <a href="#gameplay"><span>03</span> Gameplay</a>
+          </div>
+        </section>
+      )}
+
       <section id="top" className="hero shell">
-        <div className="heroMeta">
-          <span>WEST LAFAYETTE / US</span>
-          <span>LOCAL TIME {time || '—:—:—'}</span>
-          <span>SCROLL TO EXPLORE ↓</span>
-        </div>
-
-        <div className="heroGrid">
-          <div className="heroCopy">
-            <p className="kicker">{copy.kicker}</p>
-            <h1>
-              <span>{copy.titleTop}</span>
-              <em>{copy.titleBottom}</em>
-            </h1>
-            <p className="intro">{copy.intro}</p>
-
-            <div className="heroButtons">
-              <a className="button buttonPrimary" href="#work">Enter selected work <b>↘</b></a>
-              <a className="button buttonGhost" href="https://aspires101.com/" target="_blank" rel="noreferrer">Latest build: Aspire 101 ↗</a>
-            </div>
-
-            <div className="proofStrip">
-              <div><strong>04</strong><span>Featured worlds</span></div>
-              <div><strong>∞</strong><span>Iterations</span></div>
-              <div><strong>01</strong><span>Founder mindset</span></div>
-            </div>
+        <div className="heroCopy">
+          <p className="eyebrow">FOUNDER · DEVELOPER · GAME SYSTEMS</p>
+          <h1>Congyu<br />Zhao.</h1>
+          <p className="heroStatement">
+            I build products, interactive systems, and visual worlds.
+          </p>
+          <p className="heroBody">
+            From marketplace infrastructure to gameplay logic, I like turning messy ideas into things people can actually use, play, and remember.
+          </p>
+          <div className="heroActions">
+            <a className="primaryButton" href="#work">View selected work <span>↓</span></a>
+            <button className="secondaryButton" onClick={() => setGameMode(true)}>Enter game mode</button>
           </div>
-
-          <div className="heroConsole">
-            <div className="consoleHeader">
-              <span>CONGYU_OS</span>
-              <div><i /><i /><i /></div>
-            </div>
-
-            <div className="identityCore">
-              <div className="coreRing ringOne" />
-              <div className="coreRing ringTwo" />
-              <div className="coreRing ringThree" />
-              <div className="coreCenter">CZ</div>
-              <span className="satellite satOne">01</span>
-              <span className="satellite satTwo">02</span>
-              <span className="satellite satThree">03</span>
-            </div>
-
-            <div className="consoleReadout">
-              <div><span>ROLE</span><b>FOUNDER + BUILDER</b></div>
-              <div><span>FOCUS</span><b>PRODUCT / GAMES / SOFTWARE</b></div>
-              <div><span>MODE</span><b>{mode === 'game' ? 'PLAYFUL EXPERIMENT' : 'SHIP THE SYSTEM'}</b></div>
-              <div><span>STATUS</span><b className="online">● ONLINE</b></div>
-            </div>
-
-            <div className="consoleFooter">
-              <span>SYS // CREATIVE COMPUTING</span>
-              <span>v2.0</span>
-            </div>
+          <div className="heroMeta">
+            <span>PRODUCT</span>
+            <span>SOFTWARE</span>
+            <span>GAME DEVELOPMENT</span>
+            <span>VISUAL SYSTEMS</span>
           </div>
         </div>
 
-        <div className="marquee">
-          <div>
-            <span>UNITY</span><b>✦</b><span>UNREAL</span><b>✦</b><span>NEXT.JS</span><b>✦</b>
-            <span>SUPABASE</span><b>✦</b><span>STRIPE</span><b>✦</b><span>PRODUCT SYSTEMS</span><b>✦</b>
-            <span>UNITY</span><b>✦</b><span>UNREAL</span><b>✦</b><span>NEXT.JS</span><b>✦</b>
-            <span>SUPABASE</span><b>✦</b><span>STRIPE</span><b>✦</b><span>PRODUCT SYSTEMS</span><b>✦</b>
-          </div>
-        </div>
+        <figure className="heroPhoto">
+          <img src="/images/hero.webp" alt="Congyu Zhao standing near the coast" />
+          <figcaption>
+            <span>PLAYER / BUILDER</span>
+            <b>Always making the next thing.</b>
+          </figcaption>
+        </figure>
       </section>
 
-      <section id="work" className="section shell">
-        <div className="sectionIntro">
+      <div className="ticker" aria-hidden="true">
+        <div>
+          <span>BUILD</span><i>✦</i><span>ITERATE</span><i>✦</i><span>PLAY</span><i>✦</i><span>SHIP</span><i>✦</i>
+          <span>BUILD</span><i>✦</i><span>ITERATE</span><i>✦</i><span>PLAY</span><i>✦</i><span>SHIP</span><i>✦</i>
+        </div>
+      </div>
+
+      <section id="work" className="work shell">
+        <header className="sectionHeader">
           <div>
-            <p className="kicker">SELECTED WORLDS / 01—04</p>
-            <h2>Built to be<br /><em>used, not admired.</em></h2>
+            <p className="eyebrow">SELECTED WORK / 2026</p>
+            <h2>Real work.<br /><em>Real systems.</em></h2>
           </div>
           <p>
-            A mix of startup product work, gameplay systems, simulations, and visual worlds.
-            Each project starts with a different problem; the common thread is making the system feel clear.
+            Startup product work, narrative game worlds, and gameplay prototypes — shown through the actual things I built and shipped.
           </p>
-        </div>
+        </header>
 
-        <div className="projectStack">
-          {projects.map((project) => (
+        <div className="projectList">
+          {work.map((project) => (
             <article
-              className={'projectCard ' + (hovered === project.id ? 'isHovered' : '')}
-              key={project.id}
-              onMouseEnter={() => setHovered(project.id)}
-              onMouseLeave={() => setHovered(null)}
+              className={'project project-' + project.kind}
+              id={project.kind === 'aspire' ? 'aspire' : project.kind === 'tempus' ? 'tempus' : 'gameplay'}
+              key={project.number}
             >
-              <div className="projectInfo">
-                <div className="projectTopline">
-                  <span>{project.id}</span>
+              <div className="projectText">
+                <div className="projectLabel">
+                  <span>{project.number}</span>
                   <p>{project.eyebrow}</p>
                 </div>
                 <h3>{project.title}</h3>
-                <p className="projectDescription">{project.description}</p>
-                <div className="tagRow">
-                  {project.tags.map(tag => <span key={tag}>{tag}</span>)}
+                <p className="projectBody">{project.body}</p>
+                <div className="tags">
+                  {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
                 </div>
+
+                {project.kind === 'aspire' && (
+                  <dl className="projectFacts">
+                    <div><dt>ROLE</dt><dd>Founder / Product / Development</dd></div>
+                    <div><dt>FOCUS</dt><dd>Trust, campus commerce, flexible fulfillment</dd></div>
+                    <div><dt>STATUS</dt><dd><i /> Building now</dd></div>
+                  </dl>
+                )}
+
                 {project.href
-                  ? <a className="projectLink" href={project.href} target="_blank" rel="noreferrer">Open project <b>↗</b></a>
-                  : <span className="projectLink muted">Case study / in progress</span>
+                  ? <a className="projectLink" href={project.href} target="_blank" rel="noreferrer">Visit live product <span>↗</span></a>
+                  : <span className="projectLink muted">Project study / visual archive</span>
                 }
               </div>
-              <ProjectVisual type={project.visual} />
+
+              <ProjectMedia kind={project.kind} />
             </article>
           ))}
         </div>
       </section>
 
-      <section id="lab" className="section shell">
-        <div className="labPanel">
-          <div className="labHeader">
-            <div>
-              <p className="kicker">SYSTEM MAP / HOW I BUILD</p>
-              <h2>From idea to<br /><em>working loop.</em></h2>
-            </div>
-            <span className="labIndex">LAB_04</span>
-          </div>
+      <section className="statement shell">
+        <p className="eyebrow">HOW I WORK</p>
+        <h2>
+          I don&apos;t want a portfolio that only says I can build.
+          <em> It should prove it.</em>
+        </h2>
+        <div className="principles">
+          <div><span>01</span><b>Product thinking</b><p>Map the real user problem before adding features.</p></div>
+          <div><span>02</span><b>Technical execution</b><p>Make the idea work end-to-end, not just in a mockup.</p></div>
+          <div><span>03</span><b>Interactive thinking</b><p>Use feedback, state, motion, and play to make systems understandable.</p></div>
+        </div>
+      </section>
 
-          <div className="capabilityGrid">
-            {capabilities.map(([n, title, description]) => (
-              <div className="capability" key={n}>
-                <span>{n}</span>
-                <h3>{title}</h3>
-                <p>{description}</p>
-                <i>↗</i>
-              </div>
-            ))}
-          </div>
+      <section id="about" className="about shell">
+        <figure className="aboutPhoto">
+          <img src="/images/gym.webp" alt="Congyu Zhao at the gym" />
+          <figcaption>OFF-SCREEN / STILL BUILDING</figcaption>
+        </figure>
 
-          <div className="processLine">
-            <span>OBSERVE</span><i />
-            <span>MAP</span><i />
-            <span>BUILD</span><i />
-            <span>BREAK</span><i />
-            <span>ITERATE</span><i />
-            <span>SHIP</span>
+        <div className="aboutCopy">
+          <p className="eyebrow">ABOUT / NOT A SINGLE LANE</p>
+          <h2>I like the point where <em>code, product, and play</em> collide.</h2>
+          <p>
+            I move between software, game systems, product decisions, and visual presentation. The goal is not to collect tools — it is to understand enough of the whole system to move an idea forward.
+          </p>
+          <p>
+            That can mean designing a marketplace flow, wiring up payments, programming an interaction, building a 3D world, or turning a messy concept into something another person can actually use.
+          </p>
+          <div className="aboutLinks">
+            <a href="https://www.linkedin.com/in/congyu-zhao-5226b52b1/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            <a href="https://www.instagram.com/congyu_zhao/" target="_blank" rel="noreferrer">Instagram ↗</a>
           </div>
         </div>
       </section>
 
-      <section id="about" className="section about shell">
-        <div className="aboutStatement">
-          <p className="kicker">ABOUT / NOT A SINGLE LANE</p>
-          <h2>
-            I like the point where
-            <em> code, product, and play </em>
-            collide.
-          </h2>
+      <section className="gameTeaser shell">
+        <div className="gameTeaserCopy">
+          <p className="eyebrow">OPTIONAL PATH / GAME MODE</p>
+          <h2>Want the less normal version?</h2>
+          <p>The portfolio stays recruiter-friendly by default. Game Mode adds a playful layer without hiding the actual work.</p>
         </div>
-
-        <div className="aboutGrid">
-          <div className="aboutText">
-            <p>
-              I work across product development, software, game systems, and visual storytelling.
-              The goal is not to collect tools — it is to understand enough of the whole system to move an idea forward.
-            </p>
-            <p>
-              That can mean designing a marketplace flow, wiring up a payment system, programming character behavior,
-              prototyping an interaction, or turning a messy concept into something another person can actually use.
-            </p>
-          </div>
-
-          <div className="statBoard">
-            <div><span>PRIMARY MODE</span><b>BUILD + LEARN</b></div>
-            <div><span>COMFORT ZONE</span><b>CROSS-DISCIPLINARY</b></div>
-            <div><span>FAVORITE QUESTION</span><b>“CAN WE SHIP IT?”</b></div>
-            <div><span>CURRENT ENERGY</span><b>FOUNDER / DEV</b></div>
-          </div>
-        </div>
+        <button onClick={() => {
+          setGameMode(true);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}>START SIDE QUEST <span>→</span></button>
       </section>
 
-      <section className="contact shell">
+      <section id="contact" className="contact shell">
+        <p className="eyebrow">CONTACT / NEXT BUILD</p>
         <div className="contactGrid">
-          <div>
-            <p className="kicker">CONTACT / NEXT QUEST</p>
-            <h2>Have an idea<br />worth <em>building?</em></h2>
-          </div>
-          <div className="contactActions">
-            <a href="https://www.linkedin.com/in/congyu-zhao-5226b52b1/" target="_blank" rel="noreferrer">
-              <span>LINKEDIN</span><b>↗</b>
-            </a>
-            <a href="https://www.instagram.com/congyu_zhao/" target="_blank" rel="noreferrer">
-              <span>INSTAGRAM</span><b>↗</b>
-            </a>
-            <a href="https://aspires101.com/" target="_blank" rel="noreferrer">
-              <span>ASPIRE 101</span><b>↗</b>
-            </a>
+          <h2>Have something<br />worth building?</h2>
+          <div className="contactLinks">
+            <a href="mailto:24zhaocongyu@gmail.com"><span>Email</span><b>24zhaocongyu@gmail.com ↗</b></a>
+            <a href="https://www.linkedin.com/in/congyu-zhao-5226b52b1/" target="_blank" rel="noreferrer"><span>LinkedIn</span><b>Connect ↗</b></a>
+            <a href="https://www.aspires101.com/" target="_blank" rel="noreferrer"><span>Latest product</span><b>Aspire 101 ↗</b></a>
           </div>
         </div>
       </section>
 
       <footer className="footer shell">
-        <div className="footerBrand"><span>CZ</span><b>CONGYU ZHAO</b></div>
-        <p>DESIGNED AS A SYSTEM, NOT A TEMPLATE.</p>
+        <div><span>CZ</span><b>Congyu Zhao</b></div>
+        <p>Designed around the work, not the template.</p>
         <span>© 2026</span>
       </footer>
     </main>
