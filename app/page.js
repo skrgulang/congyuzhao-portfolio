@@ -2,9 +2,19 @@
 
 import { useState } from 'react';
 
+const legacyImagePaths = new Set([
+  '/images/hero.webp',
+  '/images/gym.webp',
+  '/images/aspire-wide.webp',
+  '/images/tempus-title.webp',
+  '/images/tempus-building.webp',
+  '/images/unity-tutorial.webp'
+]);
+
 function PortfolioImage({ src, alt, ...props }) {
   const [failed, setFailed] = useState(false);
-  if (failed) return <div className="visualFallback" role="img" aria-label={alt}><span className="visualFallbackMark">CZ / PORTFOLIO</span><strong>{alt}</strong><small>Original image temporarily unavailable</small></div>;
+  // Legacy images are damaged; don't render partially decoded/corrupted pixels.
+  if (failed || legacyImagePaths.has(src)) return <div className="visualFallback" role="img" aria-label={alt}><span className="visualFallbackMark">CZ / PORTFOLIO</span><strong>{alt}</strong><small>Original image temporarily unavailable</small></div>;
   return <img src={src} alt={alt} onError={() => setFailed(true)} {...props} />;
 }
 
