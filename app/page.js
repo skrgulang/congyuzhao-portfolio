@@ -2,6 +2,12 @@
 
 import { useState } from 'react';
 
+function PortfolioImage({ src, alt, ...props }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return <div className="visualFallback" role="img" aria-label={alt}><span className="visualFallbackMark">CZ / PORTFOLIO</span><strong>{alt}</strong><small>Original image temporarily unavailable</small></div>;
+  return <img src={src} alt={alt} onError={() => setFailed(true)} {...props} />;
+}
+
 const work = [
   {
     number: '01',
@@ -55,7 +61,7 @@ function ProjectMedia({ kind }) {
   if (kind === 'aspire') {
     return (
       <div className="media mediaAspire">
-        <img src="/images/aspire-wide.webp" alt="Aspire 101 campaign concept featuring students on a campus" />
+        <PortfolioImage src="/images/aspire-wide.webp" alt="Aspire 101 campaign concept featuring students on a campus" />
         <div className="mediaOverlay">
           <span>PRODUCT SYSTEM</span>
           <strong>Post. Match. Connect.</strong>
@@ -69,11 +75,11 @@ function ProjectMedia({ kind }) {
     return (
       <div className="mediaSplit">
         <figure className="media">
-          <img src="/images/tempus-title.webp" alt="Tempus Lineus game title screen" />
+          <PortfolioImage src="/images/tempus-title.webp" alt="Tempus Lineus game title screen" />
           <figcaption><span>01</span> Title screen / visual identity</figcaption>
         </figure>
         <figure className="media">
-          <img src="/images/tempus-building.webp" alt="Tempus Lineus 3D bakery environment model" />
+          <PortfolioImage src="/images/tempus-building.webp" alt="Tempus Lineus 3D bakery environment model" />
           <figcaption><span>02</span> Environment modeling / world building</figcaption>
         </figure>
       </div>
@@ -83,7 +89,7 @@ function ProjectMedia({ kind }) {
   if (kind === 'fish') {
     return (
       <div className="media mediaUnity">
-        <img src="/images/unity-tutorial.webp" alt="Representative Unity prototype screenshot; Fish and Ships footage to be added" />
+        <PortfolioImage src="/images/unity-tutorial.webp" alt="Representative Unity prototype screenshot; Fish and Ships footage to be added" />
         <div className="mediaOverlay">
           <span>FISH AND SHIPS / TEAM PROTOTYPE</span>
           <strong>Procedural water. Boats. Exploration.</strong>
@@ -95,7 +101,7 @@ function ProjectMedia({ kind }) {
 
   return (
     <div className="media mediaUnity">
-      <img src="/images/unity-tutorial.webp" alt="Unity gameplay tutorial level interface" />
+      <PortfolioImage src="/images/unity-tutorial.webp" alt="Unity gameplay tutorial level interface" />
       <div className="mediaOverlay">
         <span>WORKING PROTOTYPE</span>
         <strong>Teach the system through play.</strong>
@@ -179,8 +185,7 @@ export default function Home() {
         </div>
 
         <figure className="heroPhoto">
-          <img src="/images/hero.webp" alt="Congyu Zhao standing near the coast" loading="eager" fetchPriority="high" onError={(event) => { const img = event.currentTarget; if (!img.dataset.fallback) { img.dataset.fallback = "gym"; img.src = "/images/gym.webp"; } else { img.style.display = "none"; img.parentElement?.classList.add("photoUnavailable"); } }} />
-          <div className="heroPhotoFallback" aria-hidden="true">Photo unavailable — original image is being checked</div>
+          <PortfolioImage src="/images/hero.webp" alt="Congyu Zhao / Coastal portrait" loading="eager" fetchPriority="high" />
           <div className="heroPhotoChrome">
             <span>PROFILE_01</span>
             <span>PLAYER / BUILDER</span>
@@ -317,7 +322,7 @@ export default function Home() {
         <div className="archiveGrid">
           {archive.map((item, index) => (
             <figure className={'archiveItem archiveItem-' + (index + 1)} key={item.src}>
-              <img src={item.src} alt={item.label} />
+              <PortfolioImage src={item.src} alt={item.label} />
               <figcaption><span>{String(index + 1).padStart(2, '0')}</span><b>{item.label}</b></figcaption>
             </figure>
           ))}
@@ -336,7 +341,7 @@ export default function Home() {
 
       <section id="about" className="about shell">
         <figure className="aboutPhoto">
-          <img src="/images/gym.webp" alt="Congyu Zhao at the gym" />
+          <PortfolioImage src="/images/gym.webp" alt="Congyu Zhao at the gym" />
           <div className="aboutPhotoTag"><i /> OFF-SCREEN / STILL BUILDING</div>
         </figure>
 
