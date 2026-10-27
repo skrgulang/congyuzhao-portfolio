@@ -342,3 +342,8 @@ img{display:block;width:100%}
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
 }
+
+/* Avoid an empty hero card when an uploaded photo cannot load. */
+.heroPhotoFallback{display:none;position:absolute;inset:0;align-items:center;justify-content:center;text-align:center;padding:32px;color:#a7b0bd;font-size:14px;letter-spacing:.02em;background:linear-gradient(145deg,#111721,#090b10)}
+.heroPhoto.photoUnavailable .heroPhotoFallback{display:flex}
+.heroPhoto.photoUnavailable .heroPhotoChrome,.heroPhoto.photoUnavailable figcaption{z-index:3}
