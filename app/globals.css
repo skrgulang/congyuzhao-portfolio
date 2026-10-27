@@ -347,3 +347,24 @@ img{display:block;width:100%}
 .heroPhotoFallback{display:none;position:absolute;inset:0;align-items:center;justify-content:center;text-align:center;padding:32px;color:#a7b0bd;font-size:14px;letter-spacing:.02em;background:linear-gradient(145deg,#111721,#090b10)}
 .heroPhoto.photoUnavailable .heroPhotoFallback{display:flex}
 .heroPhoto.photoUnavailable .heroPhotoChrome,.heroPhoto.photoUnavailable figcaption{z-index:3}
+
+/* Shared visual fallback: renders useful content even when legacy WebP assets fail. */
+.visualFallback{
+  position:relative;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  gap:16px;width:100%;height:100%;min-height:230px;padding:clamp(24px,4vw,56px);
+  overflow:hidden;color:#f5f7fa;background:
+    radial-gradient(circle at 80% 20%,rgba(131,244,223,.15),transparent 44%),
+    radial-gradient(circle at 12% 85%,rgba(138,114,255,.18),transparent 55%),#10151d;
+}
+.visualFallback:after{content:"";position:absolute;right:-70px;bottom:-100px;width:310px;height:310px;border:1px solid rgba(131,244,223,.18);border-radius:50%;box-shadow:0 0 0 60px rgba(131,244,223,.022),0 0 0 125px rgba(131,244,223,.018);pointer-events:none}
+.visualFallbackMark{position:relative;z-index:1;font-size:10px;letter-spacing:.22em;color:#83f4df;font-weight:800}
+.visualFallback strong{position:relative;z-index:1;max-width:90%;font-size:clamp(20px,2.8vw,46px);line-height:1.05;letter-spacing:-.04em}
+.visualFallback small{position:relative;z-index:1;font-size:11px;letter-spacing:.02em;color:#a1abb8}
+.heroPhoto>.visualFallback,.aboutPhoto>.visualFallback{min-height:610px}
+.media>.visualFallback{min-height:620px}
+.mediaSplit figure>.visualFallback{min-height:620px;padding:22px}
+.mediaSplit figure>.visualFallback strong{font-size:25px}
+.archiveItem>.visualFallback{min-height:100%;padding:22px;justify-content:center}
+.archiveItem>.visualFallback strong{font-size:clamp(17px,2vw,30px)}
+.archiveItem>.visualFallback small{font-size:10px}
+.archiveItem>.visualFallback:after{right:-160px}
