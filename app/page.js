@@ -179,7 +179,8 @@ export default function Home() {
         </div>
 
         <figure className="heroPhoto">
-          <img src="/images/hero.webp" alt="Congyu Zhao standing near the coast" />
+          <img src="/images/hero.webp" alt="Congyu Zhao standing near the coast" loading="eager" fetchPriority="high" onError={(event) => { const img = event.currentTarget; if (!img.dataset.fallback) { img.dataset.fallback = "gym"; img.src = "/images/gym.webp"; } else { img.style.display = "none"; img.parentElement?.classList.add("photoUnavailable"); } }} />
+          <div className="heroPhotoFallback" aria-hidden="true">Photo unavailable — original image is being checked</div>
           <div className="heroPhotoChrome">
             <span>PROFILE_01</span>
             <span>PLAYER / BUILDER</span>
