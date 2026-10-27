@@ -24,6 +24,15 @@ const work = [
   },
   {
     number: '03',
+    title: 'Fish and Ships',
+    eyebrow: 'UNITY · OCEAN SIMULATION · TEAM PROJECT',
+    body: 'A collaborative game prototype exploring an open-water world. I worked on procedural ocean waves, floating and boat movement, terrain generation, and interaction systems. The project is still in development.',
+    tags: ['Unity', 'C#', 'Procedural Mesh', 'Gameplay Prototyping'],
+    kind: 'fish',
+    note: 'IN DEVELOPMENT'
+  },
+  {
+    number: '04',
     title: 'Gameplay Systems',
     eyebrow: 'UNITY · INTERACTION · PROTOTYPING',
     body: 'Quest logic, tutorial states, NPC dialogue, task tracking, and level progression documented through working prototype screens.',
@@ -67,6 +76,19 @@ function ProjectMedia({ kind }) {
           <img src="/images/tempus-building.webp" alt="Tempus Lineus 3D bakery environment model" />
           <figcaption><span>02</span> Environment modeling / world building</figcaption>
         </figure>
+      </div>
+    );
+  }
+
+  if (kind === 'fish') {
+    return (
+      <div className="media mediaUnity">
+        <img src="/images/unity-tutorial.webp" alt="Representative Unity prototype screenshot; Fish and Ships footage to be added" />
+        <div className="mediaOverlay">
+          <span>FISH AND SHIPS / TEAM PROTOTYPE</span>
+          <strong>Procedural water. Boats. Exploration.</strong>
+          <small>Actual project screenshots coming soon</small>
+        </div>
       </div>
     );
   }
@@ -118,11 +140,11 @@ export default function Home() {
       {gameMode && (
         <section className="questBar shell" aria-live="polite">
           <span className="questStatus"><i /> GAME MODE ACTIVE</span>
-          <p>Side quest unlocked: explore the three project worlds below.</p>
+          <p>Side quest unlocked: explore the featured project worlds below.</p>
           <div className="questSteps">
             <a href="#aspire"><span>01</span> Aspire</a>
             <a href="#tempus"><span>02</span> Tempus</a>
-            <a href="#gameplay"><span>03</span> Gameplay</a>
+            <a href="#fish"><span>03</span> Fish and Ships</a><a href="#gameplay"><span>04</span> Gameplay</a>
           </div>
         </section>
       )}
@@ -199,7 +221,7 @@ export default function Home() {
             <h2>Proof over<br /><em>promises.</em></h2>
           </div>
           <p>
-            Three different kinds of work, shown through actual product visuals, game assets, and prototypes rather than generic mockups.
+            Selected products, game environments, and Unity prototypes. Fish and Ships is an in-progress collaborative project; its original footage will be added when available.
           </p>
         </header>
 
@@ -207,7 +229,7 @@ export default function Home() {
           {work.map((project, index) => (
             <article
               className={'project project-' + project.kind + (index % 2 ? ' projectReverse' : '')}
-              id={project.kind === 'aspire' ? 'aspire' : project.kind === 'tempus' ? 'tempus' : 'gameplay'}
+              id={project.kind === 'aspire' ? 'aspire' : project.kind === 'tempus' ? 'tempus' : project.kind === 'fish' ? 'fish' : 'gameplay'}
               key={project.number}
             >
               <div className="projectText">
@@ -239,6 +261,14 @@ export default function Home() {
                     <div><span>WORLD</span><b>Environment</b></div>
                     <div><span>LOOK</span><b>Visual identity</b></div>
                     <div><span>TOOLS</span><b>3D + game pipeline</b></div>
+                  </div>
+                )}
+
+                {project.kind === 'fish' && (
+                  <div className="miniFacts">
+                    <div><span>ENGINE</span><b>Unity / C#</b></div>
+                    <div><span>TEAM</span><b>Collaborative project</b></div>
+                    <div><span>FOCUS</span><b>Ocean + boat physics</b></div>
                   </div>
                 )}
 
@@ -290,6 +320,16 @@ export default function Home() {
               <figcaption><span>{String(index + 1).padStart(2, '0')}</span><b>{item.label}</b></figcaption>
             </figure>
           ))}
+        </div>
+      </section>
+
+      <section className="proof shell" aria-label="Experience and education">
+        <div className="proofLead"><span>BACKGROUND / 2026</span><b>Building across<br />disciplines.</b></div>
+        <div className="proofGrid">
+          <div><span>FOUNDER</span><p>Cloudora Labs, Inc. — building Aspire 101, a student-centered marketplace and connection platform.</p></div>
+          <div><span>EDUCATION</span><p>Purdue University Polytechnic — game development and interactive systems coursework.</p></div>
+          <div><span>ENGINEERING</span><p>Next.js, React Native, Supabase, Stripe, Unity and C#.</p></div>
+          <div><span>CURRENT WORK</span><p>Aspire 101 web and mobile development, and collaborative game prototypes.</p></div>
         </div>
       </section>
 
