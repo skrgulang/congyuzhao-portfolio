@@ -78,3 +78,25 @@
 .caseHighlightGrid h2{font:700 clamp(23px,2.5vw,38px)/1.1 'Space Grotesk',sans-serif;letter-spacing:-.04em;margin:50px 0 12px}
 .caseHighlightGrid p{color:#b3bdb0;font-size:14px;line-height:1.7;margin:0}
 @media(max-width:850px){.caseHighlightGrid{grid-template-columns:1fr}.caseHighlightGrid article{min-height:190px}.caseHighlightGrid h2{margin-top:24px}}
+
+/* Editorial refinement — less decoration, clearer hierarchy */
+:root{--lime:#d8e8bb;--dim:#a5a8a0;--line:rgba(255,255,255,.13)}
+.newNavLinks{gap:27px}.newNavLinks a,.navContact,.btnSolid,.btnText,.newProjectLink{transition:color .2s,background .2s,border-color .2s,transform .2s}
+.newHero{min-height:690px;padding-top:45px;padding-bottom:78px;grid-template-columns:1fr .72fr}
+.newHero h1{font-size:clamp(83px,8.5vw,140px);letter-spacing:-.09em}
+.heroArtwork{min-height:450px}.heroGlyph{font-size:clamp(118px,14vw,220px);text-shadow:none}
+.heroArtwork:before{opacity:.16;filter:blur(80px)}
+.orbit{border-color:rgba(216,232,187,.15)}.orbitTwo{border-color:rgba(255,255,255,.11)}
+.heroNoise{opacity:.28}.artSpark{display:none}.heroIndex{color:#959a90}
+.newWork{padding-top:105px}.newProjectGrid{gap:22px}.newProject{border-radius:14px;background:#171916}
+.projectArt{height:248px}.projectArt:before,.projectArt:after{opacity:.38}.projectSymbol{font-size:145px;text-shadow:none}
+.newProject:hover .projectSymbol{transform:scale(1.035)}.newProject:hover{transform:translateY(-2px)}
+.projectInfo{padding:28px 30px}.projectInfo h3{font-size:clamp(31px,3vw,45px)}.projectDesc{min-height:0}
+.artStatus{font-size:9px;background:rgba(15,17,15,.18)}
+.newEyebrow{letter-spacing:.14em}.sectionTop{margin-bottom:38px}.sectionTop h2{font-size:clamp(50px,5.7vw,86px)}
+.fishShowcase{margin-top:95px;margin-bottom:110px;background:#171c1b;gap:45px;padding:46px;border-radius:18px}
+.fishDetails article{border-radius:10px}.newAbout{padding-bottom:100px}.newExperience{padding-top:95px}
+.newContact{margin-top:80px;border-radius:18px;background:#1a211b}.contactGlow{opacity:.35}
+a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+@media(max-width:1000px){.newHero{grid-template-columns:1fr}.heroArtwork{min-height:340px}.newProjectGrid{grid-template-columns:1fr}}
+@media(max-width:650px){.newHero{min-height:0;padding-top:55px}.heroArtwork{min-height:285px}.newHero h1{font-size:clamp(68px,17vw,105px)}.projectArt{height:225px}.projectSymbol{font-size:130px}.projectInfo{padding:24px}.fishShowcase{margin-top:65px;padding:24px}.newContact{margin-top:60px}}
