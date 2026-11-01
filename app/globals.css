@@ -22,3 +22,12 @@
 .caseSteps h3{margin:28px 0 16px;font-size:clamp(19px,2vw,27px);line-height:1.2;letter-spacing:-.03em}
 .caseSteps p{font-size:13px;color:#a1a8b6;line-height:1.7;margin:0}
 @media(max-width:800px){.caseSteps{grid-template-columns:1fr}.aspireCase{padding:60px 0}.caseSteps>div{padding:24px}}
+
+.buildNotes{padding:40px 0 110px}
+.buildNoteGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.buildNoteGrid article{border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:clamp(24px,3vw,42px);background:linear-gradient(160deg,rgba(255,255,255,.045),rgba(255,255,255,.015))}
+.buildNoteGrid span{font-size:11px;letter-spacing:.16em;color:#a9e4dd;font-weight:750}
+.buildNoteGrid h3{font-size:clamp(24px,3vw,40px);line-height:1.12;letter-spacing:-.045em;margin:24px 0}
+.buildNoteGrid p{line-height:1.75;color:#a6afbd;max-width:560px}
+.buildNoteGrid a,.buildNoteFoot{display:inline-block;margin-top:12px;font-size:13px;color:#dfc07e!important}
+@media(max-width:760px){.buildNoteGrid{grid-template-columns:1fr}.buildNotes{padding-bottom:70px}}
