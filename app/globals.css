@@ -31,3 +31,12 @@
 .buildNoteGrid p{line-height:1.75;color:#a6afbd;max-width:560px}
 .buildNoteGrid a,.buildNoteFoot{display:inline-block;margin-top:12px;font-size:13px;color:#dfc07e!important}
 @media(max-width:760px){.buildNoteGrid{grid-template-columns:1fr}.buildNotes{padding-bottom:70px}}
+
+/* Original portrait becomes visible as soon as /images/hero.jpg is restored. */
+.heroArtwork{isolation:isolate}
+.restoredPortrait{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 36%;z-index:0;opacity:.86;filter:saturate(.9)}
+.restoredPortrait[hidden]{display:none!important}
+.heroArtwork:has(.restoredPortrait:not([hidden])) .heroGlyph{opacity:.1}
+.heroArtwork:has(.restoredPortrait:not([hidden])) .orbit{opacity:.25}
+.heroArtwork:has(.restoredPortrait:not([hidden])) .orbitLabel{z-index:2;text-shadow:0 2px 14px rgba(0,0,0,.9)}
+@media(prefers-reduced-motion:reduce){.heroArtwork *{animation:none!important;transition:none!important}}
