@@ -24,6 +24,16 @@ export const metadata = {
   robots: { index: true, follow: true }
 };
 
+const personStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Congyu Zhao',
+  url: 'https://congyuzhao.com',
+  affiliation: { '@type': 'CollegeOrUniversity', name: 'Purdue University' },
+  knowsAbout: ['Software development', 'Game development', 'Product engineering', 'Unity'],
+  sameAs: ['https://github.com/skrgulang', 'https://www.aspires101.com/']
+};
+
 export default function RootLayout({ children }) {
-  return <html lang="en"><body>{children}</body></html>;
+  return <html lang="en"><body><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personStructuredData).replace(/</g, '\\u003c') }} />{children}</body></html>;
 }
