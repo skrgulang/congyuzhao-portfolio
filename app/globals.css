@@ -100,3 +100,18 @@
 a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
 @media(max-width:1000px){.newHero{grid-template-columns:1fr}.heroArtwork{min-height:340px}.newProjectGrid{grid-template-columns:1fr}}
 @media(max-width:650px){.newHero{min-height:0;padding-top:55px}.heroArtwork{min-height:285px}.newHero h1{font-size:clamp(68px,17vw,105px)}.projectArt{height:225px}.projectSymbol{font-size:130px}.projectInfo{padding:24px}.fishShowcase{margin-top:65px;padding:24px}.newContact{margin-top:60px}}
+
+/* Case study editorial pass */
+.caseHero{padding-top:86px;padding-bottom:65px}
+.caseHero h1{max-width:1110px;font-size:clamp(57px,7.5vw,116px);line-height:1.02}
+.caseHero>p:not(.newEyebrow){max-width:780px;font-size:clamp(19px,2.05vw,26px);line-height:1.6}
+.caseMeta{margin-top:62px}.caseBody{padding-top:18px;padding-bottom:90px}
+.caseBody article{grid-template-columns:95px 1fr;padding:42px 0}
+.caseBody h2{font-size:clamp(29px,3.5vw,48px);letter-spacing:-.045em}
+.caseBody p{font-size:17px;line-height:1.8;max-width:750px}
+.caseHighlightGrid article{min-height:225px;background:#181b17;border-radius:12px;padding:25px}
+.caseHighlightGrid h2{margin-top:40px;font-size:clamp(23px,2.2vw,30px)}
+.caseHighlightGrid p{max-width:320px}
+.caseDemo{background:#1a2019;padding:52px;border-radius:14px}
+.caseDemo h2{font-size:clamp(38px,4.5vw,62px)}
+@media(max-width:650px){.caseHero{padding:56px 0}.caseHero h1{font-size:clamp(47px,12vw,75px)}.caseBody article{grid-template-columns:32px 1fr;gap:15px;padding:30px 0}.caseBody p{font-size:16px}.caseHighlightGrid article{min-height:170px}.caseHighlightGrid h2{margin-top:24px}.caseDemo{padding:24px}}
