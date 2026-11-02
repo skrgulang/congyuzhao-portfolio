@@ -173,3 +173,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 .newHero h1{word-break:normal}
 #work,#about,#contact,#experience,#links,#fish-demo{scroll-margin-top:32px}
 @media(max-width:650px){.featureActions{align-items:flex-start;flex-direction:column;gap:20px}.resultCount{margin-top:0}.projectDesc{font-size:14px;line-height:1.65}}
+
+.projectIndex{padding:85px 0 75px;border-top:1px solid var(--line)}
+.projectIndexHeading{display:flex;align-items:baseline;gap:30px;flex-wrap:wrap;margin-bottom:35px}
+.projectIndexHeading h2{font:700 clamp(28px,4vw,49px)/1.1 'Space Grotesk',sans-serif;letter-spacing:-.05em;margin:0}
+.projectIndexList{border-top:1px solid var(--line)}
+.projectIndexList a{display:grid;grid-template-columns:minmax(120px,.7fr) minmax(0,2fr) 30px;gap:18px;align-items:center;padding:22px 5px;border-bottom:1px solid var(--line);transition:color .15s,padding .15s}
+.projectIndexList a:hover{color:var(--lime);padding-left:15px}
+.projectIndexList a>span:first-child{font-size:11px;color:#a6aaa1}
+.projectIndexList strong{font-size:clamp(17px,2vw,25px);letter-spacing:-.02em;font-weight:600}
+.projectIndexList a>span:last-child{text-align:right}
+@media(max-width:650px){.projectIndex{padding:55px 0}.projectIndexList a{grid-template-columns:1fr 27px;gap:6px}.projectIndexList a>span:first-child{grid-column:1/-1}.projectIndexList strong{font-size:19px}}
