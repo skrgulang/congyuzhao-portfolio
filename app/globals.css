@@ -115,3 +115,12 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 .caseDemo{background:#1a2019;padding:52px;border-radius:14px}
 .caseDemo h2{font-size:clamp(38px,4.5vw,62px)}
 @media(max-width:650px){.caseHero{padding:56px 0}.caseHero h1{font-size:clamp(47px,12vw,75px)}.caseBody article{grid-template-columns:32px 1fr;gap:15px;padding:30px 0}.caseBody p{font-size:16px}.caseHighlightGrid article{min-height:170px}.caseHighlightGrid h2{margin-top:24px}.caseDemo{padding:24px}}
+
+/* Historical game development milestones, clearly separate from shipped product claims. */
+.prototypeStatus{margin-top:28px;margin-bottom:70px;padding:32px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.prototypeStatusGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:22px 0}
+.prototypeStatusGrid>div{border:1px solid var(--line);border-radius:20px;padding:24px;background:rgba(255,255,255,.025)}
+.prototypeStatusGrid strong{display:block;color:var(--lime);font-size:18px;margin-bottom:12px}
+.prototypeStatusGrid p,.prototypeNote{color:var(--dim);font-size:14px;line-height:1.7}
+.prototypeNote{margin:8px 0 0;font-size:12px}
+@media(max-width:700px){.prototypeStatusGrid{grid-template-columns:1fr}.prototypeStatus{margin-bottom:42px}}
