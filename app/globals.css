@@ -124,3 +124,19 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 .prototypeStatusGrid p,.prototypeNote{color:var(--dim);font-size:14px;line-height:1.7}
 .prototypeNote{margin:8px 0 0;font-size:12px}
 @media(max-width:700px){.prototypeStatusGrid{grid-template-columns:1fr}.prototypeStatus{margin-bottom:42px}}
+
+/* Fish and Ships: dedicated video entry, distinct from portfolio stock art */
+.fishVideoFeature{padding:0 0 65px}
+.fishVideoFeatureLink{display:grid;grid-template-columns:1.05fr .95fr;align-items:stretch;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#172125;transition:border-color .2s}
+.fishVideoFeatureLink:hover{border-color:#92bfc0}
+.fishVideoArt{position:relative;min-height:325px;overflow:hidden;background:linear-gradient(#739eac 0%,#acc1bd 53%,#2a6275 54%,#153a4a 100%)}
+.fishSeaLine{position:absolute;left:-10%;width:120%;height:75px;border-top:2px solid #bdd9db99;border-radius:50%}
+.fishSeaLine.one{top:59%}.fishSeaLine.two{top:74%;left:-22%}.fishSeaLine.three{top:90%;left:5%}
+.fishBoat{position:absolute;width:142px;height:42px;border-radius:0 0 65% 65%;background:#273a40;left:50%;top:52%;transform:translate(-50%,-50%) rotate(-4deg);box-shadow:0 18px 20px #142f3a50}
+.fishBoat:before{content:"";position:absolute;width:5px;height:116px;background:#26393c;left:50%;bottom:24px}.fishSail{position:absolute;bottom:62px;left:54%;height:0;width:0;border-left:71px solid #e5e2c9;border-top:64px solid transparent;transform:rotate(-5deg)}
+.fishPlay{position:absolute;z-index:1;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;background:#101a1bdb;color:white;width:76px;height:76px;border-radius:50%;font-size:24px;box-shadow:0 9px 40px #0008}
+.fishVideoCopy{padding:45px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.fishVideoCopy>span{font-size:10px;letter-spacing:.14em;color:#a3c9c9}.fishVideoCopy h2{font:700 clamp(30px,3.2vw,51px)/1.08 'Space Grotesk',sans-serif;letter-spacing:-.045em;margin:0}
+.fishVideoCopy p{font-size:15px;line-height:1.7;color:#b4c4c4;margin:0}.fishVideoCopy strong{font-size:13px;color:#e5eff0;margin-top:10px}
+.fishVideoFeature>small{display:block;color:#7f928f;margin-top:10px;font-size:11px}
+@media(max-width:760px){.fishVideoFeatureLink{grid-template-columns:1fr}.fishVideoArt{min-height:230px}.fishVideoCopy{padding:27px}}
