@@ -194,3 +194,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 .developmentLogEntries h3{font-size:21px;letter-spacing:-.025em;margin:0 0 9px}
 .developmentLogEntries p{color:#aeb6ae;font-size:14px;line-height:1.7;margin:0}
 @media(max-width:850px){.developmentLog{grid-template-columns:1fr;gap:22px;padding:55px 0}}
+
+/* Genuine project media from uploaded Fish and Ships demo */
+.projectScreenshot{display:block;width:100%;height:100%;object-fit:cover;object-position:center;position:absolute;inset:0;z-index:1;filter:saturate(.86)}
+.newProject.tone-blue .projectArt:after,.newProject.tone-blue .projectArt:before{display:none}
+.newProject.tone-blue .artNumber,.newProject.tone-blue .artStatus{z-index:3;background:rgba(10,24,30,.78);padding:7px 9px;border-radius:6px}
+.fishVideoArt.fishRealFrame{background:#1d323e}
+.fishRealFrame img{display:block;width:100%;height:100%;object-fit:cover;position:absolute;inset:0;filter:saturate(.9)}
+.fishRealFrame .fishPlay{z-index:2}
