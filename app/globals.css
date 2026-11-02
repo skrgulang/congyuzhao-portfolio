@@ -140,3 +140,12 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 .fishVideoCopy p{font-size:15px;line-height:1.7;color:#b4c4c4;margin:0}.fishVideoCopy strong{font-size:13px;color:#e5eff0;margin-top:10px}
 .fishVideoFeature>small{display:block;color:#7f928f;margin-top:10px;font-size:11px}
 @media(max-width:760px){.fishVideoFeatureLink{grid-template-columns:1fr}.fishVideoArt{min-height:230px}.fishVideoCopy{padding:27px}}
+
+.caseNext{display:grid;gap:20px;padding:50px 0 70px;border-top:1px solid var(--line)}
+.caseNext>span{font-size:11px;letter-spacing:.17em;color:var(--lime)}
+.caseNext>a{display:flex;justify-content:space-between;align-items:center;gap:15px;font:700 clamp(32px,5vw,72px)/1.1 'Space Grotesk',sans-serif;letter-spacing:-.06em;transition:color .2s}
+.caseNext>a:hover{color:var(--lime)}.caseNext>a span{font-size:.8em}
+.notFoundPage{min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:40px max(24px,calc((100vw - 1440px)/2))}
+.notFoundPage>div{padding:90px 0 140px}.notFoundPage h1{font:700 clamp(65px,10vw,145px) 'Space Grotesk',sans-serif;letter-spacing:-.09em;margin:25px 0}
+.notFoundPage p:not(.newEyebrow){font-size:19px;color:var(--dim);margin-bottom:38px}
+.notFoundPage .btnSolid{display:inline-flex}
