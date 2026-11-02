@@ -2,23 +2,28 @@ import './globals.css';
 
 export const metadata = {
   metadataBase: new URL('https://congyuzhao.com'),
-  title: 'Congyu Zhao | Founder & Developer',
-  description: 'Congyu Zhao is a Purdue University student, founder of Aspire 101, and developer building software products and Unity games including Fish and Ships.',
+  title: { default: 'Congyu Zhao — Software, Games & Aspire 101', template: '%s | Congyu Zhao' },
+  description: 'Portfolio of Congyu Zhao, a Purdue University student and founder of Aspire 101. Explore product engineering, Unity game projects, and wildfire evacuation simulation.',
+  applicationName: 'Congyu Zhao Portfolio',
+  authors: [{ name: 'Congyu Zhao', url: 'https://congyuzhao.com' }],
+  keywords: ['Congyu Zhao', 'Aspire 101', 'Purdue University', 'Unity', 'Fish and Ships', 'Wildfire Evacuation Simulator', 'portfolio'],
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Congyu Zhao | Portfolio',
-    description: 'Explore Aspire 101, Fish and Ships, and selected software and game development projects.',
+    title: 'Congyu Zhao — Software, Games & Aspire 101',
+    description: 'Selected work spanning a campus startup, Unity games, and interactive simulation.',
     url: 'https://congyuzhao.com',
     siteName: 'Congyu Zhao Portfolio',
+    locale: 'en_US',
     type: 'website'
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Congyu Zhao — Software, Games & Aspire 101',
+    description: 'Projects in software, product development, and Unity games.'
   },
   robots: { index: true, follow: true }
 };
 
 export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
+  return <html lang="en"><body>{children}</body></html>;
 }
