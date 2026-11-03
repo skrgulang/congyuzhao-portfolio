@@ -366,3 +366,18 @@ html{scroll-padding-top:24px}
 .interactiveGalleryFoot{color:#829087;font-size:11px;line-height:1.6;margin-top:13px}
 @media(max-width:640px){.interactiveGalleryStage{aspect-ratio:4/3}.interactiveGalleryOverlay{padding:42px 17px 16px}.interactiveGalleryControls{right:12px;top:12px}.interactiveGalleryControls button{width:39px;height:39px}.interactiveGalleryBottom{align-items:flex-start;flex-direction:column;gap:8px}.interactiveGalleryThumbs button{min-width:80px}.interactiveGalleryThumbs img{width:80px;height:47px}}
 @media(prefers-reduced-motion:reduce){.interactiveGalleryStage>img{animation:none!important}.interactiveGalleryControls button{transition:none!important}}
+
+/* Enlarged game stills — accessible, understated, works on touch and keyboard */
+.galleryExpand{position:absolute;inset:0;width:100%;height:100%;display:block;background:transparent;border:0;padding:0;cursor:zoom-in;text-align:left}
+.galleryExpand>img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.galleryExpand:hover>img{transform:scale(1.025)}
+.galleryExpandHint{position:absolute;left:21px;top:20px;padding:10px 13px;border:1px solid #ffffff70;border-radius:6px;background:#101716cb;color:white;font-size:12px;backdrop-filter:blur(8px)}
+.galleryLightbox{position:fixed;z-index:10000;inset:0;display:grid;place-items:center;background:rgba(4,9,8,.95);padding:35px 6vw;backdrop-filter:blur(12px)}
+.galleryLightboxContent{width:min(1200px,100%);max-height:95vh;display:flex;flex-direction:column;gap:16px}
+.galleryLightboxTop,.galleryLightboxBottom{display:flex;align-items:center;justify-content:space-between;gap:18px;font-size:13px;color:#c9d5c8}
+.galleryLightboxTop button,.galleryLightboxBottom button{background:#202a24;border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:12px 17px;color:#eef2e9;white-space:nowrap}
+.galleryLightbox button:hover{border-color:var(--lime);color:var(--lime)}
+.galleryLightboxContent>img{display:block;width:100%;max-height:72vh;min-height:0;object-fit:contain;border-radius:9px;background:#121a1b}
+.galleryLightboxBottom span{text-align:center;color:#aab8af}
+@media(max-width:650px){.galleryExpandHint{font-size:10px;left:12px;top:12px;padding:8px}.galleryLightbox{padding:18px}.galleryLightboxTop,.galleryLightboxBottom{font-size:11px}.galleryLightboxTop button,.galleryLightboxBottom button{padding:10px}.galleryLightboxBottom span{display:none}.galleryLightboxContent>img{max-height:70vh}}
+@media(prefers-reduced-motion:reduce){.galleryExpand>img{transition:none!important}}
