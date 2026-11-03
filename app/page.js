@@ -18,23 +18,24 @@ const experience=[
 export default function Home(){
  const [filter,setFilter]=useState('All');
  const [menu,setMenu]=useState(false);
- const [scrollPct,setScrollPct]=useState(0);
+ const progressRef=useRef(null);
+ const rafRef=useRef(0);
  const artRef=useRef(null);
  useEffect(()=>{
    const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
    if(!reduce)document.documentElement.classList.add('has-motion');
-   const setProgress=()=>{const max=document.documentElement.scrollHeight-window.innerHeight;setScrollPct(max>0?Math.min(100,Math.round(window.scrollY/max*100)):0)};
+   const setProgress=()=>{if(rafRef.current)return;rafRef.current=requestAnimationFrame(()=>{rafRef.current=0;const max=document.documentElement.scrollHeight-window.innerHeight;if(progressRef.current)progressRef.current.style.transform=`scaleX(${max>0?Math.min(1,window.scrollY/max):0})`})};
    setProgress();window.addEventListener('scroll',setProgress,{passive:true});window.addEventListener('resize',setProgress);
    const observer=reduce?null:new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target)}})},{threshold:.1,rootMargin:'0px 0px -35px 0px'});
    document.querySelectorAll('.reveal-on-scroll').forEach(el=>{if(observer)observer.observe(el);else el.classList.add('is-visible')});
-   return()=>{observer?.disconnect();window.removeEventListener('scroll',setProgress);window.removeEventListener('resize',setProgress)};
+   return()=>{observer?.disconnect();if(rafRef.current)cancelAnimationFrame(rafRef.current);rafRef.current=0;window.removeEventListener('scroll',setProgress);window.removeEventListener('resize',setProgress)};
  },[filter]);
  useEffect(()=>{if(!menu)return;const escape=e=>{if(e.key==='Escape')setMenu(false)};window.addEventListener('keydown',escape);return()=>window.removeEventListener('keydown',escape)},[menu]);
  const onArtMove=(event)=>{if(!artRef.current||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const box=artRef.current.getBoundingClientRect();const x=(event.clientX-box.left)/box.width-.5;const y=(event.clientY-box.top)/box.height-.5;artRef.current.style.setProperty('--main-x',`${(-x*22).toFixed(1)}px`);artRef.current.style.setProperty('--main-y',`${(-y*18).toFixed(1)}px`);artRef.current.style.setProperty('--side-x',`${(x*23).toFixed(1)}px`);artRef.current.style.setProperty('--side-y',`${(y*20).toFixed(1)}px`);};
  const onArtLeave=()=>{if(artRef.current){artRef.current.style.setProperty('--main-x','0px');artRef.current.style.setProperty('--main-y','0px');artRef.current.style.setProperty('--side-x','0px');artRef.current.style.setProperty('--side-y','0px')}};
  const shown=filter==='All'?projects:projects.filter(p=>p.category===filter);
  return <main className="newSite" id="top">
-  <div className="readingProgress" aria-hidden="true" style={{transform:`scaleX(${scrollPct/100})`}}/>
+  <div ref={progressRef} className="readingProgress" aria-hidden="true" style={{transform:'scaleX(0)'}}/>
   <a className="skipLink" href="#work">Skip to projects</a>
   <header className="newNav frame"><a href="#top" className="newLogo" aria-label="Home">CZ<span className="logoDot">.</span></a><nav id="main-navigation" aria-label="Main navigation" className={'newNavLinks '+(menu?'open':'')}><a onClick={()=>setMenu(false)} href="/projects">Projects</a><a onClick={()=>setMenu(false)} href="#links">Links</a><a onClick={()=>setMenu(false)} href="#about">About</a><a onClick={()=>setMenu(false)} href="#experience">Experience</a><a onClick={()=>setMenu(false)} href="#contact">Contact</a></nav><a className="navContact" href="mailto:24zhaocongyu@gmail.com">Let's talk <span>↗</span></a><button className="menuToggle" onClick={()=>setMenu(!menu)} aria-label="Toggle navigation" aria-controls="main-navigation" aria-expanded={menu}>☰</button></header>
   <section className="newHero frame">
