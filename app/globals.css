@@ -381,3 +381,20 @@ html{scroll-padding-top:24px}
 .galleryLightboxBottom span{text-align:center;color:#aab8af}
 @media(max-width:650px){.galleryExpandHint{font-size:10px;left:12px;top:12px;padding:8px}.galleryLightbox{padding:18px}.galleryLightboxTop,.galleryLightboxBottom{font-size:11px}.galleryLightboxTop button,.galleryLightboxBottom button{padding:10px}.galleryLightboxBottom span{display:none}.galleryLightboxContent>img{max-height:70vh}}
 @media(prefers-reduced-motion:reduce){.galleryExpand>img{transition:none!important}}
+
+/* Recovered personal photography — original full-resolution image from archived files */
+.showcasePortrait{position:absolute;z-index:3;left:0;top:5%;width:49%;height:83%;margin:0;border:1px solid rgba(239,242,232,.43);border-radius:18px;overflow:hidden;box-shadow:0 35px 85px #000a;background:#1b282b;transform:rotate(-6deg) translate3d(calc(var(--main-x,0px)*.45),calc(var(--main-y,0px)*.45),0);transition:transform .38s cubic-bezier(.2,.8,.2,1)}
+.showcasePortrait:hover{transform:rotate(-3deg) translateY(-8px)}
+.showcasePortrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 25%}
+.showcasePortrait figcaption{position:absolute;left:0;right:0;bottom:0;padding:23px 14px 14px;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#f2f2ec;font-size:9px;letter-spacing:.13em}
+.interactiveShowcase .showcaseCardMain{z-index:2;left:auto;right:0;top:3%;width:48%;height:57%;transform:translate3d(var(--main-x,0px),var(--main-y,0px),0) rotate(8deg)}
+.interactiveShowcase .showcaseCardMain:hover{transform:translate3d(var(--main-x,0px),var(--main-y,0px),0) rotate(5deg) scale(1.03)}
+.interactiveShowcase .showcaseCardSide{z-index:4;right:0;bottom:8%;width:54%;height:37%;transform:translate3d(var(--side-x,0px),var(--side-y,0px),0) rotate(-4deg)}
+.interactiveShowcase .showcaseCardSide:hover{transform:translate3d(var(--side-x,0px),var(--side-y,0px),0) rotate(-2deg) scale(1.04)}
+.interactiveShowcase .showcaseNote{z-index:5;right:0;top:auto;bottom:0}
+.newAbout .aboutPortrait{margin:48px 0 0;max-width:350px}
+.aboutPortrait img{display:block;width:100%;height:auto;max-height:450px;object-fit:cover;object-position:center;border-radius:14px;filter:saturate(.9)}
+.aboutPortrait figcaption{margin-top:10px;color:#87968c;font-size:11px;letter-spacing:.04em}
+@media(max-width:850px){.showcasePortrait{left:5%;width:46%;height:82%}.interactiveShowcase .showcaseCardMain{right:5%}.interactiveShowcase .showcaseCardSide{right:1%}.newAbout .aboutPortrait{max-width:340px;margin:30px 0}}
+@media(max-width:650px){.showcasePortrait{left:2%;top:9%;width:48%;height:79%;border-radius:12px}.showcasePortrait figcaption{font-size:7px;padding:19px 9px 9px}.interactiveShowcase .showcaseCardMain{right:1%;width:51%;height:55%}.interactiveShowcase .showcaseCardSide{right:0;bottom:12%;width:59%;height:34%}}
+@media(prefers-reduced-motion:reduce){.showcasePortrait{transition:none!important;transform:rotate(-6deg)!important}.interactiveShowcase .showcaseCardMain{transform:rotate(8deg)!important}.interactiveShowcase .showcaseCardSide{transform:rotate(-4deg)!important}}
