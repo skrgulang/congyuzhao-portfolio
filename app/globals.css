@@ -410,3 +410,48 @@ html{scroll-padding-top:24px}
 .contactEmailGroup .contactEmailSecondary small{color:#89958a}
 .contactEmailGroup + .contactSocial{margin-top:55px;flex-wrap:wrap}
 @media(max-width:650px){.contactEmailGroup{margin-top:30px}.contactEmailGroup .contactEmail{padding:18px 0}.contactEmailGroup .contactEmail span{font-size:clamp(17px,5vw,27px)}.contactEmailGroup .contactEmailSecondary span{font-size:clamp(16px,4.3vw,24px)}.contactEmailGroup + .contactSocial{margin-top:35px;gap:16px}}
+
+/* Aspire 101: editorial flagship project, mobile-first */
+.aspireCaseLead,.aspireJourney,.aspireBuild,.aspireLessons{border-top:1px solid var(--line);padding-top:78px;padding-bottom:95px}
+.aspireCaseLeadTop{display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px;color:var(--lime);font-size:11px;font-weight:600;letter-spacing:.15em;margin-bottom:35px}
+.aspireCaseLeadGrid{display:grid;grid-template-columns:1.13fr .87fr;gap:72px;align-items:center}
+.aspireCaseLead h2,.aspireChapterHead h2,.aspireLessons h2{font:700 clamp(44px,5.9vw,91px)/1.03 'Space Grotesk',sans-serif;letter-spacing:-.072em;margin:0 0 31px;max-width:930px}
+.aspireCaseLeadGrid>div:first-child>p{font-size:clamp(17px,1.65vw,21px);line-height:1.75;color:#b9c3b7;max-width:700px;margin:0 0 20px}
+.aspirePrimaryLinks{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:38px}
+.aspirePrimaryLinks a{font-size:13px;color:#e8f1e3;border-bottom:1px solid rgba(211,239,195,.45);padding-bottom:10px;display:inline-flex;gap:30px}
+.aspirePrimaryLinks a:hover{color:var(--lime);border-color:var(--lime)}
+.aspireProductVisual{min-height:550px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;border:1px solid var(--line);background:radial-gradient(circle at 55% 35%,#70623364,#1b211b 66%);border-radius:18px;overflow:hidden;padding:34px}
+.aspirePhoneChrome{height:min(460px,42vw);max-height:460px;aspect-ratio:849/1852;transform:rotate(-7deg);border:6px solid #191b1a;border-radius:26px;overflow:hidden;box-shadow:0 35px 65px #000b;transition:transform .45s cubic-bezier(.22,.8,.22,1)}
+.aspireProductVisual:hover .aspirePhoneChrome{transform:rotate(-3deg) translateY(-8px)}
+.aspirePhoneChrome img{width:100%;height:100%;object-fit:cover;display:block}
+.aspireVisualTag{font-size:10px;letter-spacing:.12em;text-align:center;color:#c5c2ac;line-height:1.5}
+.aspireChapterHead>span,.aspireLessons>div:first-child>span{display:block;color:var(--lime);font-size:11px;font-weight:600;letter-spacing:.14em;margin-bottom:21px}
+.aspireChapterHead h2{max-width:850px;margin-bottom:19px}
+.aspireChapterHead>p{font-size:18px;line-height:1.7;color:#aeb8ae;max-width:710px;margin:0 0 41px}
+.aspireJourneyGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.aspireJourneyGrid article{position:relative;border:1px solid var(--line);border-radius:12px;background:#19201b;padding:28px 23px 34px;min-height:258px}
+.aspireJourneyGrid article:not(:last-child):after{content:"→";position:absolute;right:-18px;top:40px;z-index:2;font-size:25px;color:var(--lime)}
+.aspireJourneyNumber{color:var(--lime);font-size:12px;letter-spacing:.1em}
+.aspireJourneyGrid h3{font:700 clamp(26px,2.8vw,40px)/1.1 'Space Grotesk',sans-serif;letter-spacing:-.055em;margin:65px 0 12px}
+.aspireJourneyGrid p{font-size:14px;line-height:1.65;color:#b7c0b5;margin:0}
+.aspireJourneyNote{font-size:11px;color:#89958a;line-height:1.7;margin:18px 0 0}
+.aspireBuildGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line);margin-top:15px}
+.aspireBuildGrid article{display:grid;grid-template-columns:44px 1fr;gap:18px;padding:32px 30px 35px 0;border-bottom:1px solid var(--line)}
+.aspireBuildGrid article:nth-child(odd){border-right:1px solid var(--line)}
+.aspireBuildGrid article:nth-child(even){padding-left:30px}
+.aspireBuildGrid article>span{font-size:12px;color:var(--lime)}
+.aspireBuildGrid h3{font:700 clamp(23px,2.7vw,37px)/1.15 'Space Grotesk',sans-serif;letter-spacing:-.04em;margin:0 0 14px}
+.aspireBuildGrid p{font-size:15px;line-height:1.8;color:#b0b9af;margin:0;max-width:530px}
+.aspireStackLine{display:flex;align-items:center;flex-wrap:wrap;gap:25px;border-bottom:1px solid var(--line);padding:28px 0}
+.aspireStackLine>span{font-size:11px;letter-spacing:.12em;color:var(--lime)}
+.aspireStackLine>div{display:flex;gap:9px;flex-wrap:wrap}
+.aspireStackLine>div span{font-size:12px;padding:9px 12px;border:1px solid var(--line);border-radius:30px;color:#d4ded1}
+.aspireLessons{display:grid;grid-template-columns:1fr 1fr;gap:65px}
+.aspireLessons h2{max-width:650px}
+.aspireLessons>div:last-child{padding-top:30px}
+.aspireLessons p{font-size:18px;line-height:1.8;color:#b9c3b8;margin:0 0 23px}
+.aspireLessons a{display:inline-block;color:var(--lime);font-size:14px;border-bottom:1px solid var(--lime);padding:12px 0}
+@media(max-width:1000px){.aspireCaseLeadGrid{grid-template-columns:1fr 1fr;gap:30px}.aspireProductVisual{min-height:450px}.aspireJourneyGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.aspireJourneyGrid article:nth-child(2):after{display:none}.aspireJourneyGrid h3{margin-top:30px}.aspireLessons{gap:30px}}
+@media(max-width:700px){.aspireCaseLead,.aspireJourney,.aspireBuild,.aspireLessons{padding-top:53px;padding-bottom:63px}.aspireCaseLeadGrid,.aspireLessons{grid-template-columns:1fr}.aspireCaseLeadGrid{gap:30px}.aspireProductVisual{min-height:410px;padding:25px}.aspirePhoneChrome{height:340px}.aspireCaseLead h2,.aspireChapterHead h2,.aspireLessons h2{font-size:clamp(40px,11vw,65px)}.aspireJourneyGrid{gap:10px}.aspireJourneyGrid article{padding:21px 15px;min-height:220px}.aspireJourneyGrid article:after{display:none}.aspireJourneyGrid h3{font-size:27px;margin-top:34px}.aspireJourneyGrid p{font-size:13px}.aspireBuildGrid{grid-template-columns:1fr}.aspireBuildGrid article:nth-child(odd){border-right:0}.aspireBuildGrid article:nth-child(even){padding-left:0}.aspireLessons>div:last-child{padding-top:0}.aspireLessons p{font-size:16px}}
+@media(max-width:410px){.aspireJourneyGrid{grid-template-columns:1fr}.aspireJourneyGrid article{min-height:0}.aspireJourneyGrid h3{margin-top:24px}.aspireCaseLeadTop{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.aspirePhoneChrome{transition:none!important}}
