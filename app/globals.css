@@ -398,3 +398,15 @@ html{scroll-padding-top:24px}
 @media(max-width:850px){.showcasePortrait{left:5%;width:46%;height:82%}.interactiveShowcase .showcaseCardMain{right:5%}.interactiveShowcase .showcaseCardSide{right:1%}.newAbout .aboutPortrait{max-width:340px;margin:30px 0}}
 @media(max-width:650px){.showcasePortrait{left:2%;top:9%;width:48%;height:79%;border-radius:12px}.showcasePortrait figcaption{font-size:7px;padding:19px 9px 9px}.interactiveShowcase .showcaseCardMain{right:1%;width:51%;height:55%}.interactiveShowcase .showcaseCardSide{right:0;bottom:12%;width:59%;height:34%}}
 @media(prefers-reduced-motion:reduce){.showcasePortrait{transition:none!important;transform:rotate(-6deg)!important}.interactiveShowcase .showcaseCardMain{transform:rotate(8deg)!important}.interactiveShowcase .showcaseCardSide{transform:rotate(-4deg)!important}}
+
+/* Contact options: business first, personal second */
+.contactEmailGroup{position:relative;width:min(780px,100%);display:flex;flex-direction:column;gap:0;margin-top:48px}
+.contactEmailGroup .contactEmail{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 20px;align-items:center;margin:0;padding:22px 0;border-bottom:1px solid rgba(243,247,235,.35);text-decoration:none;transition:color .2s,border-color .2s}
+.contactEmailGroup .contactEmail:hover{color:var(--lime);border-color:var(--lime)}
+.contactEmailGroup .contactEmail small{grid-column:1/-1;font-size:10px;font-weight:600;letter-spacing:.16em;color:#a2b1a0}
+.contactEmailGroup .contactEmail span{min-width:0;overflow-wrap:anywhere;font-size:clamp(21px,3vw,37px);font-weight:700;letter-spacing:-.035em;line-height:1.2}
+.contactEmailGroup .contactEmail strong{font-size:clamp(20px,3vw,34px);font-weight:400}
+.contactEmailGroup .contactEmailSecondary span{font-size:clamp(18px,2.3vw,28px);font-weight:600}
+.contactEmailGroup .contactEmailSecondary small{color:#89958a}
+.contactEmailGroup + .contactSocial{margin-top:55px;flex-wrap:wrap}
+@media(max-width:650px){.contactEmailGroup{margin-top:30px}.contactEmailGroup .contactEmail{padding:18px 0}.contactEmailGroup .contactEmail span{font-size:clamp(17px,5vw,27px)}.contactEmailGroup .contactEmailSecondary span{font-size:clamp(16px,4.3vw,24px)}.contactEmailGroup + .contactSocial{margin-top:35px;gap:16px}}
