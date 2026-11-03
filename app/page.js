@@ -22,6 +22,7 @@ export default function Home(){
  const artRef=useRef(null);
  useEffect(()=>{
    const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+   if(!reduce)document.documentElement.classList.add('has-motion');
    const setProgress=()=>{const max=document.documentElement.scrollHeight-window.innerHeight;setScrollPct(max>0?Math.min(100,Math.round(window.scrollY/max*100)):0)};
    setProgress();window.addEventListener('scroll',setProgress,{passive:true});window.addEventListener('resize',setProgress);
    const observer=reduce?null:new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target)}})},{threshold:.1,rootMargin:'0px 0px -35px 0px'});
@@ -29,8 +30,8 @@ export default function Home(){
    return()=>{observer?.disconnect();window.removeEventListener('scroll',setProgress);window.removeEventListener('resize',setProgress)};
  },[filter]);
  useEffect(()=>{if(!menu)return;const escape=e=>{if(e.key==='Escape')setMenu(false)};window.addEventListener('keydown',escape);return()=>window.removeEventListener('keydown',escape)},[menu]);
- const onArtMove=(event)=>{if(!artRef.current||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const box=artRef.current.getBoundingClientRect();const x=(event.clientX-box.left)/box.width-.5;const y=(event.clientY-box.top)/box.height-.5;artRef.current.style.setProperty('--px',String(x));artRef.current.style.setProperty('--py',String(y));};
- const onArtLeave=()=>{if(artRef.current){artRef.current.style.setProperty('--px','0');artRef.current.style.setProperty('--py','0')}};
+ const onArtMove=(event)=>{if(!artRef.current||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const box=artRef.current.getBoundingClientRect();const x=(event.clientX-box.left)/box.width-.5;const y=(event.clientY-box.top)/box.height-.5;artRef.current.style.setProperty('--main-x',`${(-x*22).toFixed(1)}px`);artRef.current.style.setProperty('--main-y',`${(-y*18).toFixed(1)}px`);artRef.current.style.setProperty('--side-x',`${(x*23).toFixed(1)}px`);artRef.current.style.setProperty('--side-y',`${(y*20).toFixed(1)}px`);};
+ const onArtLeave=()=>{if(artRef.current){artRef.current.style.setProperty('--main-x','0px');artRef.current.style.setProperty('--main-y','0px');artRef.current.style.setProperty('--side-x','0px');artRef.current.style.setProperty('--side-y','0px')}};
  const shown=filter==='All'?projects:projects.filter(p=>p.category===filter);
  return <main className="newSite" id="top">
   <div className="readingProgress" aria-hidden="true" style={{transform:`scaleX(${scrollPct/100})`}}/>
