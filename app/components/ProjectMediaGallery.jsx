@@ -2,8 +2,9 @@
 import { useEffect, useRef, useState } from 'react';
 
 const frames=[
-  {src:'/showcase/fish-gameplay.svg',title:'Gameplay development',caption:'A still from the team development recording'},
-  {src:'/showcase/fish-characters.svg',title:'Characters & island',caption:'Unity characters and environment work'}
+  {src:'/showcase/fish-inventory-hq.jpg',title:'Inventory and item management',caption:'Original 1080p presentation frame — inventory UI and item actions'},
+  {src:'/showcase/fish-gameplay-hq.jpg',title:'Characters and gameplay',caption:'Original 1080p presentation frame — playable character interactions'},
+  {src:'/showcase/fish-island-hq.jpg',title:'Island and terrain',caption:'Original 1080p presentation frame — island environment work'}
 ];
 
 export default function ProjectMediaGallery(){
@@ -29,7 +30,7 @@ export default function ProjectMediaGallery(){
   return <div className="interactiveGallery" id="fish-project-gallery" role="region" aria-label="Fish and Ships game images" tabIndex={0} onKeyDown={e=>{if(expanded)return;if(e.key==='ArrowRight'){e.preventDefault();move(1)}else if(e.key==='ArrowLeft'){e.preventDefault();move(-1)}}}>
     <div className="interactiveGalleryStage">
       <button ref={openRef} className="galleryExpand" type="button" onClick={()=>setExpanded(true)} aria-label={'View '+frames[active].title+' enlarged'}>
-        <img key={frames[active].src} src={frames[active].src} alt={frames[active].title+' — actual work-in-progress footage'} width="900" height="510" loading="lazy"/>
+        <img key={frames[active].src} src={frames[active].src} alt={frames[active].title+' — actual work-in-progress footage'} width="1194" height="672" loading="lazy"/>
         <span className="galleryExpandHint">View larger ↗</span>
       </button>
       <div className="interactiveGalleryOverlay"><span>{String(active+1).padStart(2,'0')} / {String(frames.length).padStart(2,'0')}</span><strong>{frames[active].title}</strong></div>
@@ -42,11 +43,11 @@ export default function ProjectMediaGallery(){
       <p aria-live="polite">{frames[active].caption}</p>
       <div className="interactiveGalleryThumbs">{frames.map((item,i)=><button key={item.src} type="button" onClick={()=>setActive(i)} className={i===active?'active':''} aria-label={'View '+item.title} aria-pressed={i===active}><img src={item.src} width="95" height="55" alt=""/></button>)}</div>
     </div>
-    <p className="interactiveGalleryFoot">Original development video stills · Choose a thumbnail or use arrow keys.</p>
+    <p className="interactiveGalleryFoot">Frames re-extracted at higher resolution from the original 1920 × 1080 recording. Choose a thumbnail or use arrow keys.</p>
     {expanded&&<div className="galleryLightbox" role="dialog" aria-modal="true" aria-label="Expanded Fish and Ships screenshot" onMouseDown={e=>{if(e.target===e.currentTarget)setExpanded(false)}}>
       <div className="galleryLightboxContent">
         <div className="galleryLightboxTop"><span>{frames[active].title} · {active+1}/{frames.length}</span><button ref={closeRef} type="button" onClick={()=>setExpanded(false)} aria-label="Close enlarged view">✕ Close</button></div>
-        <img src={frames[active].src} alt={frames[active].title+' — actual game development still'} width="1200" height="680"/>
+        <img src={frames[active].src} alt={frames[active].title+' — actual game development still'} width="1194" height="672"/>
         <div className="galleryLightboxBottom"><button type="button" onClick={()=>move(-1)} aria-label="Previous enlarged image">← Previous</button><span>{frames[active].caption}</span><button type="button" onClick={()=>move(1)} aria-label="Next enlarged image">Next →</button></div>
       </div>
     </div>}
