@@ -278,3 +278,59 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 
 .caseNext .allWorkInline{font-size:11px;letter-spacing:.12em;font-weight:600;color:#a6b7a4;vertical-align:baseline;text-decoration:underline;text-underline-offset:3px}
 .caseNext .allWorkInline:hover{color:var(--lime)}
+
+/* 2026 portfolio experience refresh — interactive work showcase */
+:root{--lime:#d8f0ae;--panel:#151917}
+html{scroll-padding-top:24px}
+.readingProgress{position:fixed;z-index:9999;top:0;left:0;right:0;height:3px;transform-origin:left center;background:var(--lime);pointer-events:none;transition:transform .12s linear}
+.newNav{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(15,18,16,.84);position:sticky;top:0;width:min(1440px,calc(100% - 100px));height:80px}
+.newHero{min-height:min(880px,92vh);grid-template-columns:1fr 1fr;gap:20px;padding:55px 0 75px;position:relative}
+.newHero .heroIntro{z-index:3;align-self:center}
+.newHero h1{font-size:clamp(74px,9.1vw,148px);line-height:.92;margin:30px 0 30px}
+.newHero h1 em{font-style:normal;color:var(--lime)}
+.heroLead{font-size:clamp(18px,1.85vw,24px);max-width:550px;line-height:1.6}
+.heroButtons{margin-top:35px}
+.heroSocial{display:flex;align-items:center;flex-wrap:wrap;gap:20px;margin-top:70px;font-size:11px;color:#b3bcb0}
+.heroSocial span{letter-spacing:.1em;margin-right:auto;color:#8f9c8d}
+.heroSocial a{border-bottom:1px solid #899484;padding-bottom:4px;white-space:nowrap}
+.heroSocial a:hover{color:var(--lime)}
+.heroArtwork.interactiveShowcase{position:relative;min-height:590px;background:transparent;isolation:isolate;perspective:950px;transform-style:preserve-3d}
+.heroArtwork.interactiveShowcase:before{content:"";position:absolute;width:75%;aspect-ratio:1;border-radius:50%;filter:blur(70px);background:radial-gradient(circle,#9ebd5965,transparent 70%);opacity:.8}
+.showcaseOrbit{position:absolute;inset:14% 7%;border:1px solid rgba(209,233,183,.15);border-radius:48% 52% 48% 52%;transform:rotate(28deg)}
+.showcaseOrbit:after{content:"";position:absolute;inset:11%;border:1px dashed rgba(255,255,255,.12);border-radius:50%}
+.showcaseCard{display:flex;flex-direction:column;position:absolute;overflow:hidden;background:#202520;border:1px solid rgba(229,243,218,.23);box-shadow:0 28px 75px rgba(0,0,0,.45);border-radius:18px;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s;will-change:transform}
+.showcaseCard:hover{border-color:var(--lime);box-shadow:0 40px 85px rgba(0,0,0,.62)}
+.showcaseCardMain{width:54%;height:72%;left:10%;top:5%;transform:translate3d(calc(var(--px,0)*-16px),calc(var(--py,0)*-16px),0) rotate(-8deg)}
+.showcaseCardMain:hover{transform:translate3d(calc(var(--px,0)*-16px),calc(var(--py,0)*-16px - 10px),0) rotate(-5deg) scale(1.02)}
+.showcaseCardSide{width:55%;height:41%;right:1%;bottom:12%;transform:translate3d(calc(var(--px,0)*23px),calc(var(--py,0)*20px),0) rotate(7deg)}
+.showcaseCardSide:hover{transform:translate3d(calc(var(--px,0)*23px),calc(var(--py,0)*20px - 10px),0) rotate(3deg) scale(1.03)}
+.showcaseImage{flex:1;min-height:0;overflow:hidden;display:grid;place-items:center;background:radial-gradient(circle at center,#8a783c4a,#171c19 70%)}
+.aspireShowcaseImage img{height:113%;max-width:90%;width:auto;object-fit:contain;filter:drop-shadow(0 15px 18px #000a)}
+.showcaseCardSide>img{width:100%;min-height:0;flex:1;object-fit:cover}
+.showcaseCardCaption{display:flex;flex-direction:column;gap:6px;padding:14px 17px;background:#181e1b}
+.showcaseCardCaption span{font-size:9px;letter-spacing:.12em;color:#b4bdac}
+.showcaseCardCaption strong{font-size:17px;letter-spacing:-.02em}
+.showcaseNote{position:absolute;top:4%;right:2%;display:flex;align-items:center;gap:12px;line-height:1.7;font-size:10px;letter-spacing:.13em;color:#bbc7b7}
+.showcaseNote strong{color:#e5f6d5;font-size:11px}
+.showcasePulse{width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 7px rgba(216,240,174,.1);animation:showcasePulse 3s ease-in-out infinite}
+@keyframes showcasePulse{50%{box-shadow:0 0 0 15px rgba(216,240,174,0)}}
+.heroIndex{bottom:28px}
+.heroIndex>a{margin-left:auto;font-size:10px;color:var(--lime);letter-spacing:.15em}
+.reveal-on-scroll{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s cubic-bezier(.25,.75,.2,1)}
+.reveal-on-scroll.is-visible{opacity:1;transform:translateY(0)}
+.newProject.reveal-on-scroll{transition:opacity .65s ease,transform .65s cubic-bezier(.25,.75,.2,1),border-color .25s,box-shadow .25s}
+.newProject.reveal-on-scroll.is-visible:hover{transform:translateY(-6px);border-color:rgba(216,240,174,.55);box-shadow:0 28px 75px #0005}
+.projectArt{height:275px}
+.projectScreenshot{filter:saturate(1.02)}
+.newProject.tone-blue .projectArt{background:#1b2b2b}
+.newProject .projectArt{overflow:hidden}
+.newProject .projectScreenshot,.newProject .aspirePreview img{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.newProject:hover .projectScreenshot{transform:scale(1.055)}
+.newProject:hover .aspirePreview img{transform:rotate(-5deg) scale(1.075)}
+.newProject .projectSymbol{transition:transform .5s ease}
+.newProject:hover .projectSymbol{transform:rotate(-10deg) scale(1.08)}
+.newProjectLink:focus-visible,.showcaseCard:focus-visible,.heroButtons a:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+@media(max-width:1100px){.newNav{width:calc(100% - 48px)}.newHero{grid-template-columns:1fr 1fr;min-height:730px}.heroArtwork.interactiveShowcase{min-height:480px}.showcaseCardCaption strong{font-size:14px}.heroSocial{margin-top:45px}}
+@media(max-width:850px){.newHero{grid-template-columns:1fr;min-height:0;padding:65px 0 95px}.heroArtwork.interactiveShowcase{grid-row:2;min-height:510px;width:min(660px,100%);margin:10px auto 25px}.newHero h1{font-size:clamp(90px,15vw,130px)}.heroIndex{flex-wrap:wrap;gap:14px}.heroIndex>a{margin-left:0}.heroSocial{margin-top:40px}}
+@media(max-width:650px){.newNav{width:calc(100% - 32px);height:72px}.newHero{padding-top:48px}.newHero h1{font-size:clamp(70px,17vw,100px)}.heroArtwork.interactiveShowcase{min-height:380px}.showcaseCardMain{left:5%;width:56%;height:72%}.showcaseCardSide{right:0;width:62%;height:42%}.showcaseNote{right:0;top:0;font-size:8px}.showcaseCardCaption{padding:10px}.showcaseCardCaption strong{font-size:12px}.showcaseCardCaption span{font-size:8px}.heroSocial{gap:12px}.heroSocial span{flex-basis:100%}.heroIndex{font-size:8px}.projectArt{height:230px}}
+@media(prefers-reduced-motion:reduce){.readingProgress,.reveal-on-scroll,.showcaseCard,.showcasePulse,.projectScreenshot{transition:none!important;animation:none!important}.reveal-on-scroll{opacity:1!important;transform:none!important}.showcaseCardMain{transform:rotate(-8deg)!important}.showcaseCardSide{transform:rotate(7deg)!important}}
