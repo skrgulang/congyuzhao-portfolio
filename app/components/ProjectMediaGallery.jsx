@@ -43,7 +43,7 @@ export default function ProjectMediaGallery(){
       <div className="interactiveGalleryThumbs">{frames.map((item,i)=><button key={item.src} type="button" onClick={()=>setActive(i)} className={i===active?'active':''} aria-label={'View '+item.title} aria-pressed={i===active}><img src={item.src} width="95" height="55" alt=""/></button>)}</div>
     </div>
     <p className="interactiveGalleryFoot">Original development video stills · Choose a thumbnail or use arrow keys.</p>
-    {expanded&&<div className="galleryLightbox" role="dialog" aria-modal="true" aria-label="Expanded Fish and Ships screenshot" onMouseDown={e=>{if(e.target===e.currentTarget)setExpanded(false)}}>
+    {expanded&&<div className="galleryLightbox" role="dialog" aria-modal="true" aria-label="Expanded Fish and Ships screenshot" onMouseDown={e=>{if(e.target===e.currentTarget)setExpanded(false)}} onKeyDown={e=>e.stopPropagation()}>
       <div className="galleryLightboxContent">
         <div className="galleryLightboxTop"><span>{frames[active].title} · {active+1}/{frames.length}</span><button ref={closeRef} type="button" onClick={()=>setExpanded(false)} aria-label="Close enlarged view">✕ Close</button></div>
         <img src={frames[active].src} alt={frames[active].title+' — actual game development still'} width="1200" height="680"/>
