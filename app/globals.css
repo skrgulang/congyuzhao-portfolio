@@ -262,3 +262,16 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 .gameGalleryGrid figcaption{font-size:12px;color:#c3d1cf;padding:16px}
 .gameGalleryLink{display:inline-block;font-size:13px;margin-top:27px;border-bottom:1px solid var(--lime);padding-bottom:8px;color:var(--lime)}
 @media(max-width:780px){.conceptShowcase{grid-template-columns:1fr;gap:20px;padding:55px 0}.gameGallery{padding:55px 0}.gameGalleryGrid{grid-template-columns:1fr}.aspirePreview img{max-width:55%}}
+
+/* Wildfire project: an explanatory process diagram, not a claimed screenshot */
+.wildfireStudy{border-top:1px solid var(--line);padding:75px 0 90px}
+.wildfireStudyIntro{max-width:780px;margin-bottom:32px}
+.wildfireStudyIntro h2{font:700 clamp(39px,5vw,71px)/1.06 'Space Grotesk',sans-serif;letter-spacing:-.06em;margin:18px 0}
+.wildfireStudyIntro>p:last-child{color:#b2b9ae;font-size:16px;line-height:1.75}
+.wildfireStages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.wildfireStages article{border:1px solid var(--line);border-radius:10px;padding:28px;background:linear-gradient(145deg,#25231e,#1c201d);min-height:240px}
+.wildfireStages article>span{color:#e4c8a3;letter-spacing:.12em;font-size:11px}
+.wildfireStages h3{font:700 clamp(23px,2.5vw,34px)/1.15 'Space Grotesk',sans-serif;letter-spacing:-.03em;margin:52px 0 12px}
+.wildfireStages p{font-size:14px;line-height:1.65;color:#b2b2aa;margin:0}
+.wildfireFootnote{font-size:12px;color:#a3a49d;line-height:1.7;margin-top:18px}
+@media(max-width:780px){.wildfireStudy{padding:50px 0}.wildfireStages{grid-template-columns:1fr}.wildfireStages article{min-height:0}.wildfireStages h3{margin-top:24px}}
