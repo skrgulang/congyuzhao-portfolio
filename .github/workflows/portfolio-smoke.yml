@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/smoke.mjs'
+      - 'scripts/browser-qa.mjs'
       - '.github/workflows/portfolio-smoke.yml'
   schedule:
     - cron: '23 13 * * *'
@@ -28,3 +29,17 @@ jobs:
           node-version: '22'
       - name: Check public portfolio pages and images
         run: node scripts/smoke.mjs https://congyuzhao.com
+      - name: Install Chromium for browser QA
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Mobile and desktop browser QA
+        run: node scripts/browser-qa.mjs https://congyuzhao.com
+      - name: Save visual QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-qa-screenshots
+          path: qa-screenshots/
+          if-no-files-found: ignore
+          retention-days: 7
