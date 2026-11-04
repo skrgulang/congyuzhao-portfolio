@@ -488,3 +488,22 @@ html{scroll-padding-top:24px}
 .aspireDecisionDisclaimer{max-width:800px;font-size:12px;line-height:1.65;color:#89918d;margin-top:20px}
 @media(max-width:820px){.aspireDecisionList article{grid-template-columns:115px minmax(0,1fr);gap:18px}.aspireDecisionList strong{grid-column:2;text-align:left;padding-top:0}.aspireDecisions{padding:65px 0}}
 @media(max-width:520px){.aspireDecisionList article{grid-template-columns:1fr;gap:12px;padding:27px 0}.aspireDecisionList article>span,.aspireDecisionList strong{grid-column:1;padding:0}.aspireDecisionList h3{font-size:24px}}
+
+/* Aspire 101: explicit live / TestFlight / concept distinction */
+.aspireProductProof{padding:85px 0 100px;border-top:1px solid rgba(255,255,255,.13)}
+.aspireProofGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:38px}
+.aspireProofCard{display:flex;flex-direction:column;min-width:0;min-height:345px;border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:clamp(22px,2.5vw,33px);background:linear-gradient(145deg,#1c211c,#171a17)}
+.aspireProofTop{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.aspireProofTop>span:first-child{font-size:10px;letter-spacing:.13em;color:#b9bdb5}
+.aspireProofStatus{display:inline-flex;align-items:center;border-radius:100px;padding:6px 10px;font-size:9px;letter-spacing:.1em;font-weight:700;border:1px solid rgba(255,255,255,.18)}
+.aspireProofStatus.live{color:#d8e8bb;border-color:#d8e8bb55}
+.aspireProofStatus.beta{color:#dcbf8b;border-color:#dcbf8b55}
+.aspireProofStatus.concept{color:#adbac7;border-color:#adbac755}
+.aspireProofCard h3{font-size:clamp(23px,2.3vw,33px);line-height:1.16;letter-spacing:-.045em;margin:40px 0 16px;max-width:330px}
+.aspireProofCard p{font-size:14px;line-height:1.72;color:#adb5ae;margin:0 0 25px}
+.aspireProofCard a,.aspireProofQuiet{margin-top:auto;padding-top:18px;border-top:1px solid rgba(255,255,255,.15);font-size:12px;line-height:1.5;font-weight:600}
+.aspireProofCard a{display:flex;justify-content:space-between;gap:15px;color:#e0eacb}
+.aspireProofCard a:hover{color:white}
+.aspireProofQuiet{color:#8e978f;font-weight:400}
+@media(max-width:900px){.aspireProofGrid{grid-template-columns:1fr}.aspireProofCard{min-height:0}.aspireProofCard h3{margin-top:24px;max-width:none}.aspireProofCard p{max-width:650px}}
+@media(max-width:600px){.aspireProductProof{padding:60px 0 70px}.aspireProofCard{padding:23px}.aspireProofCard h3{font-size:26px}}
