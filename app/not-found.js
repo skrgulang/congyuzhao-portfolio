@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Page not found | Congyu Zhao',
+  title: 'Page not found',
   robots: { index: false, follow: true }
 };
 
