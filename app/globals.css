@@ -561,3 +561,15 @@ html{scroll-padding-top:24px}
  .allProjectsDetail{min-width:0}
  .allProjectsRight{min-width:0}
 }
+
+/* Recovery route for invalid URLs */
+.notFoundPage{min-height:100vh;display:flex;flex-direction:column;background:#10100f;color:#f6f3eb}
+.notFoundMain{flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:95px 0 125px}
+.notFoundMain h1{font:700 clamp(74px,11vw,170px)/.94 'Space Grotesk',sans-serif;letter-spacing:-.08em;margin:22px 0 30px}
+.notFoundMain h1 span{color:var(--lime)}
+.notFoundMain>p:not(.newEyebrow){max-width:550px;font-size:clamp(17px,2vw,23px);line-height:1.6;color:#b7beb3;margin:0}
+.notFoundActions{display:flex;align-items:center;flex-wrap:wrap;gap:28px;margin-top:37px}
+.notFoundSecondary{font-size:14px;border-bottom:1px solid currentColor;padding-bottom:4px}
+.notFoundPage .caseFooter{width:min(1440px,calc(100% - 100px))}
+.notFoundActions a:focus-visible,.notFoundPage .caseNav a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}
+@media(max-width:650px){.notFoundMain{padding:85px 0}.notFoundMain h1{font-size:clamp(60px,15vw,105px)}.notFoundPage .caseFooter{width:calc(100% - 32px)}}
