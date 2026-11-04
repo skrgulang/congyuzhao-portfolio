@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 
 const frames=[
   {src:'/showcase/fish-inventory-hq.jpg',title:'Inventory and item management',caption:'Original 1080p presentation frame — inventory UI and item actions'},
@@ -13,7 +13,30 @@ export default function ProjectMediaGallery(){
   const closeRef=useRef(null);
   const openRef=useRef(null);
   const dialogRef=useRef(null);
+  const swipeStart=useRef(null);
+  const titleId=useId();
   const move=delta=>setActive(current=>(current+delta+frames.length)%frames.length);
+  const onTouchStart=e=>{
+    const touch=e.changedTouches[0];
+    swipeStart.current={x:touch.clientX,y:touch.clientY};
+  };
+  const onTouchEnd=e=>{
+    const start=swipeStart.current;
+    swipeStart.current=null;
+    if(!start)return;
+    const touch=e.changedTouches[0];
+    const dx=touch.clientX-start.x;
+    const dy=touch.clientY-start.y;
+    if(Math.abs(dx)>=55 && Math.abs(dx)>Math.abs(dy)*1.5)move(dx<0?1:-1);
+  };
+  useEffect(()=>{
+    const preload=frames.filter((_,i)=>i!==active).map(item=>{
+      const image=new Image();
+      image.src=item.src;
+      return image;
+    });
+    return()=>{preload.length=0};
+  },[active]);
   useEffect(()=>{
     if(!expanded)return;
     const previous=document.activeElement;
@@ -26,8 +49,10 @@ export default function ProjectMediaGallery(){
         const controls=Array.from(dialogRef.current?.querySelectorAll('button:not([disabled])')||[]);
         if(!controls.length)return;
         const first=controls[0],last=controls[controls.length-1];
-        if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
-        else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+        const focused=document.activeElement;
+        if(!dialogRef.current?.contains(focused)){e.preventDefault();first.focus();}
+        else if(e.shiftKey&&focused===first){e.preventDefault();last.focus();}
+        else if(!e.shiftKey&&focused===last){e.preventDefault();first.focus();}
       }
       else if(e.key==='ArrowRight'){e.preventDefault();move(1);}
       else if(e.key==='ArrowLeft'){e.preventDefault();move(-1);}
@@ -36,7 +61,7 @@ export default function ProjectMediaGallery(){
     return()=>{document.removeEventListener('keydown',onKey);document.body.style.overflow=oldOverflow;requestAnimationFrame(()=>{if(previous?.isConnected)previous.focus();else openRef.current?.focus()});};
   },[expanded]);
   return <div className="interactiveGallery" id="fish-project-gallery" role="region" aria-label="Fish and Ships game images" tabIndex={0} onKeyDown={e=>{if(expanded)return;if(e.key==='ArrowRight'){e.preventDefault();move(1)}else if(e.key==='ArrowLeft'){e.preventDefault();move(-1)}}}>
-    <div className="interactiveGalleryStage">
+    <div className="interactiveGalleryStage" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <button ref={openRef} className="galleryExpand" type="button" onClick={()=>setExpanded(true)} aria-label={'View '+frames[active].title+' enlarged'}>
         <img key={frames[active].src} src={frames[active].src} alt={frames[active].title+' — actual work-in-progress footage'} width="1194" height="672" loading="lazy"/>
         <span className="galleryExpandHint">View larger ↗</span>
@@ -52,9 +77,9 @@ export default function ProjectMediaGallery(){
       <div className="interactiveGalleryThumbs">{frames.map((item,i)=><button key={item.src} type="button" onClick={()=>setActive(i)} className={i===active?'active':''} aria-label={'View '+item.title} aria-pressed={i===active}><img src={item.src} width="95" height="55" alt=""/></button>)}</div>
     </div>
     <p className="interactiveGalleryFoot">Frames re-extracted at higher resolution from the original 1920 × 1080 recording. Choose a thumbnail or use arrow keys.</p>
-    {expanded&&<div className="galleryLightbox" role="dialog" aria-modal="true" aria-label="Expanded Fish and Ships screenshot" onMouseDown={e=>{if(e.target===e.currentTarget)setExpanded(false)}}>
+    {expanded&&<div className="galleryLightbox" role="dialog" aria-modal="true" aria-labelledby={titleId} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onMouseDown={e=>{if(e.target===e.currentTarget)setExpanded(false)}}>
       <div className="galleryLightboxContent" ref={dialogRef}>
-        <div className="galleryLightboxTop"><span>{frames[active].title} · {active+1}/{frames.length}</span><button ref={closeRef} type="button" onClick={()=>setExpanded(false)} aria-label="Close enlarged view">✕ Close</button></div>
+        <div className="galleryLightboxTop"><span id={titleId}>{frames[active].title} · {active+1}/{frames.length}</span><button ref={closeRef} type="button" onClick={()=>setExpanded(false)} aria-label="Close enlarged view">✕ Close</button></div>
         <img src={frames[active].src} alt={frames[active].title+' — actual game development still'} width="1194" height="672"/>
         <div className="galleryLightboxBottom"><button type="button" onClick={()=>move(-1)} aria-label="Previous enlarged image">← Previous</button><span>{frames[active].caption}</span><button type="button" onClick={()=>move(1)} aria-label="Next enlarged image">Next →</button></div>
       </div>
