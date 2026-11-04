@@ -32,8 +32,10 @@ The smoke script is a **network and content check**, not a replacement for visua
 
 ## Automated browser QA
 
-GitHub Actions workflow [Portfolio public smoke test](https://github.com/skrgulang/congyuzhao-portfolio/actions/workflows/portfolio-smoke.yml) runs on changes to the QA scripts/workflow, can be started manually, and is scheduled daily at 13:23 UTC.
+GitHub Actions workflow [Portfolio public smoke test](https://github.com/skrgulang/congyuzhao-portfolio/actions/workflows/portfolio-smoke.yml) runs on changes to website source, public images, or QA scripts/workflow, can be started manually, and is scheduled daily at 13:23 UTC.
 
-In addition to the HTTP checks, it launches Chromium with 390px mobile and 1440px desktop viewports to check the homepage, projects index, and all six project detail pages for horizontal overflow, above-the-fold broken images, mobile menu behavior, and the Fish and Ships image lightbox (open, next image, Escape to close). It saves full-page screenshots to a **portfolio-qa-screenshots** Actions artifact (retained for seven days).
+In addition to the HTTP checks, it launches Chromium with 320px small-mobile, 390px mobile, and 1440px desktop viewports to check the homepage, projects index, and all six project detail pages for horizontal overflow, above-the-fold broken images, mobile menu behavior, and the Fish and Ships image lightbox (open, next image, Escape to close). It saves full-page screenshots to a **portfolio-qa-screenshots** Actions artifact (retained for seven days).
 
 These automated checks cannot establish a full visual quality pass or verify authenticated product screens. A human should inspect screenshots and test Safari/iOS separately. GitHub Actions must be enabled for this repository for the workflow to run.
+
+On pushes to main, the workflow pauses briefly before checking the public production URL so Vercel has time to publish. This is a best-effort delay, not a guarantee that the newly pushed commit is live; always distinguish GitHub Actions results from Vercel deployment status.
