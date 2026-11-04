@@ -12,6 +12,7 @@ export default function ProjectMediaGallery(){
   const [expanded,setExpanded]=useState(false);
   const closeRef=useRef(null);
   const openRef=useRef(null);
+  const dialogRef=useRef(null);
   const move=delta=>setActive(current=>(current+delta+frames.length)%frames.length);
   useEffect(()=>{
     if(!expanded)return;
@@ -20,7 +21,14 @@ export default function ProjectMediaGallery(){
     document.body.style.overflow='hidden';
     closeRef.current?.focus();
     const onKey=e=>{
-      if(e.key==='Escape')setExpanded(false);
+      if(e.key==='Escape'){e.preventDefault();setExpanded(false);}
+      else if(e.key==='Tab'){
+        const controls=Array.from(dialogRef.current?.querySelectorAll('button:not([disabled])')||[]);
+        if(!controls.length)return;
+        const first=controls[0],last=controls[controls.length-1];
+        if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+        else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+      }
       else if(e.key==='ArrowRight')move(1);
       else if(e.key==='ArrowLeft')move(-1);
     };
@@ -45,7 +53,7 @@ export default function ProjectMediaGallery(){
     </div>
     <p className="interactiveGalleryFoot">Frames re-extracted at higher resolution from the original 1920 × 1080 recording. Choose a thumbnail or use arrow keys.</p>
     {expanded&&<div className="galleryLightbox" role="dialog" aria-modal="true" aria-label="Expanded Fish and Ships screenshot" onMouseDown={e=>{if(e.target===e.currentTarget)setExpanded(false)}}>
-      <div className="galleryLightboxContent">
+      <div className="galleryLightboxContent" ref={dialogRef}>
         <div className="galleryLightboxTop"><span>{frames[active].title} · {active+1}/{frames.length}</span><button ref={closeRef} type="button" onClick={()=>setExpanded(false)} aria-label="Close enlarged view">✕ Close</button></div>
         <img src={frames[active].src} alt={frames[active].title+' — actual game development still'} width="1194" height="672"/>
         <div className="galleryLightboxBottom"><button type="button" onClick={()=>move(-1)} aria-label="Previous enlarged image">← Previous</button><span>{frames[active].caption}</span><button type="button" onClick={()=>move(1)} aria-label="Next enlarged image">Next →</button></div>
