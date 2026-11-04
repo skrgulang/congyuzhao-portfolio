@@ -614,3 +614,17 @@ html{scroll-padding-top:24px}
 /* Indicate the section reached through keyboard navigation without outlining the entire layout. */
 #links:focus-visible,#about:focus-visible,#experience:focus-visible,#contact:focus-visible{outline:none}
 #links:focus-visible h2,#about:focus-visible h2,#experience:focus-visible h2,#contact:focus-visible h2{text-decoration:underline;text-decoration-thickness:2px;text-decoration-color:var(--lime);text-underline-offset:9px}
+
+/* Aspire case study: product evidence first, quick chapter navigation */
+.aspireCaseNav{display:flex;align-items:center;justify-content:space-between;gap:28px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+.aspireCaseNav>span{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--lime);white-space:nowrap}
+.aspireCaseNav>div{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px 22px}
+.aspireCaseNav a{color:#cbd3c9;font-size:12px;line-height:1.5;border-bottom:1px solid transparent;padding:6px 0}
+.aspireCaseNav a:hover,.aspireCaseNav a:focus-visible{color:var(--lime);border-bottom-color:var(--lime)}
+.aspireCaseNav a:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+#aspire-availability,#aspire-designs,#aspire-flow,#aspire-engineering,#aspire-decisions,#aspire-timeline{scroll-margin-top:28px}
+@media(max-width:850px){
+ .aspireCaseNav{align-items:flex-start;flex-direction:column;gap:10px}
+ .aspireCaseNav>div{justify-content:flex-start;gap:8px 17px}
+}
+@media(max-width:420px){.aspireCaseNav>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:8px 12px}.aspireCaseNav a{font-size:12px}}
