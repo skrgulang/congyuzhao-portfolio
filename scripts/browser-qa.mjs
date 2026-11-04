@@ -90,9 +90,20 @@ try {
           const gallery=page.getByRole('region',{name:'Fish and Ships game images'});
           await gallery.scrollIntoViewIfNeeded();
           await gallery.getByRole('button',{name:/View .* enlarged/}).click();
-          const dialog=page.getByRole('dialog',{name:'Expanded Fish and Ships screenshot'});
+          const dialog=page.getByRole('dialog',{name:/Inventory and item management|Characters and gameplay|Island and terrain/});
           await dialog.waitFor({state:'visible',timeout:5000});
           await page.keyboard.press('ArrowRight');
+          await page.getByRole('dialog',{name:/Characters and gameplay/}).waitFor({state:'visible'});
+          if(device.isMobile){
+            // Trigger a horizontal right swipe across the modal to return to the previous frame.
+            await dialog.evaluate(element=>{
+              const target=element;
+              const touch=(x)=>new Touch({identifier:1,target,clientX:x,clientY:150,pageX:x,pageY:150});
+              target.dispatchEvent(new TouchEvent('touchstart',{bubbles:true,changedTouches:[touch(240)],touches:[touch(240)],targetTouches:[touch(240)]}));
+              target.dispatchEvent(new TouchEvent('touchend',{bubbles:true,changedTouches:[touch(100)],touches:[],targetTouches:[]}));
+            });
+            await page.getByRole('dialog',{name:/Island and terrain/}).waitFor({state:'visible',timeout:5000});
+          }
           await page.keyboard.press('Tab');
           if(!(await dialog.evaluate(el=>el.contains(document.activeElement)))) throw new Error('Lightbox focus left dialog');
           await page.keyboard.press('Escape');
