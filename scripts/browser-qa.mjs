@@ -76,6 +76,9 @@ try {
           if(device.isMobile) await menuOpenForAnchor(page);
           await page.locator('#main-navigation').getByRole('link',{name:'About'}).click();
           await page.waitForTimeout(250);
+          const focusedSection=await page.locator('#about').evaluate(el=>document.activeElement===el);
+          if(!focusedSection) throw new Error('Navigation did not move keyboard focus to About content');
+          if(device.isMobile) await page.getByRole('button',{name:'Open navigation menu'}).waitFor({state:'visible'});
           const offset=await page.locator('#about').evaluate(el=>el.getBoundingClientRect().top);
           const navHeight=await page.locator('.newNav').evaluate(el=>el.getBoundingClientRect().height);
           if(offset < navHeight-3) throw new Error('About anchor hidden beneath sticky header: '+offset+'px');
