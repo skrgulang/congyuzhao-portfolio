@@ -34,8 +34,17 @@ export default function AspireCaseStudy(){
    <div className="aspireBuildGrid">{buildNotes.map(item=><article key={item.number}><span>{item.number}</span><div><h3>{item.title}</h3><p>{item.body}</p></div></article>)}</div>
    <div className="aspireStackLine"><span>ENGINEERING STACK</span><div>{['Next.js','Expo / React Native','Supabase','Stripe','Vercel'].map(item=><span key={item}>{item}</span>)}</div></div>
   </section>
+  <section className="aspireDecisions frame" aria-label="Aspire 101 founder engineering decisions">
+   <div className="aspireChapterHead"><span>05 — ENGINEERING DECISIONS</span><h2>What changed after real people showed up.</h2><p>The parts of building Aspire 101 that taught me the most were not the polished screens. They were the decisions I had to make when a campus product became a real service.</p></div>
+   <div className="aspireDecisionList">
+    <article><span>01 / TRUST</span><div><h3>A campus account needs context.</h3><p>University email verification gives students a starting point, but it does not replace moderation. Cross-campus posts need clear origin labels and a reason for reaching another campus, so readers understand who is asking and why.</p></div><strong>VERIFY → LABEL → REVIEW</strong></article>
+    <article><span>02 / SAFETY</span><div><h3>Abuse changed the roadmap.</h3><p>After an early wave of abusive registrations, I started treating rate limits, reporting and backend authorization as product features—not cleanup tasks to leave until later. The work is ongoing.</p></div><strong>DETECT → LIMIT → RESPOND</strong></article>
+    <article><span>03 / RELIABILITY</span><div><h3>A connection is more than a tap.</h3><p>The post-to-message journey needs sensible pending, empty, error and cancellation states. I focus on those edges because they determine whether students can finish what they came to do.</p></div><strong>POST → RESPOND → CHAT</strong></article>
+   </div>
+   <p className="aspireDecisionDisclaimer">Product and engineering retrospective. This describes design and development priorities, not an audited security certification or an assertion that every planned safeguard is live.</p>
+  </section>
   <section className="aspireLessons frame" aria-label="Lessons and next steps">
-   <div><span>05 — WHAT I LEARNED</span><h2>Shipping is the beginning.</h2></div>
+   <div><span>06 — WHAT I LEARNED</span><h2>Shipping is the beginning.</h2></div>
    <div><p>An early wave of abusive registrations made it clear that the backend needed stronger safeguards. That changed how I think about verification, moderation, security and testing.</p><p>The web product is live and the iOS build is in TestFlight. The next challenge is to learn whether students return, post again, and actually meet through the product — not just whether they sign up.</p><a href="https://www.aspires101.com/" target="_blank" rel="noopener noreferrer">See what we're building ↗</a></div>
   </section>
  </>;
