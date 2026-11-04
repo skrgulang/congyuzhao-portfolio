@@ -8,7 +8,11 @@ const cases = [
   { name: 'home', path: '/' },
   { name: 'projects', path: '/projects' },
   { name: 'aspire', path: '/projects/aspire-101' },
-  { name: 'fish', path: '/projects/fish-and-ships' }
+  { name: 'fish', path: '/projects/fish-and-ships' },
+  { name: 'wildfire', path: '/projects/wildfire-evacuation-simulator' },
+  { name: 'studio', path: '/projects/3am-game-studio' },
+  { name: 'tempus', path: '/projects/tempus-lineus' },
+  { name: 'gameplay', path: '/projects/gameplay-systems' }
 ];
 const devices = [
   {name:'mobile',viewport:{width:390,height:844},isMobile:true,deviceScaleFactor:1},
@@ -27,26 +31,45 @@ try {
         const response = await page.goto(base + test.path, {waitUntil:'domcontentloaded',timeout:30000});
         if (!response?.ok()) throw new Error('HTTP ' + (response?.status() ?? 'no response'));
         await page.locator('body').waitFor({state:'visible'});
-        await page.evaluate(() => document.fonts.ready);
+        await page.evaluate(async () => { await document.fonts.ready; });
+        await page.waitForTimeout(350);
         const dimensions=await page.evaluate(()=>({
           viewport:document.documentElement.clientWidth,
           content:document.documentElement.scrollWidth,
         }));
         if(dimensions.content > dimensions.viewport + 2)
           throw new Error('Horizontal overflow: '+dimensions.content+'px > '+dimensions.viewport+'px');
-        // Check existing local images which have finished loading; lazy images can be outside viewport.
-        const broken=await page.locator('img').evaluateAll(images=>images.filter(img=>{
-          const r=img.getBoundingClientRect();
-          const visible=r.top < window.innerHeight && r.bottom > 0;
-          return visible && img.complete && img.naturalWidth===0;
-        }).map(img=>img.currentSrc||img.src));
+        // Wait for above-the-fold local images before evaluating their load state.
+        const broken=await page.evaluate(async ()=>{
+          const visible=Array.from(document.images).filter(img=>{
+            const r=img.getBoundingClientRect();
+            return r.top < window.innerHeight && r.bottom > 0 && new URL(img.src,location.href).origin===location.origin;
+          });
+          await Promise.all(visible.map(img=>img.complete ? Promise.resolve() :
+            Promise.race([
+              new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true});}),
+              new Promise(resolve=>setTimeout(resolve,5000))
+            ])
+          ));
+          return visible.filter(img=>!img.complete || img.naturalWidth===0).map(img=>img.currentSrc||img.src);
+        });
         if(broken.length) throw new Error('Broken above-the-fold images: '+broken.join(', '));
         if(device.name==='mobile' && test.name==='home'){
           const menu=page.getByRole('button',{name:'Open navigation menu'});
           await menu.click();
-          if(await page.getByRole('button',{name:'Close navigation menu'}).count()!==1) throw new Error('Menu failed to open');
+          await page.getByRole('button',{name:'Close navigation menu'}).waitFor({state:'visible',timeout:5000});
           await page.keyboard.press('Escape');
-          if(await page.getByRole('button',{name:'Open navigation menu'}).count()!==1) throw new Error('Menu failed to close via Escape');
+          await page.getByRole('button',{name:'Open navigation menu'}).waitFor({state:'visible',timeout:5000});
+        }
+        if(test.name==='fish'){
+          const gallery=page.getByRole('region',{name:'Fish and Ships game images'});
+          await gallery.scrollIntoViewIfNeeded();
+          await gallery.getByRole('button',{name:/View .* enlarged/}).click();
+          const dialog=page.getByRole('dialog',{name:'Expanded Fish and Ships screenshot'});
+          await dialog.waitFor({state:'visible',timeout:5000});
+          await page.keyboard.press('ArrowRight');
+          await page.keyboard.press('Escape');
+          await dialog.waitFor({state:'hidden',timeout:5000});
         }
         await page.screenshot({path:'qa-screenshots/'+device.name+'-'+test.name+'.png',fullPage:true,animations:'disabled'});
         console.log('PASS',label);
