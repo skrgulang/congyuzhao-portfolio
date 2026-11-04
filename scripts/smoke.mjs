@@ -35,7 +35,7 @@ async function check(path, expectedText) {
       if (!contentType.includes('text/html')) throw new Error('Expected HTML, got ' + contentType);
       const html = await response.text();
       if (!html.includes(expectedText)) throw new Error('Missing expected content: ' + expectedText);
-      const canonical = [...html.matchAll(/<link\\b[^>]*rel="canonical"[^>]*>/g)].map(match => match[0]);
+      const canonical = [...html.matchAll(/<link\b[^>]*rel="canonical"[^>]*>/g)].map(match => match[0]);
       const expectedCanonical = new URL(path, base).href;
       if (canonical.length !== 1 || !canonical[0].includes('href="' + expectedCanonical + '"'))
         throw new Error('Expected one matching canonical link: ' + expectedCanonical);
