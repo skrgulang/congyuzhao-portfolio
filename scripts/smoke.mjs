@@ -35,6 +35,14 @@ async function check(path, expectedText) {
       if (!contentType.includes('text/html')) throw new Error('Expected HTML, got ' + contentType);
       const html = await response.text();
       if (!html.includes(expectedText)) throw new Error('Missing expected content: ' + expectedText);
+      const canonical = [...html.matchAll(/<link\\b[^>]*rel="canonical"[^>]*>/g)].map(match => match[0]);
+      const expectedCanonical = new URL(path, base).href;
+      if (canonical.length !== 1 || !canonical[0].includes('href="' + expectedCanonical + '"'))
+        throw new Error('Expected one matching canonical link: ' + expectedCanonical);
+      if (!html.includes('property="og:image"'))
+        throw new Error('Missing social sharing image metadata');
+      if (html.includes(' | Congyu Zhao | Congyu Zhao'))
+        throw new Error('Duplicate site name in page title');
     } else if (!contentType.startsWith('image/')) {
       throw new Error('Expected image, got ' + contentType);
     }
@@ -42,6 +50,20 @@ async function check(path, expectedText) {
     return true;
   } catch (error) {
     console.error('FAIL', path, '-', error.message);
+    return false;
+  }
+}
+
+async function checkCrawlerFile(path, expectedText) {
+  try {
+    const response = await fetch(new URL(path, base), {signal: AbortSignal.timeout(15000)});
+    if(!response.ok) throw new Error('HTTP ' + response.status);
+    const body = await response.text();
+    if(!body.includes(expectedText)) throw new Error('Missing expected crawler content');
+    console.log('PASS', path);
+    return true;
+  } catch(error) {
+    console.error('FAIL',path,'-',error.message);
     return false;
   }
 }
@@ -65,6 +87,8 @@ async function checkNotFound() {
 const results = [];
 for (const [path, text] of pages) results.push(await check(path, text));
 results.push(await checkNotFound());
+results.push(await checkCrawlerFile('/sitemap.xml', '/projects/aspire-101'));
+results.push(await checkCrawlerFile('/robots.txt', '/sitemap.xml'));
 for (const path of images) results.push(await check(path));
 const failures = results.filter(ok => !ok).length;
 console.log('\n' + (results.length - failures) + '/' + results.length + ' checks passed at ' + base);
