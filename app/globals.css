@@ -529,3 +529,16 @@ html{scroll-padding-top:24px}
 .fishShowcase:has(.fishVisualEvidence)>.fishDetails{grid-column:1 / -1;grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(max-width:850px){.fishShowcase:has(.fishVisualEvidence){grid-template-columns:1fr}.fishShowcase:has(.fishVisualEvidence)>.fishDetails{grid-column:auto;grid-template-columns:1fr}}
 @media(max-width:520px){.fishEvidencePair{grid-template-columns:1fr}.fishVisualEvidence figcaption{font-size:9px}}
+
+/* Project source evidence and studio cross-reference */
+.studioFeature{padding:42px 0 90px;display:grid;grid-template-columns:minmax(0,.83fr) minmax(0,1.17fr);align-items:center;gap:45px;border-top:1px solid rgba(255,255,255,.13)}
+.studioFeature h2,.wildfireSource h2{font-size:clamp(30px,4vw,55px);line-height:1.07;letter-spacing:-.05em;margin:22px 0}
+.studioFeature p,.wildfireSource p{font-size:15px;line-height:1.8;color:#b2bcb1;max-width:680px}
+.studioFeatureLink{display:flex;align-items:center;justify-content:space-between;gap:18px;max-width:430px;margin-top:32px;padding:17px 0;border-top:1px solid rgba(255,255,255,.2);font-size:13px;font-weight:650;color:#d8e8bb}
+.studioFeatureLink:hover,.wildfireSource>a:hover{color:white}
+.studioFeature figure{margin:0;min-width:0;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.15);background:#152025}
+.studioFeature figure img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.studioFeature figcaption{padding:13px 17px;color:#adb8b7;font-size:10px;letter-spacing:.13em}
+.wildfireSource{padding:50px 0 85px;border-top:1px solid rgba(255,255,255,.14);display:grid;grid-template-columns:minmax(0,1fr) 265px;gap:48px;align-items:end}
+.wildfireSource>a{display:flex;justify-content:space-between;align-items:center;gap:16px;border:1px solid rgba(255,255,255,.25);border-radius:7px;padding:17px;color:#d8e8bb;font-size:13px;font-weight:650}
+@media(max-width:830px){.studioFeature,.wildfireSource{grid-template-columns:1fr;gap:25px}.studioFeature{padding:38px 0 70px}.wildfireSource{padding:40px 0 70px}.wildfireSource>a{max-width:350px}}
