@@ -51,6 +51,15 @@ export default function AspireCaseStudy(){
    </div>
    <p className="aspireDecisionDisclaimer">Product and engineering retrospective. This describes design and development priorities, not an audited security certification or an assertion that every planned safeguard is live.</p>
   </section>
+  <section className="aspireMilestones frame" aria-label="Aspire 101 founder development timeline">
+   <div className="aspireChapterHead"><span>FOUNDER JOURNEY</span><h2>Built, tested, rebuilt.</h2><p>The progress behind Aspire 101 was less a straight launch plan and more a sequence of lessons from shipping and listening.</p></div>
+   <ol className="aspireMilestoneList">
+    <li><time dateTime="2025-09">SEP 2025</time><div><h3>Started with a campus problem.</h3><p>I began working on a way for students to find people and practical help without relying on the right group chat or student organization.</p></div></li>
+    <li><time dateTime="2026">2026</time><div><h3>Built the product across web and mobile.</h3><p>What began as learning to ship became work across product design, Next.js, React Native, backend infrastructure, testing and deployment.</p></div></li>
+    <li><time dateTime="2026-09">FALL 2026</time><div><h3>Started the Purdue rollout.</h3><p>Direct outreach, student feedback and an early abuse incident pushed me to think harder about onboarding, trust and operational reliability.</p></div></li>
+    <li><time dateTime="2026-11">NOV 2026</time><div><h3>Web live. iOS in TestFlight.</h3><p>Now the most important question is whether students keep returning and form useful connections—not simply whether we can ship another feature.</p></div></li>
+   </ol>
+  </section>
   <section className="aspireLessons frame" aria-label="Lessons and next steps">
    <div><span>06 — WHAT I LEARNED</span><h2>Shipping is the beginning.</h2></div>
    <div><p>An early wave of abusive registrations made it clear that the backend needed stronger safeguards. That changed how I think about verification, moderation, security and testing.</p><p>The web product is live and the iOS build is in TestFlight. The next challenge is to learn whether students return, post again, and actually meet through the product — not just whether they sign up.</p><a href="https://www.aspires101.com/" target="_blank" rel="noopener noreferrer">See what we're building ↗</a></div>
