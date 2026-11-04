@@ -14,10 +14,12 @@ export const metadata = {
     url: 'https://congyuzhao.com',
     siteName: 'Congyu Zhao Portfolio',
     locale: 'en_US',
+    images: [{ url: '/images/hero-recovered.jpg', width: 960, height: 1200, alt: 'Congyu Zhao, portfolio founder and developer' }],
     type: 'website'
   },
   twitter: {
     card: 'summary',
+    images: ['/images/hero-recovered.jpg'],
     title: 'Congyu Zhao — Software, Games & Aspire 101',
     description: 'Projects in software, product development, and Unity games.'
   },
