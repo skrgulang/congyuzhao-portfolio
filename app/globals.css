@@ -647,3 +647,14 @@ html{scroll-padding-top:24px}
 .featuredProofItem p{font-size:13px;color:#bfcabd;line-height:1.65;margin:9px 0 0}
 @media(max-width:850px){.featuredProof{grid-template-columns:1fr 1fr}.featuredProofItem:last-child{grid-column:1/-1}}
 @media(max-width:570px){.featuredProof{grid-template-columns:1fr;gap:9px}.featuredProofItem:last-child{grid-column:auto}.featuredProofItem{padding:19px}.featuredProofItem strong{font-size:23px}}
+
+/* Keep the founder narrative and product evidence visually distinct. */
+.aspireCase .caseSteps{margin-bottom:0}
+.aspireCase .featuredProof{padding-top:25px;margin-top:32px;border-top:1px solid rgba(255,255,255,.14)}
+.aspireCase .featuredProofItem{position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(27,37,29,.78),rgba(13,20,15,.88))}
+.aspireCase .featuredProofItem::before{content:'';position:absolute;inset:0 auto 0 0;width:3px;background:rgba(220,255,136,.75)}
+.aspireCase .featuredProofItem:nth-child(2)::before{background:#93b8ec}
+.aspireCase .featuredProofItem:nth-child(3)::before{background:#cfb5ed}
+.aspireCase .featuredProofItem strong{overflow-wrap:anywhere}
+.aspireCase .featureActions{margin-top:30px}
+@media(max-width:570px){.aspireCase .featuredProof{margin-top:24px;padding-top:18px}}
