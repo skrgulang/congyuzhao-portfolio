@@ -61,6 +61,10 @@ try {
           await page.getByRole('button',{name:'Close navigation menu'}).waitFor({state:'visible',timeout:5000});
           await page.keyboard.press('Escape');
           await page.getByRole('button',{name:'Open navigation menu'}).waitFor({state:'visible',timeout:5000});
+          await menu.click();
+          await page.getByRole('button',{name:'Close navigation menu'}).waitFor({state:'visible',timeout:5000});
+          await page.locator('.newHero').click({position:{x:20,y:20}});
+          await page.getByRole('button',{name:'Open navigation menu'}).waitFor({state:'visible',timeout:5000});
         }
         if(test.name==='fish'){
           const gallery=page.getByRole('region',{name:'Fish and Ships game images'});
