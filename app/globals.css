@@ -573,3 +573,8 @@ html{scroll-padding-top:24px}
 .notFoundPage .caseFooter{width:min(1440px,calc(100% - 100px))}
 .notFoundActions a:focus-visible,.notFoundPage .caseNav a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}
 @media(max-width:650px){.notFoundMain{padding:85px 0}.notFoundMain h1{font-size:clamp(60px,15vw,105px)}.notFoundPage .caseFooter{width:calc(100% - 32px)}}
+
+/* Label archival Aspire screens accurately, including in the project directory */
+.allProjectsThumb:has(.indexConceptLabel){position:relative}
+.allProjectsThumb .indexConceptLabel{position:absolute;left:9px;bottom:9px;z-index:2;border:1px solid rgba(255,255,255,.23);border-radius:4px;background:rgba(12,15,12,.88);padding:6px 7px;color:#e4ebcf;font:700 9px/1.2 'DM Sans',Arial,sans-serif;letter-spacing:.1em;max-width:calc(100% - 18px)}
+@media(max-width:480px){.allProjectsThumb .indexConceptLabel{font-size:8px;letter-spacing:.06em;padding:5px}}
