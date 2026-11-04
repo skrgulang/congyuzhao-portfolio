@@ -476,3 +476,15 @@ html{scroll-padding-top:24px}
 .aspireBoardFootnote a{color:var(--lime);text-decoration:underline;text-underline-offset:3px}
 @media(max-width:800px){.aspireVisualArchiveHead{grid-template-columns:1fr;gap:15px}.aspireVisualArchive{padding-top:60px;padding-bottom:65px}.aspireVisualBoardTop{padding:20px;flex-direction:column;gap:12px}.aspireVisualBoardTop>span{font-size:9px}.aspireBoardAction{right:9px;bottom:9px;padding:9px 12px;font-size:10px}}
 @media(prefers-reduced-motion:reduce){.aspireVisualBoard>a img{transition:none!important}}
+
+/* Aspire case study: founder decisions / operational learning */
+.aspireDecisions{padding:95px 0 105px;border-top:1px solid rgba(255,255,255,.13)}
+.aspireDecisionList{margin-top:42px;border-top:1px solid rgba(255,255,255,.18)}
+.aspireDecisionList article{display:grid;grid-template-columns:155px minmax(0,1fr) 205px;align-items:start;gap:30px;padding:34px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+.aspireDecisionList article>span{font-size:11px;letter-spacing:.12em;color:#d9bd82;padding-top:10px}
+.aspireDecisionList h3{font-size:clamp(21px,2.3vw,31px);letter-spacing:-.04em;line-height:1.2;margin:0 0 13px}
+.aspireDecisionList p{font-size:15px;line-height:1.75;color:#aeb4b0;max-width:680px;margin:0}
+.aspireDecisionList strong{font-size:10px;letter-spacing:.12em;color:#d8e8bb;font-weight:600;text-align:right;padding-top:10px}
+.aspireDecisionDisclaimer{max-width:800px;font-size:12px;line-height:1.65;color:#89918d;margin-top:20px}
+@media(max-width:820px){.aspireDecisionList article{grid-template-columns:115px minmax(0,1fr);gap:18px}.aspireDecisionList strong{grid-column:2;text-align:left;padding-top:0}.aspireDecisions{padding:65px 0}}
+@media(max-width:520px){.aspireDecisionList article{grid-template-columns:1fr;gap:12px;padding:27px 0}.aspireDecisionList article>span,.aspireDecisionList strong{grid-column:1;padding:0}.aspireDecisionList h3{font-size:24px}}
