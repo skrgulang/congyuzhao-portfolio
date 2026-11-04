@@ -44,7 +44,7 @@ jobs:
         run: |
           echo "### HTTP routes and assets" >> "$GITHUB_STEP_SUMMARY"
           echo "Result: **$CHECK_OUTCOME**" >> "$GITHUB_STEP_SUMMARY"
-          echo "Coverage: 8 public pages and 7 images." >> "$GITHUB_STEP_SUMMARY"
+          echo "Coverage: 8 public pages, 7 images, and invalid-project 404 recovery." >> "$GITHUB_STEP_SUMMARY"
 
   browser:
     name: Chromium mobile and desktop
