@@ -46,8 +46,25 @@ async function check(path, expectedText) {
   }
 }
 
+async function checkNotFound() {
+  const path='/projects/this-project-does-not-exist';
+  try {
+    const response=await fetch(new URL(path,base),{redirect:'follow',signal:AbortSignal.timeout(15000)});
+    const html=await response.text();
+    if(response.status!==404) throw new Error('Expected HTTP 404, received '+response.status);
+    if(!html.includes('Wrong turn') || !html.includes('/projects'))
+      throw new Error('Custom 404 recovery navigation not found');
+    console.log('PASS',path,'(404 recovery)');
+    return true;
+  } catch(error) {
+    console.error('FAIL',path,'-',error.message);
+    return false;
+  }
+}
+
 const results = [];
 for (const [path, text] of pages) results.push(await check(path, text));
+results.push(await checkNotFound());
 for (const path of images) results.push(await check(path));
 const failures = results.filter(ok => !ok).length;
 console.log('\n' + (results.length - failures) + '/' + results.length + ' checks passed at ' + base);
