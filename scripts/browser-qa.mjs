@@ -66,6 +66,13 @@ try {
           await page.locator('.newHero').click({position:{x:20,y:20}});
           await page.getByRole('button',{name:'Open navigation menu'}).waitFor({state:'visible',timeout:5000});
         }
+        if(test.name==='home'){
+          await page.evaluate(()=>window.scrollTo({top:600,behavior:'instant'}));
+          await page.waitForTimeout(200);
+          const navTop=await page.locator('.newNav').evaluate(el=>el.getBoundingClientRect().top);
+          if(Math.abs(navTop)>3) throw new Error('Sticky navigation lost while scrolling: top='+navTop);
+          await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+        }
         if(test.name==='fish'){
           const gallery=page.getByRole('region',{name:'Fish and Ships game images'});
           await gallery.scrollIntoViewIfNeeded();
