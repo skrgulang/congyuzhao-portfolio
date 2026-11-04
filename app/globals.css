@@ -171,7 +171,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 .newProjectLink{min-height:48px;align-items:center}
 .newProjectLink:hover,.plainProjectLink:hover,.featureActions>a:not(.btnSolid):hover{color:var(--lime)}
 .newHero h1{word-break:normal}
-#work,#about,#contact,#experience,#links,#fish-demo{scroll-margin-top:32px}
+#work,#about,#contact,#experience,#links,#fish-demo{scroll-margin-top:104px}
 @media(max-width:650px){.featureActions{align-items:flex-start;flex-direction:column;gap:20px}.resultCount{margin-top:0}.projectDesc{font-size:14px;line-height:1.65}}
 
 .projectIndex{padding:85px 0 75px;border-top:1px solid var(--line)}
@@ -602,3 +602,7 @@ html{scroll-padding-top:24px}
  .interactiveShowcase .showcaseCardMain:hover{transform:translate3d(var(--main-x,0px),var(--main-y,0px),0) rotate(8deg)}
  .interactiveShowcase .showcaseCardSide:hover{transform:translate3d(var(--side-x,0px),var(--side-y,0px),0) rotate(-4deg)}
 }
+
+/* Leave space for the sticky header when navigating to in-page sections. */
+@media(max-width:650px){#work,#about,#contact,#experience,#links,#fish-demo{scroll-margin-top:88px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
