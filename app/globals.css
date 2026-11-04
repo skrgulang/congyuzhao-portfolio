@@ -628,3 +628,13 @@ html{scroll-padding-top:24px}
  .aspireCaseNav>div{justify-content:flex-start;gap:8px 17px}
 }
 @media(max-width:420px){.aspireCaseNav>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:8px 12px}.aspireCaseNav a{font-size:12px}}
+
+/* A real early-use anecdote, presented without invented growth metrics. */
+.aspireFieldNote{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(240px,.75fr);gap:clamp(24px,5vw,80px);padding:58px 0 68px;border-top:1px solid rgba(255,255,255,.16);border-bottom:1px solid rgba(255,255,255,.16)}
+.aspireFieldNoteLead h2{font:700 clamp(33px,4.6vw,65px)/1.05 'Space Grotesk',sans-serif;letter-spacing:-.055em;margin:18px 0}
+.aspireFieldNoteLead p{color:#c3ccc1;font-size:clamp(15px,1.4vw,18px);line-height:1.85;max-width:730px}
+.aspireFieldNoteAside{border-left:2px solid var(--lime);padding:8px 0 8px 26px;align-self:center}
+.aspireFieldNoteAside>span{font-size:10px;letter-spacing:.14em;color:var(--lime);font-weight:700}
+.aspireFieldNoteAside strong{font:600 clamp(21px,2.4vw,32px)/1.25 'Space Grotesk',sans-serif;display:block;letter-spacing:-.035em;margin:18px 0}
+.aspireFieldNoteAside p{font-size:14px;line-height:1.75;color:#aab5aa}
+@media(max-width:750px){.aspireFieldNote{grid-template-columns:1fr;padding:44px 0;gap:22px}.aspireFieldNoteAside{max-width:580px}}
