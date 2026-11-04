@@ -14,6 +14,7 @@ export default function ProjectMediaGallery(){
   const openRef=useRef(null);
   const dialogRef=useRef(null);
   const swipeStart=useRef(null);
+  const lastSwipeAt=useRef(0);
   const titleId=useId();
   const move=delta=>setActive(current=>(current+delta+frames.length)%frames.length);
   const onTouchStart=e=>{
@@ -27,7 +28,10 @@ export default function ProjectMediaGallery(){
     const touch=e.changedTouches[0];
     const dx=touch.clientX-start.x;
     const dy=touch.clientY-start.y;
-    if(Math.abs(dx)>=55 && Math.abs(dx)>Math.abs(dy)*1.5)move(dx<0?1:-1);
+    if(Math.abs(dx)>=55 && Math.abs(dx)>Math.abs(dy)*1.5){
+      lastSwipeAt.current=Date.now();
+      move(dx<0?1:-1);
+    }
   };
   useEffect(()=>{
     const preload=frames.filter((_,i)=>i!==active).map(item=>{
@@ -62,7 +66,7 @@ export default function ProjectMediaGallery(){
   },[expanded]);
   return <div className="interactiveGallery" id="fish-project-gallery" role="region" aria-label="Fish and Ships game images" tabIndex={0} onKeyDown={e=>{if(expanded)return;if(e.key==='ArrowRight'){e.preventDefault();move(1)}else if(e.key==='ArrowLeft'){e.preventDefault();move(-1)}}}>
     <div className="interactiveGalleryStage" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-      <button ref={openRef} className="galleryExpand" type="button" onClick={()=>setExpanded(true)} aria-label={'View '+frames[active].title+' enlarged'}>
+      <button ref={openRef} className="galleryExpand" type="button" onClick={()=>{if(Date.now()-lastSwipeAt.current>450)setExpanded(true)}} aria-label={'View '+frames[active].title+' enlarged'}>
         <img key={frames[active].src} src={frames[active].src} alt={frames[active].title+' — actual work-in-progress footage'} width="1194" height="672" loading="lazy"/>
         <span className="galleryExpandHint">View larger ↗</span>
       </button>
