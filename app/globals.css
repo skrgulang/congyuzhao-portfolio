@@ -516,3 +516,16 @@ html{scroll-padding-top:24px}
 .aspireMilestoneList h3{font-size:clamp(22px,2.2vw,31px);letter-spacing:-.045em;margin:0 0 11px}
 .aspireMilestoneList p{font-size:15px;line-height:1.74;color:#aeb4b0;max-width:740px;margin:0}
 @media(max-width:650px){.aspireMilestones{padding:60px 0}.aspireMilestoneList li{grid-template-columns:1fr;gap:13px}.aspireMilestoneList h3{font-size:24px}.aspireMilestoneList time{padding-top:0}}
+
+/* Homepage Fish and Ships: real development footage, not a generated illustration */
+.fishShowcase:has(.fishVisualEvidence){grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:start}
+.fishVisualEvidence{display:flex;flex-direction:column;gap:9px;min-width:0}
+.fishVisualEvidence figure{margin:0;position:relative;overflow:hidden;background:#111d1e;border:1px solid rgba(255,255,255,.12);border-radius:9px}
+.fishVisualEvidence img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
+.fishVisualEvidence figcaption{position:absolute;left:12px;bottom:12px;color:#f7faf5;font-size:10px;font-weight:700;letter-spacing:.1em;text-shadow:0 2px 8px #000;background:#10201dd9;border-radius:3px;padding:6px 8px}
+.fishEvidencePair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.fishEvidenceBrowse{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:650;padding:12px 3px 4px;border-bottom:1px solid rgba(255,255,255,.22);color:#d6ebdf}
+.fishEvidenceBrowse:hover{color:white}
+.fishShowcase:has(.fishVisualEvidence)>.fishDetails{grid-column:1 / -1;grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:850px){.fishShowcase:has(.fishVisualEvidence){grid-template-columns:1fr}.fishShowcase:has(.fishVisualEvidence)>.fishDetails{grid-column:auto;grid-template-columns:1fr}}
+@media(max-width:520px){.fishEvidencePair{grid-template-columns:1fr}.fishVisualEvidence figcaption{font-size:9px}}
