@@ -15,6 +15,7 @@ const cases = [
   { name: 'gameplay', path: '/projects/gameplay-systems' }
 ];
 const devices = [
+  {name:'small-mobile',viewport:{width:320,height:700},isMobile:true,deviceScaleFactor:1},
   {name:'mobile',viewport:{width:390,height:844},isMobile:true,deviceScaleFactor:1},
   {name:'desktop',viewport:{width:1440,height:900},isMobile:false,deviceScaleFactor:1}
 ];
@@ -54,7 +55,7 @@ try {
           return visible.filter(img=>!img.complete || img.naturalWidth===0).map(img=>img.currentSrc||img.src);
         });
         if(broken.length) throw new Error('Broken above-the-fold images: '+broken.join(', '));
-        if(device.name==='mobile' && test.name==='home'){
+        if(device.isMobile && test.name==='home'){
           const menu=page.getByRole('button',{name:'Open navigation menu'});
           await menu.click();
           await page.getByRole('button',{name:'Close navigation menu'}).waitFor({state:'visible',timeout:5000});
@@ -68,6 +69,8 @@ try {
           const dialog=page.getByRole('dialog',{name:'Expanded Fish and Ships screenshot'});
           await dialog.waitFor({state:'visible',timeout:5000});
           await page.keyboard.press('ArrowRight');
+          await page.keyboard.press('Tab');
+          if(!(await dialog.evaluate(el=>el.contains(document.activeElement)))) throw new Error('Lightbox focus left dialog');
           await page.keyboard.press('Escape');
           await dialog.waitFor({state:'hidden',timeout:5000});
         }
