@@ -542,3 +542,22 @@ html{scroll-padding-top:24px}
 .wildfireSource{padding:50px 0 85px;border-top:1px solid rgba(255,255,255,.14);display:grid;grid-template-columns:minmax(0,1fr) 265px;gap:48px;align-items:end}
 .wildfireSource>a{display:flex;justify-content:space-between;align-items:center;gap:16px;border:1px solid rgba(255,255,255,.25);border-radius:7px;padding:17px;color:#d8e8bb;font-size:13px;font-weight:650}
 @media(max-width:830px){.studioFeature,.wildfireSource{grid-template-columns:1fr;gap:25px}.studioFeature{padding:38px 0 70px}.wildfireSource{padding:40px 0 70px}.wildfireSource>a{max-width:350px}}
+
+/* Keyboard navigation for project directory and case studies */
+#project-directory:focus,#project-content:focus{outline:none}
+.allProjectsPage .skipLink,.casePage .skipLink{position:fixed;z-index:2000}
+.caseNav a:focus-visible,.caseFooter a:focus-visible,.caseNext a:focus-visible,
+.allProjectsItem:focus-visible,.allProjectsContact a:focus-visible,
+.casePage .btnSolid:focus-visible,.casePage .gameGalleryLink:focus-visible,
+.casePage .studioFeatureLink:focus-visible,.casePage .wildfireSource a:focus-visible,
+.casePage .aspirePrimaryLinks a:focus-visible,.casePage .aspireProofCard a:focus-visible,
+.casePage .galleryExpand:focus-visible,.casePage .interactiveGallery button:focus-visible{
+ outline:2px solid var(--lime);outline-offset:4px;border-radius:4px
+}
+@media(max-width:380px){
+ .caseNav{gap:12px}
+ .caseHero h1,.allProjectsHero h1{overflow-wrap:anywhere}
+ .allProjectsItem{min-width:0}
+ .allProjectsDetail{min-width:0}
+ .allProjectsRight{min-width:0}
+}
