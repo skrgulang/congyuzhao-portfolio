@@ -606,3 +606,7 @@ html{scroll-padding-top:24px}
 /* Leave space for the sticky header when navigating to in-page sections. */
 @media(max-width:650px){#work,#about,#contact,#experience,#links,#fish-demo{scroll-margin-top:88px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Horizontal gallery swipes leave normal vertical page scrolling available. */
+.interactiveGalleryStage,.galleryLightbox{touch-action:pan-y}
+.galleryLightboxContent{overscroll-behavior:contain}
