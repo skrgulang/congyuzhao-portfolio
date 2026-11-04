@@ -19,6 +19,10 @@ const devices = [
   {name:'mobile',viewport:{width:390,height:844},isMobile:true,deviceScaleFactor:1},
   {name:'desktop',viewport:{width:1440,height:900},isMobile:false,deviceScaleFactor:1}
 ];
+async function menuOpenForAnchor(page){
+  await page.getByRole('button',{name:'Open navigation menu'}).click();
+  await page.getByRole('button',{name:'Close navigation menu'}).waitFor({state:'visible'});
+}
 let failures = 0;
 await mkdir('qa-screenshots', {recursive:true});
 const browser = await chromium.launch({headless:true});
@@ -59,6 +63,8 @@ try {
           const menu=page.getByRole('button',{name:'Open navigation menu'});
           await menu.click();
           await page.getByRole('button',{name:'Close navigation menu'}).waitFor({state:'visible',timeout:5000});
+          const firstNavFocused=await page.locator('#main-navigation a').first().evaluate(el=>document.activeElement===el);
+          if(!firstNavFocused) throw new Error('Opening mobile navigation did not move focus into menu');
           await page.keyboard.press('Escape');
           await page.getByRole('button',{name:'Open navigation menu'}).waitFor({state:'visible',timeout:5000});
           await menu.click();
@@ -67,6 +73,13 @@ try {
           await page.getByRole('button',{name:'Open navigation menu'}).waitFor({state:'visible',timeout:5000});
         }
         if(test.name==='home'){
+          if(device.isMobile) await menuOpenForAnchor(page);
+          await page.locator('#main-navigation').getByRole('link',{name:'About'}).click();
+          await page.waitForTimeout(250);
+          const offset=await page.locator('#about').evaluate(el=>el.getBoundingClientRect().top);
+          const navHeight=await page.locator('.newNav').evaluate(el=>el.getBoundingClientRect().height);
+          if(offset < navHeight-3) throw new Error('About anchor hidden beneath sticky header: '+offset+'px');
+          await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
           await page.evaluate(()=>window.scrollTo({top:600,behavior:'instant'}));
           await page.waitForTimeout(200);
           const navTop=await page.locator('.newNav').evaluate(el=>el.getBoundingClientRect().top);
