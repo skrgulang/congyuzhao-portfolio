@@ -610,3 +610,7 @@ html{scroll-padding-top:24px}
 /* Horizontal gallery swipes leave normal vertical page scrolling available. */
 .interactiveGalleryStage,.galleryLightbox{touch-action:pan-y}
 .galleryLightboxContent{overscroll-behavior:contain}
+
+/* Indicate the section reached through keyboard navigation without outlining the entire layout. */
+#links:focus-visible,#about:focus-visible,#experience:focus-visible,#contact:focus-visible{outline:none}
+#links:focus-visible h2,#about:focus-visible h2,#experience:focus-visible h2,#contact:focus-visible h2{text-decoration:underline;text-decoration-thickness:2px;text-decoration-color:var(--lime);text-underline-offset:9px}
