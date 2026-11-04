@@ -26,7 +26,7 @@ npm run check:live -- https://congyuzhao.com
 npm run check:live -- https://your-preview.vercel.app
 ```
 
-This checks the homepage, project index, six case-study routes, and seven portfolio image assets for successful public HTTP responses. It requires Node.js 18+ and no private tokens. A failed check exits nonzero.
+This checks the homepage, project index, six case-study routes, seven portfolio image assets, and the custom 404 recovery page for successful public HTTP responses. It requires Node.js 18+ and no private tokens. A failed check exits nonzero.
 
 The smoke script is a **network and content check**, not a replacement for visual review, responsive browser testing, or an accessibility audit.
 
