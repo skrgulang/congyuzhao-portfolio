@@ -35,7 +35,16 @@ jobs:
         if: github.event_name == 'push'
         run: sleep 75
       - name: Check public pages and images
+        id: http_check
         run: node scripts/smoke.mjs https://congyuzhao.com
+      - name: Summarize HTTP check
+        if: always()
+        env:
+          CHECK_OUTCOME: ${{ steps.http_check.outcome }}
+        run: |
+          echo "### HTTP routes and assets" >> "$GITHUB_STEP_SUMMARY"
+          echo "Result: **$CHECK_OUTCOME**" >> "$GITHUB_STEP_SUMMARY"
+          echo "Coverage: 8 public pages and 7 images." >> "$GITHUB_STEP_SUMMARY"
 
   browser:
     name: Chromium mobile and desktop
@@ -54,7 +63,17 @@ jobs:
           npm install --no-save playwright
           npx playwright install --with-deps chromium
       - name: Test responsive pages and interactions
+        id: browser_check
         run: node scripts/browser-qa.mjs https://congyuzhao.com
+      - name: Summarize browser check
+        if: always()
+        env:
+          CHECK_OUTCOME: ${{ steps.browser_check.outcome }}
+        run: |
+          echo "### Chromium browser QA" >> "$GITHUB_STEP_SUMMARY"
+          echo "Result: **$CHECK_OUTCOME**" >> "$GITHUB_STEP_SUMMARY"
+          echo "Coverage: 8 pages at 320px, 390px and 1440px." >> "$GITHUB_STEP_SUMMARY"
+          echo "Screenshots are attached to the workflow run when available." >> "$GITHUB_STEP_SUMMARY"
       - name: Upload QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
