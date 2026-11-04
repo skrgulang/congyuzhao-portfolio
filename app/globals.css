@@ -658,3 +658,7 @@ html{scroll-padding-top:24px}
 .aspireCase .featuredProofItem strong{overflow-wrap:anywhere}
 .aspireCase .featureActions{margin-top:30px}
 @media(max-width:570px){.aspireCase .featuredProof{margin-top:24px;padding-top:18px}}
+
+/* Keyboard skip-link destination stays discoverable without enclosing the whole section. */
+#work:focus{outline:none}
+#work:focus-visible .sectionTop h2{text-decoration:underline;text-decoration-color:var(--lime);text-decoration-thickness:2px;text-underline-offset:9px}
