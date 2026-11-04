@@ -14,7 +14,7 @@ const buildNotes=[
 ];
 export default function AspireCaseStudy(){
  return <>
-  <nav className="aspireCaseNav frame" aria-label="Aspire 101 case study chapters"><span>IN THIS CASE STUDY</span><div><a href="#aspire-availability">Product status</a><a href="#aspire-designs">Design work</a><a href="#aspire-flow">User journey</a><a href="#aspire-engineering">Engineering</a><a href="#aspire-decisions">Decisions</a><a href="#aspire-timeline">Timeline</a></div></nav>
+  <nav className="aspireCaseNav frame" aria-label="Aspire 101 case study chapters"><span>IN THIS CASE STUDY</span><div><a href="#aspire-availability">Product status</a><a href="#aspire-community">Early connection</a><a href="#aspire-designs">Design work</a><a href="#aspire-flow">User journey</a><a href="#aspire-engineering">Engineering</a><a href="#aspire-decisions">Decisions</a><a href="#aspire-timeline">Timeline</a></div></nav>
   <section className="aspireCaseLead frame" aria-label="Aspire 101 project overview">
    <div className="aspireCaseLeadTop"><span>01 — THE PRODUCT</span><span>WEB LIVE · iOS TESTFLIGHT</span></div>
    <div className="aspireCaseLeadGrid"><div><h2>Making campus feel a little smaller.</h2><p>There are thousands of students nearby, but finding the right person can still mean searching through a dozen group chats. Aspire 101 started with that frustration.</p><p>I wanted somewhere students could look for each other by what they actually want to do — not by which group chat they happen to be in.</p><div className="aspirePrimaryLinks"><a href="https://www.aspires101.com/" rel="noopener noreferrer" target="_blank">Explore the live product <span>↗</span></a><Link href="/projects">Other projects <span>↗</span></Link></div></div><div className="aspireProductVisual"><div className="aspirePhoneChrome"><img src="/showcase/aspire-onboarding-hq.jpg" width="849" height="1852" alt="Aspire 101 interest-selection design preview" loading="lazy"/></div><span className="aspireVisualTag">INTEREST-BASED ONBOARDING / DESIGN CONCEPT</span></div></div>
@@ -27,7 +27,7 @@ export default function AspireCaseStudy(){
     <article className="aspireProofCard"><div className="aspireProofTop"><span>03 / INTERFACE EXPLORATIONS</span><span className="aspireProofStatus concept">CONCEPTS</span></div><h3>The thinking behind the screens.</h3><p>The mobile and desktop boards in the following section show interface directions and example content. They are design references, not screenshots of current usage.</p><a href="/showcase/aspire-mobile-board.png" target="_blank" rel="noopener noreferrer">View mobile design board <span aria-hidden="true">↗</span></a></article>
    </div>
   </section>
-  <section className="aspireFieldNote frame" aria-label="Aspire 101 early community story">
+  <section className="aspireFieldNote frame" id="aspire-community" aria-label="Aspire 101 early community story">
     <div className="aspireFieldNoteLead"><span className="newEyebrow">EARLY COMMUNITY MOMENT / 2026</span><h2>A connection beyond the screen.</h2><p>One early example came from two UC Davis students who connected through Aspire 101 to play VALORANT together. It is a small anecdote, not a retention metric — but it gets at the reason I built the product.</p></div>
     <div className="aspireFieldNoteAside"><span>THE REAL QUESTION</span><strong>Did finding someone turn into doing something together?</strong><p>That is the outcome I want to understand as the campus rollout continues.</p></div>
   </section>
