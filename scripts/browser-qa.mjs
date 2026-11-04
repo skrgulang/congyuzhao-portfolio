@@ -110,8 +110,10 @@ try {
           if(!(await dialog.evaluate(el=>el.contains(document.activeElement)))) throw new Error('Lightbox focus left dialog');
           await page.keyboard.press('Escape');
           await dialog.waitFor({state:'hidden',timeout:5000});
-          const focusReturned=await gallery.getByRole('button',{name:/View .* enlarged/}).evaluate(el=>document.activeElement===el);
-          if(!focusReturned) throw new Error('Closing lightbox did not restore focus to image trigger');
+          await page.waitForFunction(()=>{
+            const trigger=document.querySelector('.galleryExpand');
+            return Boolean(trigger && document.activeElement===trigger);
+          },null,{timeout:5000});
         }
         await page.screenshot({path:'qa-screenshots/'+device.name+'-'+test.name+'.png',fullPage:true,animations:'disabled'});
         console.log('PASS',label);
