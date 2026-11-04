@@ -70,7 +70,7 @@ export default function ProjectMediaGallery(){
         <img key={frames[active].src} src={frames[active].src} alt={frames[active].title+' — actual work-in-progress footage'} width="1194" height="672" loading="lazy"/>
         <span className="galleryExpandHint">View larger ↗</span>
       </button>
-      <div className="interactiveGalleryOverlay"><span>{String(active+1).padStart(2,'0')} / {String(frames.length).padStart(2,'0')}</span><strong>{frames[active].title}</strong></div>
+      <div className="interactiveGalleryOverlay"><span aria-live="polite" aria-atomic="true">{String(active+1).padStart(2,'0')} / {String(frames.length).padStart(2,'0')}</span><strong>{frames[active].title}</strong></div>
       <div className="interactiveGalleryControls">
         <button type="button" onClick={()=>move(-1)} aria-label="Previous screenshot">←</button>
         <button type="button" onClick={()=>move(1)} aria-label="Next screenshot">→</button>
@@ -80,7 +80,7 @@ export default function ProjectMediaGallery(){
       <p aria-live="polite">{frames[active].caption}</p>
       <div className="interactiveGalleryThumbs">{frames.map((item,i)=><button key={item.src} type="button" onClick={()=>setActive(i)} className={i===active?'active':''} aria-label={'View '+item.title} aria-pressed={i===active}><img src={item.src} width="95" height="55" alt=""/></button>)}</div>
     </div>
-    <p className="interactiveGalleryFoot">Frames re-extracted at higher resolution from the original 1920 × 1080 recording. Choose a thumbnail or use arrow keys.</p>
+    <p className="interactiveGalleryFoot">Original frames from the 1920 × 1080 development recording. Swipe on touch screens, select a thumbnail, or use the arrow keys.</p>
     {expanded&&<div className="galleryLightbox" role="dialog" aria-modal="true" aria-labelledby={titleId} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onMouseDown={e=>{if(e.target===e.currentTarget)setExpanded(false)}}>
       <div className="galleryLightboxContent" ref={dialogRef}>
         <div className="galleryLightboxTop"><span id={titleId}>{frames[active].title} · {active+1}/{frames.length}</span><button ref={closeRef} type="button" onClick={()=>setExpanded(false)} aria-label="Close enlarged view">✕ Close</button></div>
