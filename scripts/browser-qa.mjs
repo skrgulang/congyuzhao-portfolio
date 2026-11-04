@@ -95,19 +95,23 @@ try {
           await page.keyboard.press('ArrowRight');
           await page.getByRole('dialog',{name:/Characters and gameplay/}).waitFor({state:'visible'});
           if(device.isMobile){
-            // Trigger a horizontal right swipe across the modal to return to the previous frame.
-            await dialog.evaluate(element=>{
-              const target=element;
-              const touch=(x)=>new Touch({identifier:1,target,clientX:x,clientY:150,pageX:x,pageY:150});
-              target.dispatchEvent(new TouchEvent('touchstart',{bubbles:true,changedTouches:[touch(240)],touches:[touch(240)],targetTouches:[touch(240)]}));
-              target.dispatchEvent(new TouchEvent('touchend',{bubbles:true,changedTouches:[touch(100)],touches:[],targetTouches:[]}));
-            });
+            // Left swipe to the final frame, then right swipe back to gameplay.
+            const swipe = async (from,to) => dialog.evaluate((element,{from,to})=>{
+              const touch=x=>new Touch({identifier:1,target:element,clientX:x,clientY:150,pageX:x,pageY:150});
+              element.dispatchEvent(new TouchEvent('touchstart',{bubbles:true,changedTouches:[touch(from)],touches:[touch(from)],targetTouches:[touch(from)]}));
+              element.dispatchEvent(new TouchEvent('touchend',{bubbles:true,changedTouches:[touch(to)],touches:[],targetTouches:[]}));
+            },{from,to});
+            await swipe(240,100);
             await page.getByRole('dialog',{name:/Island and terrain/}).waitFor({state:'visible',timeout:5000});
+            await swipe(100,240);
+            await page.getByRole('dialog',{name:/Characters and gameplay/}).waitFor({state:'visible',timeout:5000});
           }
           await page.keyboard.press('Tab');
           if(!(await dialog.evaluate(el=>el.contains(document.activeElement)))) throw new Error('Lightbox focus left dialog');
           await page.keyboard.press('Escape');
           await dialog.waitFor({state:'hidden',timeout:5000});
+          const focusReturned=await gallery.getByRole('button',{name:/View .* enlarged/}).evaluate(el=>document.activeElement===el);
+          if(!focusReturned) throw new Error('Closing lightbox did not restore focus to image trigger');
         }
         await page.screenshot({path:'qa-screenshots/'+device.name+'-'+test.name+'.png',fullPage:true,animations:'disabled'});
         console.log('PASS',label);
