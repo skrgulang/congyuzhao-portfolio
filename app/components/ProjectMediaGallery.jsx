@@ -29,8 +29,8 @@ export default function ProjectMediaGallery(){
         if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
         else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
       }
-      else if(e.key==='ArrowRight')move(1);
-      else if(e.key==='ArrowLeft')move(-1);
+      else if(e.key==='ArrowRight'){e.preventDefault();move(1);}
+      else if(e.key==='ArrowLeft'){e.preventDefault();move(-1);}
     };
     document.addEventListener('keydown',onKey);
     return()=>{document.removeEventListener('keydown',onKey);document.body.style.overflow=oldOverflow;requestAnimationFrame(()=>{if(previous?.isConnected)previous.focus();else openRef.current?.focus()});};
