@@ -507,3 +507,12 @@ html{scroll-padding-top:24px}
 .aspireProofQuiet{color:#8e978f;font-weight:400}
 @media(max-width:900px){.aspireProofGrid{grid-template-columns:1fr}.aspireProofCard{min-height:0}.aspireProofCard h3{margin-top:24px;max-width:none}.aspireProofCard p{max-width:650px}}
 @media(max-width:600px){.aspireProductProof{padding:60px 0 70px}.aspireProofCard{padding:23px}.aspireProofCard h3{font-size:26px}}
+
+/* Aspire 101: founder milestones */
+.aspireMilestones{padding:85px 0 105px;border-top:1px solid rgba(255,255,255,.13)}
+.aspireMilestoneList{list-style:none;margin:38px 0 0;padding:0;border-top:1px solid rgba(255,255,255,.16)}
+.aspireMilestoneList li{display:grid;grid-template-columns:170px minmax(0,1fr);gap:36px;padding:29px 0;border-bottom:1px solid rgba(255,255,255,.13)}
+.aspireMilestoneList time{font-size:11px;letter-spacing:.15em;font-weight:650;color:#d8bf8c;padding-top:8px}
+.aspireMilestoneList h3{font-size:clamp(22px,2.2vw,31px);letter-spacing:-.045em;margin:0 0 11px}
+.aspireMilestoneList p{font-size:15px;line-height:1.74;color:#aeb4b0;max-width:740px;margin:0}
+@media(max-width:650px){.aspireMilestones{padding:60px 0}.aspireMilestoneList li{grid-template-columns:1fr;gap:13px}.aspireMilestoneList h3{font-size:24px}.aspireMilestoneList time{padding-top:0}}
