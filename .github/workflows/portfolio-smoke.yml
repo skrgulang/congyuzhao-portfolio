@@ -1,0 +1,30 @@
+name: Portfolio public smoke test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/smoke.mjs'
+      - '.github/workflows/portfolio-smoke.yml'
+  schedule:
+    - cron: '23 13 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portfolio-public-smoke
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check public portfolio pages and images
+        run: node scripts/smoke.mjs https://congyuzhao.com
