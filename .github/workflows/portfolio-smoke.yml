@@ -5,8 +5,11 @@ on:
   push:
     branches: [main]
     paths:
+      - 'app/**'
+      - 'public/**'
       - 'scripts/smoke.mjs'
       - 'scripts/browser-qa.mjs'
+      - 'package.json'
       - '.github/workflows/portfolio-smoke.yml'
   schedule:
     - cron: '23 13 * * *'
@@ -28,6 +31,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Allow Git-based production deployment to publish
+        if: github.event_name == 'push'
+        run: sleep 75
       - name: Check public pages and images
         run: node scripts/smoke.mjs https://congyuzhao.com
 
@@ -40,6 +46,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Allow Git-based production deployment to publish
+        if: github.event_name == 'push'
+        run: sleep 75
       - name: Install browser test dependencies
         run: |
           npm install --no-save playwright
