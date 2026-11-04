@@ -578,3 +578,27 @@ html{scroll-padding-top:24px}
 .allProjectsThumb:has(.indexConceptLabel){position:relative}
 .allProjectsThumb .indexConceptLabel{position:absolute;left:9px;bottom:9px;z-index:2;border:1px solid rgba(255,255,255,.23);border-radius:4px;background:rgba(12,15,12,.88);padding:6px 7px;color:#e4ebcf;font:700 9px/1.2 'DM Sans',Arial,sans-serif;letter-spacing:.1em;max-width:calc(100% - 18px)}
 @media(max-width:480px){.allProjectsThumb .indexConceptLabel{font-size:8px;letter-spacing:.06em;padding:5px}}
+
+/* Mobile navigation aligns with the actual sticky bar height. */
+@media(max-width:650px){
+ .newNav{isolation:isolate}
+ .newNavLinks{top:calc(100% - 1px);left:0;right:0;z-index:25;max-height:calc(100dvh - 72px);overflow-y:auto;overscroll-behavior:contain}
+ .newNavLinks a{width:100%;justify-content:flex-start}
+ .newNav .navContact{white-space:nowrap}
+ .newHero .heroButtons{flex-wrap:wrap}
+}
+@media(max-width:360px){
+ .newNav{gap:9px}
+ .newNav .navContact{font-size:11px;padding:10px 11px;gap:9px}
+ .newHero .heroButtons{gap:12px}
+ .newHero .heroButtons a{max-width:100%}
+ .heroArtwork.interactiveShowcase{min-height:310px}
+ .showcaseCardCaption span{letter-spacing:.04em}
+ .fishShowcase{padding:18px}
+ .fishShowcase h2{font-size:clamp(34px,10vw,44px)}
+}
+@media(hover:none){
+ .newProject:hover .projectScreenshot,.newProject:hover .aspirePreview img{transform:none}
+ .interactiveShowcase .showcaseCardMain:hover{transform:translate3d(var(--main-x,0px),var(--main-y,0px),0) rotate(8deg)}
+ .interactiveShowcase .showcaseCardSide:hover{transform:translate3d(var(--side-x,0px),var(--side-y,0px),0) rotate(-4deg)}
+}
