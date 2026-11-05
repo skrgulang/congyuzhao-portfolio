@@ -767,3 +767,21 @@ html{scroll-padding-top:24px}
 .tempusHomeFootnote{font-size:12px;color:#9cab9d;line-height:1.65;margin-top:18px}
 @media(max-width:850px){.tempusHomeHead{align-items:start;flex-direction:column;gap:12px}}
 @media(max-width:620px){.tempusHome{padding:52px 0}.tempusHomeVideos{grid-template-columns:1fr;gap:12px}}
+
+/* Real iOS TestFlight screenshots — published, privacy-reviewed source imagery. */
+.aspireRealGalleryLead{margin:34px 0 27px}
+.aspireRealGalleryLead img{width:100%;height:auto;display:block;border-radius:15px;border:1px solid rgba(215,190,129,.28);background:#0a0b0a}
+.aspireRealGalleryLead figcaption{margin-top:12px;color:var(--lime);font-size:10px;font-weight:750;letter-spacing:.12em}
+.aspireRealScreens{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin:28px 0 45px}
+.aspireRealScreen{min-width:0;margin:0}
+.aspireRealScreen>a{display:block;overflow:hidden;border:1px solid rgba(225,209,157,.26);border-radius:17px;background:#080808;transition:transform .2s,border-color .2s}
+.aspireRealScreen>a:hover,.aspireRealScreen>a:focus-visible{border-color:var(--lime);transform:translateY(-4px)}
+.aspireRealScreen>a:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+.aspireRealScreen img{display:block;width:100%;height:auto;aspect-ratio:912/1870;object-fit:cover}
+.aspireRealScreen figcaption{display:flex;flex-direction:column;gap:7px;padding:13px 2px}
+.aspireRealScreen figcaption span{font-size:11px;letter-spacing:.09em;font-weight:750;color:var(--lime)}
+.aspireRealScreen figcaption small{color:#a9b4a8;font-size:12px;line-height:1.55}
+@media(max-width:1050px){.aspireRealScreens{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:680px){.aspireRealScreens{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.aspireRealScreen figcaption small{font-size:11px}.aspireRealGalleryLead{margin-top:25px}}
+@media(max-width:420px){.aspireRealScreens{gap:9px}.aspireRealScreen>a{border-radius:11px}}
+@media(prefers-reduced-motion:reduce){.aspireRealScreen>a{transition:none}.aspireRealScreen>a:hover,.aspireRealScreen>a:focus-visible{transform:none}}
