@@ -36,9 +36,14 @@ async function check(path, expectedText) {
       const html = await response.text();
       if (!html.includes(expectedText)) throw new Error('Missing expected content: ' + expectedText);
       const canonical = [...html.matchAll(/<link\b[^>]*rel="canonical"[^>]*>/g)].map(match => match[0]);
-      const expectedCanonical = new URL(path, base).href;
-      if (canonical.length !== 1 || !canonical[0].includes('href="' + expectedCanonical + '"'))
-        throw new Error('Expected one matching canonical link: ' + expectedCanonical);
+      const expectedCanonical = new URL(path, base);
+      const actualHref = canonical[0]?.match(/\bhref="([^"]+)"/)?.[1];
+      const normalize = value => {
+        const url = new URL(value);
+        return url.origin + (url.pathname === '/' ? '' : url.pathname.replace(/\/$/, '')) + url.search;
+      };
+      if (canonical.length !== 1 || !actualHref || normalize(actualHref) !== normalize(expectedCanonical.href))
+        throw new Error('Expected one matching canonical link: ' + expectedCanonical.href);
       if (!html.includes('property="og:image"'))
         throw new Error('Missing social sharing image metadata');
       if (html.includes(' | Congyu Zhao | Congyu Zhao'))
