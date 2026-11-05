@@ -19,7 +19,11 @@ const images = [
   '/showcase/fish-gameplay-hq.jpg',
   '/showcase/fish-inventory-hq.jpg',
   '/showcase/fish-island-hq.jpg',
+  '/showcase/aspire-ios-real-gallery.webp',
+  ...['home','campus-pulse','browse','create-post','inbox','profile','settings'].map(name=>'/showcase/aspire-ios-'+name+'.webp'),
+  ...['game-pov','building-lineart','geometry-test'].map(name=>'/showcase/tempus-'+name+'-poster.webp'),
 ];
+const videos = ['game-pov','building-lineart','geometry-test'].map(name=>'/showcase/tempus-'+name+'.mp4');
 
 async function check(path, expectedText) {
   const url = new URL(path, base);
@@ -89,12 +93,29 @@ async function checkNotFound() {
   }
 }
 
+async function checkVideo(path) {
+  try {
+    const response=await fetch(new URL(path,base),{
+      method:'HEAD',redirect:'follow',signal:AbortSignal.timeout(15000),
+      headers:{'user-agent':'portfolio-smoke-check/1.0'}
+    });
+    if(!response.ok)throw new Error('HTTP '+response.status);
+    if(!(response.headers.get('content-type')||'').startsWith('video/mp4'))
+      throw new Error('Expected video/mp4, got '+response.headers.get('content-type'));
+    console.log('PASS',path);
+    return true;
+  }catch(error){
+    console.error('FAIL',path,'-',error.message);
+    return false;
+  }
+}
 const results = [];
 for (const [path, text] of pages) results.push(await check(path, text));
 results.push(await checkNotFound());
 results.push(await checkCrawlerFile('/sitemap.xml', '/projects/aspire-101'));
 results.push(await checkCrawlerFile('/robots.txt', '/sitemap.xml'));
 for (const path of images) results.push(await check(path));
+for (const path of videos) results.push(await checkVideo(path));
 const failures = results.filter(ok => !ok).length;
 console.log('\n' + (results.length - failures) + '/' + results.length + ' checks passed at ' + base);
 if (failures) process.exitCode = 1;
