@@ -100,6 +100,11 @@ try {
             throw new Error('Back navigation did not restore Games project filter');
           await page.getByRole('button',{name:/^All/}).click();
           await page.getByText('Showing 6 of 6 projects').waitFor({state:'visible'});
+          // Verify links opened in a fresh tab hydrate into the intended category.
+          await page.goto(base+'/?category=Research',{waitUntil:'networkidle'});
+          await page.getByText('Showing 1 of 6 projects').waitFor({state:'visible'});
+          if((await page.getByRole('button',{name:/^Research/}).getAttribute('aria-pressed'))!=='true')
+            throw new Error('Direct category URL did not initialize the Research filter');
         }
         if(test.name==='fish'){
           const gallery=page.getByRole('region',{name:'Fish and Ships game images'});
