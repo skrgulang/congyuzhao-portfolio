@@ -688,3 +688,15 @@ html{scroll-padding-top:24px}
 #original-projects{scroll-margin-top:30px}
 @media(max-width:570px){.projectIndexQuickLinks{align-items:flex-start;flex-direction:column;gap:4px;margin-top:18px}}
 @media(prefers-reduced-motion:reduce){.projectIndexQuickLinks a{transition:none}}
+
+/* Project-specific source and release status, kept visible near the case hero. */
+.caseAccess{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:32px}
+.caseAccessStatus{display:inline-flex;align-items:center;min-height:38px;border:1px solid rgba(213,244,147,.46);background:rgba(180,220,118,.08);padding:9px 13px;border-radius:6px;color:var(--lime);font:700 10px/1.4 'DM Sans',sans-serif;letter-spacing:.11em}
+.caseAccessActions>a{display:inline-flex;align-items:center;justify-content:space-between;gap:26px;min-height:44px;padding:11px 16px;border-radius:7px;background:var(--lime);color:#151b10;font-size:13px;font-weight:750;transition:filter .2s}
+.caseAccessActions>a:hover{filter:brightness(1.12)}
+.caseAccessActions>a:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.caseAccess>p{flex-basis:100%;color:#aab6aa;font-size:12px;line-height:1.6;max-width:580px;margin:0}
+.caseHero .caseMeta{margin-top:44px}
+#case-details{scroll-margin-top:30px}
+@media(max-width:600px){.caseAccess{gap:11px;margin-top:24px}.caseAccessActions{width:100%}.caseAccessActions>a{width:100%}.caseHero .caseMeta{margin-top:35px}}
+@media(prefers-reduced-motion:reduce){.caseAccessActions>a{transition:none}}
