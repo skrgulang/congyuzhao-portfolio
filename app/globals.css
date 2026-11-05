@@ -798,3 +798,33 @@ html{scroll-padding-top:24px}
 .tempusClipGrid figcaption span{font-size:12px;color:#adbaad;line-height:1.55}
 @media(max-width:920px){.tempusClipGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.tempusClipGrid{grid-template-columns:1fr}.tempusClipHead{margin-top:38px}}
+
+/* Tempus Lineus: original videos and observed Blender development work. */
+.tempusHome{padding:64px 0 92px;border-top:1px solid rgba(255,255,255,.14)}
+.tempusHomeTop{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,5vw,68px);align-items:center}
+.tempusHome h2{font:700 clamp(48px,5.7vw,83px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-.065em;margin:18px 0}
+.tempusHome h2 em{font-style:normal;color:var(--lime)}
+.tempusHomeTop>div:first-child>p:not(.newEyebrow){color:#b6c2b7;font-size:15px;line-height:1.8;max-width:550px}
+.tempusHomeActions{display:flex;align-items:center;flex-wrap:wrap;gap:18px;margin-top:27px}
+.tempusHomeActions>a:not(.btnSolid){color:#c5d3be;font-size:13px;text-decoration:underline;text-underline-offset:5px}
+.tempusHomeFrame,.tempusVideoFrame{position:relative;aspect-ratio:16/9;overflow:hidden;background:#171b1a;border:1px solid rgba(255,255,255,.2);border-radius:15px}
+.tempusHomeFrame iframe,.tempusVideoFrame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.tempusCaseStudy{padding:70px 0 95px;border-top:1px solid var(--line)}
+.tempusCaseLead{max-width:840px}
+.tempusCaseLead h2{font:700 clamp(38px,5vw,68px)/1.06 'Space Grotesk',sans-serif;letter-spacing:-.055em;margin:20px 0}
+.tempusCaseLead>p:last-child{font-size:16px;color:#b7c1b6;line-height:1.8}
+.tempusVideoGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:34px}
+.tempusVideoCard{min-width:0;overflow:hidden;border:1px solid rgba(255,255,255,.17);border-radius:16px;background:rgba(255,255,255,.027)}
+.tempusVideoCard .tempusVideoFrame{border:0;border-radius:0}
+.tempusVideoCopy{padding:22px 25px 26px}
+.tempusVideoCopy>span,.tempusProcessGrid article>span{display:block;color:var(--lime);font-size:10px;letter-spacing:.14em;font-weight:750}
+.tempusVideoCopy h3{font:650 clamp(23px,2.5vw,34px)/1.2 'Space Grotesk',sans-serif;letter-spacing:-.04em;margin:13px 0}
+.tempusVideoCopy p,.tempusProcessGrid p{color:#aebbae;font-size:13px;line-height:1.7}
+.tempusVideoCopy a{display:inline-block;margin-top:8px;color:var(--lime);font-size:13px;text-decoration:underline;text-underline-offset:5px}
+.tempusProcessGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+.tempusProcessGrid article{padding:24px 22px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(255,255,255,.025)}
+.tempusProcessGrid h3{font:650 22px/1.23 'Space Grotesk',sans-serif;letter-spacing:-.03em;margin:14px 0 9px}
+.tempusSourceNote{font-size:12px;color:#98a898;line-height:1.65;margin-top:21px}
+#tempus-video{scroll-margin-top:30px}
+@media(max-width:850px){.tempusHomeTop{grid-template-columns:1fr}.tempusVideoGrid{grid-template-columns:1fr}.tempusProcessGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.tempusHome{padding:46px 0 58px}.tempusHomeActions{align-items:flex-start;flex-direction:column}.tempusCaseStudy{padding:45px 0 65px}.tempusProcessGrid{grid-template-columns:1fr}.tempusVideoCopy{padding:20px}.tempusProcessGrid article{padding:20px}}
