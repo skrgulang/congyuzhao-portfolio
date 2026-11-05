@@ -700,3 +700,8 @@ html{scroll-padding-top:24px}
 #case-details{scroll-margin-top:30px}
 @media(max-width:600px){.caseAccess{gap:11px;margin-top:24px}.caseAccessActions{width:100%}.caseAccessActions>a{width:100%}.caseHero .caseMeta{margin-top:35px}}
 @media(prefers-reduced-motion:reduce){.caseAccessActions>a{transition:none}}
+
+/* Distinguish artifact provenance from project release status. */
+.caseAccessLabels{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.caseAccessKind{color:#bdc8be;font:700 10px/1.4 'DM Sans',sans-serif;letter-spacing:.12em}
+@media(max-width:600px){.caseAccessLabels{width:100%}.caseAccessKind{font-size:9px;letter-spacing:.09em}}
