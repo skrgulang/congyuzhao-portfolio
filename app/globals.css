@@ -608,7 +608,7 @@ html{scroll-padding-top:24px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 /* Horizontal gallery swipes leave normal vertical page scrolling available. */
-.interactiveGalleryStage,.galleryLightbox{touch-action:pan-y}
+.interactiveGalleryStage,.galleryLightbox{touch-action:pan-y pinch-zoom}
 .galleryLightboxContent{overscroll-behavior:contain}
 
 /* Indicate the section reached through keyboard navigation without outlining the entire layout. */
