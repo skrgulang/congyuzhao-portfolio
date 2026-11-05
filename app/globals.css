@@ -662,3 +662,20 @@ html{scroll-padding-top:24px}
 /* Keyboard skip-link destination stays discoverable without enclosing the whole section. */
 #work:focus{outline:none}
 #work:focus-visible .sectionTop h2{text-decoration:underline;text-decoration-color:var(--lime);text-decoration-thickness:2px;text-underline-offset:9px}
+
+/* Project index: direct links to verifiable original work. */
+.projectSources{padding:65px 0 85px;border-top:1px solid rgba(255,255,255,.15)}
+.projectSourcesIntro{max-width:760px}
+.projectSourcesIntro h2{font:700 clamp(34px,4.6vw,62px)/1.1 'Space Grotesk',sans-serif;letter-spacing:-.055em;margin:15px 0}
+.projectSourcesIntro>p:last-child{font-size:15px;line-height:1.7;color:#aeb9ae;max-width:690px}
+.projectSourcesGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:30px}
+.projectSourcesGrid>a{min-width:0;display:flex;flex-direction:column;padding:27px 26px;min-height:245px;background:rgba(235,243,215,.045);border:1px solid rgba(255,255,255,.16);border-radius:14px;color:inherit;transition:border-color .2s,transform .2s}
+.projectSourcesGrid>a>span:first-child{font-size:10px;font-weight:700;letter-spacing:.13em;color:var(--lime)}
+.projectSourcesGrid>a>strong{font:650 clamp(22px,2.4vw,30px)/1.2 'Space Grotesk',sans-serif;margin:19px 0 9px;letter-spacing:-.04em}
+.projectSourcesGrid>a>p{font-size:13px;line-height:1.7;color:#b5c1b7;margin:0 0 22px}
+.projectSourcesGrid .projectSourcesAction{font-size:12px;font-weight:700;color:var(--lime);margin-top:auto}
+.projectSourcesGrid>a:hover,.projectSourcesGrid>a:focus-visible{border-color:var(--lime);transform:translateY(-3px)}
+.projectSourcesGrid>a:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+@media(max-width:860px){.projectSourcesGrid{grid-template-columns:1fr 1fr}.projectSourcesGrid>a:last-child{grid-column:1/-1}.projectSourcesGrid>a{min-height:215px}}
+@media(max-width:570px){.projectSources{padding:45px 0 60px}.projectSourcesGrid{grid-template-columns:1fr;gap:10px}.projectSourcesGrid>a:last-child{grid-column:auto}.projectSourcesGrid>a{min-height:0;padding:22px}}
+@media(prefers-reduced-motion:reduce){.projectSourcesGrid>a{transition:none}.projectSourcesGrid>a:hover,.projectSourcesGrid>a:focus-visible{transform:none}}
