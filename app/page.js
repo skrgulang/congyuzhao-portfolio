@@ -43,6 +43,15 @@ export default function Home(){
    requestAnimationFrame(()=>document.getElementById(hash)?.focus({preventScroll:true}));
  };
  const shown=filter==='All'?projects:projects.filter(p=>p.category===filter);
+ useEffect(()=>{
+   // Filtering changes page height even when the viewport does not move.
+   // Keep the reading progress proportional to the new document length.
+   const frame=requestAnimationFrame(()=>{
+     const max=document.documentElement.scrollHeight-window.innerHeight;
+     if(progressRef.current)progressRef.current.style.transform=`scaleX(${max>0?Math.min(1,window.scrollY/max):0})`;
+   });
+   return()=>cancelAnimationFrame(frame);
+ },[filter]);
  return <main className="newSite" id="top">
   <div ref={progressRef} className="readingProgress" aria-hidden="true" style={{transform:'scaleX(0)'}}/>
   <a className="skipLink" href="#work" onClick={closeAndFocusSection}>Skip to projects</a>
