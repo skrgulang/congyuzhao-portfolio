@@ -101,7 +101,7 @@ try {
           await page.getByRole('button',{name:/^All/}).click();
           await page.getByText('Showing 6 of 6 projects').waitFor({state:'visible'});
           // Verify links opened in a fresh tab hydrate into the intended category.
-          await page.goto(base+'/?category=Research',{waitUntil:'networkidle'});
+          await page.goto(base+'/?category=Research',{waitUntil:'domcontentloaded'});
           await page.getByText('Showing 1 of 6 projects').waitFor({state:'visible'});
           if((await page.getByRole('button',{name:/^Research/}).getAttribute('aria-pressed'))!=='true')
             throw new Error('Direct category URL did not initialize the Research filter');
