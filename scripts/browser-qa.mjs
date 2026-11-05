@@ -88,6 +88,18 @@ try {
           const navTop=await page.locator('.newNav').evaluate(el=>el.getBoundingClientRect().top);
           if(Math.abs(navTop)>3) throw new Error('Sticky navigation lost while scrolling: top='+navTop);
           await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+          // Category filters must be linkable and restore correctly when navigating back.
+          await page.getByRole('button',{name:/^Games/}).click();
+          await page.waitForURL(/category=Games/);
+          await page.getByText('Showing 3 of 6 projects').waitFor({state:'visible'});
+          await page.getByRole('button',{name:/^Research/}).click();
+          await page.waitForURL(/category=Research/);
+          await page.goBack();
+          await page.getByRole('button',{name:/^Games/}).waitFor({state:'visible'});
+          if((await page.getByRole('button',{name:/^Games/}).getAttribute('aria-pressed'))!=='true')
+            throw new Error('Back navigation did not restore Games project filter');
+          await page.getByRole('button',{name:/^All/}).click();
+          await page.getByText('Showing 6 of 6 projects').waitFor({state:'visible'});
         }
         if(test.name==='fish'){
           const gallery=page.getByRole('region',{name:'Fish and Ships game images'});
