@@ -6,6 +6,15 @@ const productSteps=[
  {n:'03',title:'Respond',body:'Reply to a student request, then continue the conversation in messaging.'},
  {n:'04',title:'Connect',body:'Move from a post to an actual meetup, service, or shared activity.'}
 ];
+const realScreens=[
+ {slug:'home',title:'Home',detail:'Campus-specific discovery and highlights'},
+ {slug:'campus-pulse',title:'Campus Pulse',detail:'Real posts and category discovery'},
+ {slug:'browse',title:'Browse',detail:'Rides, Games, Study, Cofounders and more'},
+ {slug:'create-post',title:'Create Post',detail:'Guided posting categories'},
+ {slug:'inbox',title:'Inbox',detail:'Messages, Orders and Updates'},
+ {slug:'profile',title:'Profile',detail:'Verified campus identity and activity'},
+ {slug:'settings',title:'Settings',detail:'Privacy and notification controls'}
+];
 const buildNotes=[
  {number:'01',title:'Identity and trust',body:'University email verification helps keep discovery campus-focused. Reporting, moderation and cross-campus context are important parts of the product.'},
  {number:'02',title:'The full interaction',body:'I worked across the post → response → connection → chat journey, including the awkward states: empty feeds, pending requests, cancellations and errors.'},
@@ -17,7 +26,7 @@ export default function AspireCaseStudy(){
   <nav className="aspireCaseNav frame" aria-label="Aspire 101 case study chapters"><span>IN THIS CASE STUDY</span><div><a href="#aspire-availability">Product status</a><a href="#aspire-ios">iOS app walkthrough</a><a href="#aspire-community">Early connection</a><a href="#aspire-designs">Design work</a><a href="#aspire-flow">User journey</a><a href="#aspire-engineering">Engineering</a><a href="#aspire-decisions">Decisions</a><a href="#aspire-timeline">Timeline</a></div></nav>
   <section className="aspireCaseLead frame" aria-label="Aspire 101 project overview">
    <div className="aspireCaseLeadTop"><span>01 — THE PRODUCT</span><span>WEB LIVE · iOS TESTFLIGHT</span></div>
-   <div className="aspireCaseLeadGrid"><div><h2>Making campus feel a little smaller.</h2><p>There are thousands of students nearby, but finding the right person can still mean searching through a dozen group chats. Aspire 101 started with that frustration.</p><p>I wanted somewhere students could look for each other by what they actually want to do — not by which group chat they happen to be in.</p><div className="aspirePrimaryLinks"><a href="https://www.aspires101.com/" rel="noopener noreferrer" target="_blank">Explore the live product <span>↗</span></a><Link href="/projects">Other projects <span>↗</span></Link></div></div><div className="aspireProductVisual"><div className="aspirePhoneChrome"><img src="/showcase/aspire-onboarding-hq.jpg" width="849" height="1852" alt="Aspire 101 interest-selection design preview" loading="lazy"/></div><span className="aspireVisualTag">INTEREST-BASED ONBOARDING / DESIGN CONCEPT</span></div></div>
+   <div className="aspireCaseLeadGrid"><div><h2>Making campus feel a little smaller.</h2><p>There are thousands of students nearby, but finding the right person can still mean searching through a dozen group chats. Aspire 101 started with that frustration.</p><p>I wanted somewhere students could look for each other by what they actually want to do — not by which group chat they happen to be in.</p><div className="aspirePrimaryLinks"><a href="https://www.aspires101.com/" rel="noopener noreferrer" target="_blank">Explore the live product <span>↗</span></a><Link href="/projects">Other projects <span>↗</span></Link></div></div><div className="aspireProductVisual"><div className="aspirePhoneChrome"><img src="/showcase/aspire-ios-home-real.svg" width="912" height="1870" alt="Actual Aspire 101 iOS TestFlight Home screen with Purdue campus discovery" loading="lazy"/></div><span className="aspireVisualTag">REAL iOS TESTFLIGHT UI / PRIVACY-REVIEWED</span></div></div>
   </section>
   <section className="aspireProductProof frame" id="aspire-availability" aria-label="Aspire 101 product availability and evidence">
    <div className="aspireChapterHead"><span>PRODUCT STATUS / NOVEMBER 2026</span><h2>What you can explore today.</h2><p>Design exploration and a shipped product tell different stories. Here is the clearest way to see what exists, what is being tested, and what remains a concept.</p></div>
@@ -28,7 +37,9 @@ export default function AspireCaseStudy(){
    </div>
   </section>
   <section className="aspireActualFlow frame" id="aspire-ios" aria-label="Aspire 101 actual iOS interface walkthrough">
-   <div className="aspireChapterHead"><span>ACTUAL iOS BUILD / NOVEMBER 2026</span><h2>From campus discovery to conversation.</h2><p>The current TestFlight build includes these real screens. The descriptions are drawn from the actual app captures, distinct from the speculative design boards archived below.</p></div>
+   <div className="aspireChapterHead"><span>ACTUAL iOS BUILD / NOVEMBER 2026</span><h2>From campus discovery to conversation.</h2><p>Actual, privacy-reviewed iOS screenshots from the TestFlight build: Home, Browse, Post, Inbox, Profile, Settings and Campus Pulse. These are real captures, not recreated concepts or evidence of usage volume.</p></div>
+   <figure className="aspireRealGalleryLead"><img src="/showcase/aspire-ios-real-gallery.svg" width="900" height="455" loading="lazy" alt="Five real Aspire 101 TestFlight screens: Home, Browse, Create Post, Inbox, Profile"/><figcaption>REAL TESTFLIGHT CAPTURES · PERSONAL DATA REDACTED · NOV 2026</figcaption></figure>
+   <div className="aspireRealScreens">{realScreens.map((screen,i)=><figure key={screen.slug} className="aspireRealScreen"><a href={'/showcase/aspire-ios-'+screen.slug+'-real.svg'} target="_blank" rel="noopener noreferrer" aria-label={'Open full original Aspire 101 iOS '+screen.title+' screenshot in a new tab'}><img src={'/showcase/aspire-ios-'+screen.slug+'-real.svg'} width="912" height="1870" loading="lazy" alt={'Real Aspire 101 iOS '+screen.title+' screen: '+screen.detail}/></a><figcaption><span>{String(i+1).padStart(2,'0')} / {screen.title.toUpperCase()}</span><small>{screen.detail}</small></figcaption></figure>)}</div>
    <div className="aspireActualFlowGrid">
     <article><span>01 / HOME</span><h3>Campus first.</h3><p>Purdue-specific discovery, post categories and campus highlights give students a starting point.</p></article>
     <article><span>02 / BROWSE</span><h3>Find your thing.</h3><p>Rides, Market, Study, Games, Cofounders, Projects, Help and Pickup organize campus needs.</p></article>
