@@ -679,3 +679,12 @@ html{scroll-padding-top:24px}
 @media(max-width:860px){.projectSourcesGrid{grid-template-columns:1fr 1fr}.projectSourcesGrid>a:last-child{grid-column:1/-1}.projectSourcesGrid>a{min-height:215px}}
 @media(max-width:570px){.projectSources{padding:45px 0 60px}.projectSourcesGrid{grid-template-columns:1fr;gap:10px}.projectSourcesGrid>a:last-child{grid-column:auto}.projectSourcesGrid>a{min-height:0;padding:22px}}
 @media(prefers-reduced-motion:reduce){.projectSourcesGrid>a{transition:none}.projectSourcesGrid>a:hover,.projectSourcesGrid>a:focus-visible{transform:none}}
+
+/* Project index: shortcuts to the directory and original publicly accessible work. */
+.projectIndexQuickLinks{display:flex;flex-wrap:wrap;gap:11px 22px;margin-top:26px}
+.projectIndexQuickLinks a{display:inline-flex;align-items:center;min-height:44px;color:var(--lime);font-size:13px;font-weight:700;border-bottom:1px solid rgba(216,248,149,.5);transition:color .2s,border-color .2s}
+.projectIndexQuickLinks a:hover{color:#fff;border-color:#fff}
+.projectIndexQuickLinks a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}
+#original-projects{scroll-margin-top:30px}
+@media(max-width:570px){.projectIndexQuickLinks{align-items:flex-start;flex-direction:column;gap:4px;margin-top:18px}}
+@media(prefers-reduced-motion:reduce){.projectIndexQuickLinks a{transition:none}}
