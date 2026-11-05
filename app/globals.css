@@ -705,3 +705,17 @@ html{scroll-padding-top:24px}
 .caseAccessLabels{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
 .caseAccessKind{color:#bdc8be;font:700 10px/1.4 'DM Sans',sans-serif;letter-spacing:.12em}
 @media(max-width:600px){.caseAccessLabels{width:100%}.caseAccessKind{font-size:9px;letter-spacing:.09em}}
+
+/* Two-way browsing between case studies, including small screens. */
+.caseNext{gap:22px}
+.caseNextHeader{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.caseNextHeader>span{font-size:11px;letter-spacing:.17em;color:var(--lime)}
+.caseNextHeader .allWorkInline{font-size:11px;letter-spacing:.12em;font-weight:650;color:#a6b7a4;text-decoration:underline;text-underline-offset:4px}
+.caseNextGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.caseNextGrid>a{min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:17px;padding:24px 25px;border:1px solid var(--line);border-radius:12px;color:inherit;transition:border-color .2s,background .2s}
+.caseNextGrid>a:hover,.caseNextGrid>a:focus-visible{border-color:var(--lime);background:rgba(225,250,184,.035)}
+.caseNextGrid>a:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+.caseNextGrid .caseNextDirection{font-size:10px;letter-spacing:.13em;color:var(--lime);font-weight:750}
+.caseNextGrid strong{display:block;font:650 clamp(23px,3vw,37px)/1.16 'Space Grotesk',sans-serif;letter-spacing:-.045em;overflow-wrap:anywhere}
+@media(max-width:650px){.caseNextGrid{grid-template-columns:1fr}.caseNextGrid>a{padding:20px;gap:12px}}
+@media(prefers-reduced-motion:reduce){.caseNextGrid>a{transition:none}}
