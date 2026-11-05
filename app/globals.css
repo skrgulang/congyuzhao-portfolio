@@ -731,3 +731,23 @@ html{scroll-padding-top:24px}
 #aspire-ios{scroll-margin-top:30px}
 @media(max-width:850px){.aspireActualFlowGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.aspireActualFlow{padding:54px 0}.aspireActualFlowGrid{grid-template-columns:1fr;gap:9px}.aspireActualFlowGrid article{padding:21px}}
+
+/* Tempus Lineus: original source video, no invented gameplay media. */
+.tempusShowcase{padding:72px 0 105px;border-top:1px solid var(--line)}
+.tempusShowcaseIntro{max-width:840px}
+.tempusShowcaseIntro h2{font:700 clamp(38px,5.3vw,75px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-.065em;margin:17px 0 23px}
+.tempusShowcaseIntro>p{max-width:710px;color:#b8c2b6;font-size:16px;line-height:1.75}
+.tempusVideoGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:34px}
+.tempusVideoCard{min-width:0;overflow:hidden;border:1px solid rgba(255,255,255,.15);border-radius:17px;background:rgba(226,244,218,.04)}
+.tempusVideoFrame{width:100%;aspect-ratio:16/9;background:#050505;overflow:hidden}
+.tempusVideoFrame iframe{display:block;width:100%;height:100%;border:0}
+.tempusVideoCaption{padding:25px 27px 29px}
+.tempusVideoCaption>span,.tempusProcess span{font-size:10px;color:var(--lime);font-weight:750;letter-spacing:.13em}
+.tempusVideoCaption h3{font:650 clamp(22px,2.5vw,33px)/1.2 'Space Grotesk',sans-serif;letter-spacing:-.04em;margin:13px 0}
+.tempusVideoCaption p{font-size:13px;line-height:1.7;color:#b6c1b4}
+.tempusVideoCaption a{display:inline-flex;min-height:44px;align-items:center;color:var(--lime);font-size:13px;font-weight:700;border-bottom:1px solid currentColor}
+.tempusVideoCaption a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}
+.tempusProcess{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:35px;margin-top:35px;padding:32px 0;border-top:1px solid var(--line)}
+.tempusProcess h3{font:650 clamp(25px,3.5vw,42px)/1.15 'Space Grotesk',sans-serif;letter-spacing:-.045em;margin:14px 0}
+.tempusProcess>p{font-size:15px;line-height:1.8;color:#aeb9ad}
+@media(max-width:750px){.tempusVideoGrid,.tempusProcess{grid-template-columns:1fr}.tempusShowcase{padding:48px 0 68px}.tempusProcess{gap:8px}.tempusVideoCaption{padding:20px}}
