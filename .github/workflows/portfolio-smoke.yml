@@ -36,7 +36,7 @@ jobs:
         run: sleep 75
       - name: Check public pages and images
         id: http_check
-        run: node scripts/smoke.mjs https://congyuzhao.com
+        run: node scripts/smoke.mjs https://congyuzhao.com 2>&1 | tee smoke-results.log
       - name: Summarize HTTP check
         if: always()
         env:
@@ -44,7 +44,12 @@ jobs:
         run: |
           echo "### HTTP routes and assets" >> "$GITHUB_STEP_SUMMARY"
           echo "Result: **$CHECK_OUTCOME**" >> "$GITHUB_STEP_SUMMARY"
-          echo "Coverage: 8 public pages (including SEO metadata), 7 images, 404 recovery, sitemap.xml and robots.txt." >> "$GITHUB_STEP_SUMMARY"
+          echo "Coverage: public pages, SEO metadata, current screenshot files, local videos, project media references, 404 recovery, sitemap and robots." >> "$GITHUB_STEP_SUMMARY"
+          if [ -f smoke-results.log ]; then
+            echo '~~~text' >> "$GITHUB_STEP_SUMMARY"
+            tail -n 8 smoke-results.log >> "$GITHUB_STEP_SUMMARY"
+            echo '~~~' >> "$GITHUB_STEP_SUMMARY"
+          fi
 
   browser:
     name: Chromium mobile and desktop
@@ -72,7 +77,7 @@ jobs:
         run: |
           echo "### Chromium browser QA" >> "$GITHUB_STEP_SUMMARY"
           echo "Result: **$CHECK_OUTCOME**" >> "$GITHUB_STEP_SUMMARY"
-          echo "Coverage: 8 pages at 320px, 390px and 1440px." >> "$GITHUB_STEP_SUMMARY"
+          echo "Coverage: 8 pages at 320px, 390px and 1440px, including actual Aspire 101 iOS screenshots and Tempus source media." >> "$GITHUB_STEP_SUMMARY"
           echo "Screenshots are attached to the workflow run when available." >> "$GITHUB_STEP_SUMMARY"
       - name: Upload QA screenshots
         if: always()
