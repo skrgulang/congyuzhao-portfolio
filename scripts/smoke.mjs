@@ -40,7 +40,10 @@ async function check(path, expectedText) {
       const html = await response.text();
       if (!html.includes(expectedText)) throw new Error('Missing expected content: ' + expectedText);
       const canonical = [...html.matchAll(/<link\b[^>]*rel="canonical"[^>]*>/g)].map(match => match[0]);
-      const expectedCanonical = new URL(path, base);
+      // A local preview still publishes production canonicals; compare to the public origin.
+      const canonicalOrigin = process.env.CANONICAL_ORIGIN ||
+        (['localhost','127.0.0.1'].includes(new URL(base).hostname) ? 'https://congyuzhao.com' : base);
+      const expectedCanonical = new URL(path, canonicalOrigin);
       const actualHref = canonical[0]?.match(/\bhref="([^"]+)"/)?.[1];
       const normalize = value => {
         const url = new URL(value);
