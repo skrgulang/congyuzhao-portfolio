@@ -842,3 +842,7 @@ html{scroll-padding-top:24px}
 }
 @media(max-width:420px){.aspireRealScreens{gap:13px}.aspireRealScreen{flex-basis:min(77vw,290px)}}
 @media(prefers-reduced-motion:reduce){.aspireRealScreens{scroll-behavior:auto}}
+
+/* Retain the original source link in the consolidated Tempus homepage section. */
+.tempusHomeFootnote a{color:var(--lime);text-decoration:underline;text-underline-offset:4px}
+.tempusHomeFootnote a:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
