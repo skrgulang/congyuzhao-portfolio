@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "check:live": "node scripts/smoke.mjs"
+    "check:live": "node scripts/smoke.mjs",
+    "check:media": "node scripts/check-local-media.mjs"
   },
   "dependencies": {
     "next": "15.5.24",
