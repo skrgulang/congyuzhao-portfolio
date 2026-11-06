@@ -143,6 +143,14 @@ try {
         if(test.name==='aspire'){
           const gallery=page.locator('#aspire-ios');
           const images=gallery.locator('.aspireRealScreens img');
+          if(device.isMobile){
+            const scrolling=await gallery.locator('.aspireRealScreens').evaluate(el=>({
+              display:getComputedStyle(el).display,overflow:getComputedStyle(el).overflowX,
+              scrollWidth:el.scrollWidth,clientWidth:el.clientWidth
+            }));
+            if(scrolling.display!=='flex'||scrolling.scrollWidth<=scrolling.clientWidth)
+              throw new Error('Mobile iOS screenshot gallery must be horizontally scrollable: '+JSON.stringify(scrolling));
+          }
           if(await images.count()!==7) throw new Error('Expected seven actual iOS screenshots');
           for(let i=0;i<7;i++){
             const img=images.nth(i);
@@ -174,6 +182,9 @@ try {
         }
         if(test.name==='tempus'){
           const section=page.locator('.tempusShowcase');
+          if(await section.count()!==1)throw new Error('Expected exactly one Tempus media showcase');
+          if(await page.locator('.tempusCaseStudy').count()>0)
+            throw new Error('Duplicate Tempus video archive was rendered');
           const frames=section.locator('.tempusVideoFrame iframe');
           if(await frames.count()!==2)throw new Error('Expected two original Tempus YouTube embeds');
           const urls=await frames.evaluateAll(elements=>elements.map(el=>el.src));
