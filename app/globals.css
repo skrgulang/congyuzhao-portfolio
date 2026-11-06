@@ -828,3 +828,17 @@ html{scroll-padding-top:24px}
 #tempus-video{scroll-margin-top:30px}
 @media(max-width:850px){.tempusHomeTop{grid-template-columns:1fr}.tempusVideoGrid{grid-template-columns:1fr}.tempusProcessGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.tempusHome{padding:46px 0 58px}.tempusHomeActions{align-items:flex-start;flex-direction:column}.tempusCaseStudy{padding:45px 0 65px}.tempusProcessGrid{grid-template-columns:1fr}.tempusVideoCopy{padding:20px}.tempusProcessGrid article{padding:20px}}
+
+/* Real app screenshots: readable swipeable cards on narrow phones, full grid on desktop. */
+.aspireRealSwipeHint{font-size:13px;line-height:1.65;color:#b3c0b3;margin:14px 0 3px}
+@media(max-width:680px){
+ .aspireRealScreens{display:flex;grid-template-columns:none;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding:0 8px;padding:6px 5px 22px;margin:14px -5px 29px;-webkit-overflow-scrolling:touch}
+ .aspireRealScreen{flex:0 0 min(72vw,300px);scroll-snap-align:start}
+ .aspireRealScreen img{width:100%;height:auto;object-fit:contain}
+ .aspireRealScreen figcaption{padding:12px 4px}
+ .aspireRealScreens::-webkit-scrollbar{height:6px}
+ .aspireRealScreens::-webkit-scrollbar-thumb{background:#7d704d;border-radius:6px}
+ .aspireRealScreens::-webkit-scrollbar-track{background:#23251d;border-radius:6px}
+}
+@media(max-width:420px){.aspireRealScreens{gap:13px}.aspireRealScreen{flex-basis:min(77vw,290px)}}
+@media(prefers-reduced-motion:reduce){.aspireRealScreens{scroll-behavior:auto}}
