@@ -9,6 +9,7 @@ on:
       - 'public/**'
       - 'scripts/smoke.mjs'
       - 'scripts/browser-qa.mjs'
+      - 'scripts/check-local-media.mjs'
       - 'package.json'
       - '.github/workflows/portfolio-smoke.yml'
   schedule:
@@ -22,6 +23,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  media:
+    name: Offline original media integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify referenced local iOS screenshots and game videos
+        run: npm run check:media
   smoke:
     name: HTTP routes and assets
     runs-on: ubuntu-latest
