@@ -109,7 +109,31 @@ async function checkVideo(path) {
     return false;
   }
 }
+async function checkShowcaseMarkup(path, expectedAssets) {
+  try {
+    const response = await fetch(new URL(path, base), {
+      signal: AbortSignal.timeout(15000),
+      headers: {'user-agent': 'portfolio-showcase-audit/1.0'}
+    });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const html = await response.text();
+    const missing = expectedAssets.filter(asset => !html.includes(asset));
+    if (missing.length) throw new Error('Media not referenced in rendered HTML: ' + missing.join(', '));
+    console.log('PASS', path, '(showcase links)');
+    return true;
+  } catch(error) {
+    console.error('FAIL', path, '-', error.message);
+    return false;
+  }
+}
+const showcasePages = [
+  ['/', ['aspire-ios-home.webp','tempus-building-lineart-poster.webp','https://www.youtube.com/watch?v=_tbFyFfGuR0']],
+  ['/projects', ['aspire-ios-home.webp','tempus-building-lineart-poster.webp']],
+  ['/projects/aspire-101', ['aspire-ios-real-gallery.webp',...['home','campus-pulse','browse','create-post','inbox','profile','settings'].map(name=>'aspire-ios-'+name+'.webp')]],
+  ['/projects/tempus-lineus', ['youtube-nocookie.com/embed/_tbFyFfGuR0','youtube-nocookie.com/embed/nZFQaNzNiXE',...['game-pov','building-lineart','geometry-test'].map(name=>'tempus-'+name+'.mp4')]],
+];
 const results = [];
+for (const [path, assets] of showcasePages) results.push(await checkShowcaseMarkup(path, assets));
 for (const [path, text] of pages) results.push(await check(path, text));
 results.push(await checkNotFound());
 results.push(await checkCrawlerFile('/sitemap.xml', '/projects/aspire-101'));
