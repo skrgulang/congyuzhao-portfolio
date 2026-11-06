@@ -73,6 +73,10 @@ try {
           await page.getByRole('button',{name:'Open navigation menu'}).waitFor({state:'visible',timeout:5000});
         }
         if(test.name==='home'){
+          if(await page.locator('section.tempusHome').count()!==1)
+            throw new Error('Homepage must contain exactly one Tempus video showcase');
+          if(await page.locator('section.tempusHome iframe').count()!==2)
+            throw new Error('Homepage Tempus showcase must contain two original videos');
           if(device.isMobile) await menuOpenForAnchor(page);
           await page.locator('#main-navigation').getByRole('link',{name:'About'}).click();
           await page.waitForTimeout(250);
