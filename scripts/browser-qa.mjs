@@ -179,7 +179,7 @@ try {
             }));
             if(!paths.src||!paths.poster)throw new Error('Missing Tempus clip source or poster: '+i);
             for(const mediaPath of [paths.src,paths.poster]){
-              const response=await page.request.get(new URL(mediaPath,base).href,{timeout:15000});
+              const response=await page.request.head(new URL(mediaPath,base).href,{timeout:15000});
               if(!response.ok())throw new Error('Tempus media request failed: '+mediaPath+' HTTP '+response.status());
               const expected=mediaPath.endsWith('.mp4')?'video/mp4':'image/';
               if(!(response.headers()['content-type']||'').startsWith(expected))
