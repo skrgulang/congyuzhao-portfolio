@@ -846,3 +846,11 @@ html{scroll-padding-top:24px}
 /* Retain the original source link in the consolidated Tempus homepage section. */
 .tempusHomeFootnote a{color:var(--lime);text-decoration:underline;text-underline-offset:4px}
 .tempusHomeFootnote a:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+
+/* Visible keyboard location for the real iOS screen carousel. */
+.aspireRealScreens:focus{outline:none}
+.aspireRealScreens:focus-visible{outline:2px solid var(--lime);outline-offset:5px;border-radius:12px}
+@media(max-width:680px){
+ .aspireRealScreens{scrollbar-width:thin;scrollbar-color:#9e8d5c #23251d}
+ .aspireRealScreens:focus-visible{outline-offset:1px}
+}
