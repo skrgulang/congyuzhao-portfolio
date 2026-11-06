@@ -105,6 +105,11 @@ try {
           await page.getByText('Showing 1 of 6 projects').waitFor({state:'visible'});
           if((await page.getByRole('button',{name:/^Research/}).getAttribute('aria-pressed'))!=='true')
             throw new Error('Direct category URL did not initialize the Research filter');
+          // Restore the unfiltered page before capturing the canonical homepage screenshot.
+          await page.getByRole('button',{name:/^All/}).click();
+          await page.getByText('Showing 6 of 6 projects').waitFor({state:'visible'});
+          await page.waitForURL(url=>!url.searchParams.has('category'));
+          await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
         }
         if(test.name==='fish'){
           const gallery=page.getByRole('region',{name:'Fish and Ships game images'});
