@@ -72,7 +72,10 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Test responsive pages and interactions
         id: browser_check
-        run: node scripts/browser-qa.mjs https://congyuzhao.com
+        shell: bash
+        run: |
+          set -o pipefail
+          node scripts/browser-qa.mjs https://congyuzhao.com 2>&1 | tee browser-results.log
       - name: Summarize browser check
         if: always()
         env:
@@ -82,6 +85,11 @@ jobs:
           echo "Result: **$CHECK_OUTCOME**" >> "$GITHUB_STEP_SUMMARY"
           echo "Coverage: 8 pages at 320px, 390px and 1440px, including actual Aspire 101 iOS screenshots and Tempus source media." >> "$GITHUB_STEP_SUMMARY"
           echo "Screenshots are attached to the workflow run when available." >> "$GITHUB_STEP_SUMMARY"
+          if [ -f browser-results.log ]; then
+            echo '~~~text' >> "$GITHUB_STEP_SUMMARY"
+            tail -n 35 browser-results.log >> "$GITHUB_STEP_SUMMARY"
+            echo '~~~' >> "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Upload QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
