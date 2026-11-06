@@ -36,7 +36,10 @@ jobs:
         run: sleep 75
       - name: Check public pages and images
         id: http_check
-        run: node scripts/smoke.mjs https://congyuzhao.com 2>&1 | tee smoke-results.log
+        shell: bash
+        run: |
+          set -o pipefail
+          node scripts/smoke.mjs https://congyuzhao.com 2>&1 | tee smoke-results.log
       - name: Summarize HTTP check
         if: always()
         env:
