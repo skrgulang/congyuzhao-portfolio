@@ -159,8 +159,12 @@ try {
           }
           const hero=gallery.locator('.aspireRealGalleryLead img');
           await hero.scrollIntoViewIfNeeded();
-          if(!(await hero.evaluate(el=>el.complete&&el.naturalWidth>0)))
-            throw new Error('Actual iOS screenshot collage did not load');
+          const collageLoaded=await hero.evaluate(async el=>{
+            try{await Promise.race([el.decode(),new Promise((_,reject)=>setTimeout(()=>reject(new Error('timeout')),8000))]);}
+            catch{return false;}
+            return el.complete&&el.naturalWidth>0;
+          });
+          if(!collageLoaded)throw new Error('Actual iOS screenshot collage did not load');
           await gallery.screenshot({path:'qa-screenshots/'+device.name+'-aspire-real-ios.png',animations:'disabled'});
         }
         if(test.name==='tempus'){
