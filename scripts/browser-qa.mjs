@@ -154,6 +154,19 @@ try {
             }));
             if(scrolling.display!=='flex'||scrolling.scrollWidth<=scrolling.clientWidth)
               throw new Error('Mobile iOS screenshot gallery must be horizontally scrollable: '+JSON.stringify(scrolling));
+            const scrollRegion=gallery.locator('.aspireRealScreens');
+            if((await scrollRegion.getAttribute('tabindex'))!=='0')
+              throw new Error('Mobile iOS gallery must be keyboard focusable');
+            await scrollRegion.focus();
+            if(!(await scrollRegion.evaluate(el=>document.activeElement===el)))
+              throw new Error('Focus could not enter the screenshot gallery');
+            const startingOffset=await scrollRegion.evaluate(el=>el.scrollLeft);
+            await page.keyboard.press('ArrowRight');
+            await page.waitForTimeout(300);
+            const endingOffset=await scrollRegion.evaluate(el=>el.scrollLeft);
+            if(endingOffset<=startingOffset)
+              throw new Error('ArrowRight did not scroll the focused iOS gallery');
+            await scrollRegion.evaluate(el=>el.scrollTo({left:0,behavior:'instant'}));
           }
           if(await images.count()!==7) throw new Error('Expected seven actual iOS screenshots');
           for(let i=0;i<7;i++){
