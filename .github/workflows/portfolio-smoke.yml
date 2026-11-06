@@ -34,6 +34,77 @@ jobs:
           node-version: '22'
       - name: Verify referenced local iOS screenshots and game videos
         run: npm run check:media
+  local-browser:
+    name: Local build and Chromium visual QA
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install website dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build actual Next.js pages
+        run: npm run build
+      - name: Install Chromium testing tools
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Start built website and wait for HTTP response
+        shell: bash
+        run: |
+          set -euo pipefail
+          nohup npm run start -- --hostname 127.0.0.1 --port 3000 > local-next-server.log 2>&1 &
+          echo $! > local-next-server.pid
+          for attempt in $(seq 1 40); do
+            if curl --silent --fail --output /dev/null http://127.0.0.1:3000/; then
+              echo "Local website is ready"
+              exit 0
+            fi
+            sleep 2
+          done
+          cat local-next-server.log
+          exit 1
+      - name: Verify local routes and original media
+        id: local_http_check
+        shell: bash
+        run: |
+          set -o pipefail
+          node scripts/smoke.mjs http://127.0.0.1:3000 2>&1 | tee local-smoke.log
+      - name: Verify actual render and interaction in Chromium
+        id: local_browser_check
+        shell: bash
+        run: |
+          set -o pipefail
+          node scripts/browser-qa.mjs http://127.0.0.1:3000 2>&1 | tee local-browser.log
+      - name: Summarize locally rendered browser QA
+        if: always()
+        env:
+          HTTP_RESULT: ${{ steps.local_http_check.outcome }}
+          BROWSER_RESULT: ${{ steps.local_browser_check.outcome }}
+        run: |
+          echo "### Local Next.js + Chromium QA" >> "$GITHUB_STEP_SUMMARY"
+          echo "HTTP routes and assets: **$HTTP_RESULT**" >> "$GITHUB_STEP_SUMMARY"
+          echo "Chromium rendering and interactions: **$BROWSER_RESULT**" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f local-browser.log ]; then
+            echo '~~~text' >> "$GITHUB_STEP_SUMMARY"
+            tail -n 40 local-browser.log >> "$GITHUB_STEP_SUMMARY"
+            echo '~~~' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Upload local QA screenshots and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-local-browser-qa
+          path: |
+            qa-screenshots/
+            local-smoke.log
+            local-browser.log
+            local-next-server.log
+          if-no-files-found: ignore
+          retention-days: 14
+
   smoke:
     name: HTTP routes and assets
     runs-on: ubuntu-latest
