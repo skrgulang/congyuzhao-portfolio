@@ -135,6 +135,59 @@ try {
             return Boolean(trigger && document.activeElement===trigger);
           },null,{timeout:5000});
         }
+        if(test.name==='aspire'){
+          const gallery=page.locator('#aspire-ios');
+          const images=gallery.locator('.aspireRealScreens img');
+          if(await images.count()!==7) throw new Error('Expected seven actual iOS screenshots');
+          for(let i=0;i<7;i++){
+            const img=images.nth(i);
+            await img.scrollIntoViewIfNeeded();
+            await img.evaluate(async element=>{
+              if(!element.complete) await new Promise(resolve=>{
+                element.addEventListener('load',resolve,{once:true});
+                element.addEventListener('error',resolve,{once:true});
+                setTimeout(resolve,8000);
+              });
+            });
+            const asset=await img.evaluate(element=>({
+              src:element.currentSrc||element.src,loaded:element.complete&&element.naturalWidth>0,
+              width:element.getBoundingClientRect().width,
+              height:element.getBoundingClientRect().height
+            }));
+            if(!asset.loaded||asset.width<80||asset.height<150)
+              throw new Error('Broken or collapsed iOS screenshot: '+JSON.stringify(asset));
+          }
+          const hero=gallery.locator('.aspireRealGalleryLead img');
+          await hero.scrollIntoViewIfNeeded();
+          if(!(await hero.evaluate(el=>el.complete&&el.naturalWidth>0)))
+            throw new Error('Actual iOS screenshot collage did not load');
+          await gallery.screenshot({path:'qa-screenshots/'+device.name+'-aspire-real-ios.png',animations:'disabled'});
+        }
+        if(test.name==='tempus'){
+          const section=page.locator('.tempusShowcase');
+          const frames=section.locator('.tempusVideoFrame iframe');
+          if(await frames.count()!==2)throw new Error('Expected two original Tempus YouTube embeds');
+          const urls=await frames.evaluateAll(elements=>elements.map(el=>el.src));
+          for(const id of ['_tbFyFfGuR0','nZFQaNzNiXE'])
+            if(!urls.some(url=>url.includes(id)))throw new Error('Missing Tempus YouTube embed: '+id);
+          const videos=section.locator('.tempusClipGrid video');
+          if(await videos.count()!==3)throw new Error('Expected three local Tempus videos');
+          for(let i=0;i<3;i++){
+            const paths=await videos.nth(i).evaluate(video=>({
+              src:video.querySelector('source')?.getAttribute('src'),
+              poster:video.getAttribute('poster')
+            }));
+            if(!paths.src||!paths.poster)throw new Error('Missing Tempus clip source or poster: '+i);
+            for(const mediaPath of [paths.src,paths.poster]){
+              const response=await page.request.get(new URL(mediaPath,base).href,{timeout:15000});
+              if(!response.ok())throw new Error('Tempus media request failed: '+mediaPath+' HTTP '+response.status());
+              const expected=mediaPath.endsWith('.mp4')?'video/mp4':'image/';
+              if(!(response.headers()['content-type']||'').startsWith(expected))
+                throw new Error('Unexpected Tempus media type for '+mediaPath);
+            }
+          }
+          await section.screenshot({path:'qa-screenshots/'+device.name+'-tempus-media.png',animations:'disabled'});
+        }
         await page.screenshot({path:'qa-screenshots/'+device.name+'-'+test.name+'.png',fullPage:true,animations:'disabled'});
         console.log('PASS',label);
       } catch(e) {
