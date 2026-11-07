@@ -116,6 +116,13 @@ try {
           await page.waitForURL(url=>!url.searchParams.has('category'));
           await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
         }
+        if(test.name==='projects'||test.name==='fish'||test.name==='wildfire'||test.name==='studio'||test.name==='tempus'||test.name==='gameplay'||test.name==='aspire'){
+          const resumeLink=page.locator('.caseNav .caseResumeLink');
+          if((await resumeLink.getAttribute('href'))!=='/Congyu_Zhao_Resume_Uploaded.pdf')
+            throw new Error('Missing direct Resume PDF action in project header');
+          if(!(await resumeLink.isVisible()))
+            throw new Error('Project header Resume action not visible on '+device.name);
+        }
         if(test.name==='resume'){
           await page.getByRole('heading',{name:/Resume/}).waitFor({state:'visible'});
           await page.getByText('Expected May 2028').waitFor({state:'visible'});
