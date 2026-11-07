@@ -12,11 +12,15 @@ const [home,index,project,aspire]=await Promise.all([
 const screens=['home','campus-pulse','browse','create-post','inbox','profile','settings'];
 const clips=['game-pov','building-lineart','geometry-test'];
 const assets=[
+ 'public/Congyu_Zhao_Resume.pdf',
  'public/showcase/aspire-ios-real-gallery.webp',
  ...screens.map(name=>'public/showcase/aspire-ios-'+name+'.webp'),
  ...clips.flatMap(name=>['public/showcase/tempus-'+name+'.mp4','public/showcase/tempus-'+name+'-poster.webp']),
  'public/showcase/fish-gameplay-hq.jpg'
 ];
+const resumePdf=await readFile(join(root,'public/Congyu_Zhao_Resume.pdf'));
+assert(resumePdf.subarray(0,5).toString()==='%PDF-','The public resume must be a valid PDF file');
+console.log('PASS downloadable resume PDF signature');
 for(const path of assets){
  const file=await stat(join(root,path));
  assert(file.isFile()&&file.size>0,'Missing or empty media: '+path);
