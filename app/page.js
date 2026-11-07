@@ -11,9 +11,11 @@ const projects = [
   {id:'systems',n:'06',name:'Gameplay Systems',type:'Interaction · Prototyping',category:'Games',status:'PROJECT STUDY',desc:'Unity prototypes covering puzzle states, objectives, triggers and player feedback.',contribution:'Game logic · Interface states · Prototyping',stack:['Unity','C#','Interaction design'],symbol:'⌘',tone:'green',slug:'gameplay-systems'}
 ];
 const experience=[
-  {year:'2026 — Now',role:'Founder · Aspire 101',org:'Cloudora Labs',detail:'Building a student-centered product across web, mobile, marketplace flows, and campus rollout.'},
-  {year:'2026',role:'Technology & ERP Intern',org:'Belong Automotive Technology',detail:'Evaluated business software workflows, inventory, finance, and internal systems.'},
-  {year:'2025',role:'Graphic Design Intern',org:'Narb AI',detail:'Visual communication, graphic design, and creative production.'}
+  {year:'SEP 2026 — NOW',role:'Founder · Aspire 101',org:'Cloudora Labs',detail:'Leading development of a campus marketplace across web, Expo / React Native, Supabase and testing workflows.'},
+  {year:'MAR — SEP 2026',role:'ERP Systems & Web Design Intern',org:'Belong Automotive Technology',detail:'Researched ERP integration and helped troubleshoot data migration and cross-system workflows.'},
+  {year:'AUG 2024 — DEC 2025',role:'Undergraduate Data Researcher',org:'Purdue Data Mine',detail:'Analyzed 100K+ agricultural data rows with R, data.table and Jupyter for Corteva Agriscience research.'},
+  {year:'JUL — OCT 2025',role:'Graphic Designer Intern',org:'Narb',detail:'Designed 15+ digital assets using Figma and Adobe tools and supported social media reporting.'},
+  {year:'JUN — AUG 2025',role:'Marketing Research Intern',org:'AXENTRA OS',detail:'Compared industry and product trends using Excel and presented research findings.'}
 ];
 export default function Home(){
  const [filter,setFilter]=useState('All');
