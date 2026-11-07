@@ -120,6 +120,12 @@ try {
           await page.getByRole('heading',{name:/Resume/}).waitFor({state:'visible'});
           await page.getByText('Expected May 2028').waitFor({state:'visible'});
           await page.getByText('Purdue Data Mine').waitFor({state:'visible'});
+          const pdf=page.getByRole('link',{name:/Download PDF/});
+          if((await pdf.getAttribute('href'))!=='/Congyu_Zhao_Resume.pdf')
+            throw new Error('Download PDF link does not point to the public resume');
+          const pdfResponse=await page.request.get(base+'/Congyu_Zhao_Resume.pdf');
+          if(!pdfResponse.ok()||!(pdfResponse.headers()['content-type']||'').includes('application/pdf'))
+            throw new Error('Resume PDF failed to download in browser QA');
           const logo=page.locator('.newLogo img');
           if(!(await logo.evaluate(el=>el.complete&&el.naturalWidth>0)))
             throw new Error('Resume CZ monogram failed to load');
