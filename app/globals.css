@@ -854,3 +854,43 @@ html{scroll-padding-top:24px}
  .aspireRealScreens{scrollbar-width:thin;scrollbar-color:#9e8d5c #23251d}
  .aspireRealScreens:focus-visible{outline-offset:1px}
 }
+
+/* Personal CZ mark: vector-stable at 320px through desktop and retina. */
+.newLogo{display:inline-flex;align-items:center;justify-content:flex-start;min-width:62px;text-decoration:none}
+.newLogo img{display:block;width:clamp(62px,6vw,84px);height:auto;max-height:44px}
+.newLogo:focus-visible{outline:2px solid var(--lime);outline-offset:6px;border-radius:5px}
+
+/* Resume: editorial single-column page based on documented experience. */
+.resumePage{min-height:100vh;background:#0d100d;color:#f2f1e9}
+.resumeContent{padding-top:clamp(64px,9vw,145px);padding-bottom:80px}
+.resumeLead{max-width:950px;padding:0 0 84px}
+.resumeLead h1{font:700 clamp(74px,12vw,175px)/.95 'Space Grotesk',sans-serif;letter-spacing:-.085em;margin:24px 0}
+.resumeLead h1 span{color:var(--lime)}
+.resumeLead>p:not(.newEyebrow){color:#bac6b9;font-size:clamp(16px,2vw,22px);line-height:1.55;max-width:750px}
+.resumeLeadLinks{display:flex;gap:16px 28px;flex-wrap:wrap;margin-top:35px}
+.resumeLeadLinks a,.resumeEnd a{color:var(--lime);font-size:14px;text-decoration:underline;text-underline-offset:7px;min-height:36px;display:inline-flex;align-items:center}
+.resumeSection{display:grid;grid-template-columns:minmax(175px,.3fr) minmax(0,1fr);gap:clamp(24px,5vw,75px);padding:47px 0;border-top:1px solid rgba(235,242,224,.17)}
+.resumeSectionLabel{color:var(--lime);font-size:11px;font-weight:750;letter-spacing:.16em;padding-top:7px}
+.resumeSection h2{font:650 clamp(25px,3.2vw,38px)/1.15 'Space Grotesk',sans-serif;letter-spacing:-.043em;margin:0 0 13px}
+.resumeSection p,.resumeSection li{font-size:15px;line-height:1.72;color:#c5cfc3}
+.resumeSection strong{color:#f2f1e9}
+.resumeSubhead{color:#e7e7da!important;font-weight:650;margin:8px 0!important}
+.resumeQuiet{color:#aab6a9!important}
+.resumeEntry{margin-bottom:39px}
+.resumeEntry:last-child{margin-bottom:0}
+.resumeEntryHead{display:flex;justify-content:space-between;align-items:start;gap:20px}
+.resumeEntryHead h2 a{color:inherit;text-decoration:none}
+.resumeEntryHead h2 a:hover,.resumeEntryHead h2 a:focus-visible{color:var(--lime)}
+.resumeEntryHead small{flex:0 0 auto;color:#a7b5a6;font-size:12px;padding-top:5px}
+.resumeEntry ul{padding-left:19px;margin:16px 0 0}
+.resumeEntry li+li{margin-top:8px}
+.resumeEnd{display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;border-top:1px solid rgba(235,242,224,.17);padding-top:30px}
+.resumeEnd p{font-size:12px;color:#9caa9b;line-height:1.7}
+@media(max-width:720px){
+ .resumeContent{padding-top:65px}
+ .resumeLead{padding-bottom:45px}
+ .resumeSection{grid-template-columns:1fr;gap:22px;padding:35px 0}
+ .resumeEntryHead{flex-direction:column;gap:0}
+ .resumeEntryHead small{padding:0;margin-bottom:7px}
+ .resumeLeadLinks{gap:12px 18px}
+}
