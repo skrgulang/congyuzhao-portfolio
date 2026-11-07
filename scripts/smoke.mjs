@@ -137,7 +137,25 @@ const showcasePages = [
   ['/projects/aspire-101', ['aspire-ios-real-gallery.webp',...['home','campus-pulse','browse','create-post','inbox','profile','settings'].map(name=>'aspire-ios-'+name+'.webp')]],
   ['/projects/tempus-lineus', ['youtube-nocookie.com/embed/_tbFyFfGuR0','youtube-nocookie.com/embed/nZFQaNzNiXE',...['game-pov','building-lineart','geometry-test'].map(name=>'tempus-'+name+'.mp4')]],
 ];
+async function checkResumePdf(){
+ const path='/Congyu_Zhao_Resume.pdf';
+ try{
+  const response=await fetch(new URL(path,base),{signal:AbortSignal.timeout(15000)});
+  if(!response.ok)throw new Error('HTTP '+response.status);
+  if(!(response.headers.get('content-type')||'').includes('application/pdf'))
+   throw new Error('Expected application/pdf response');
+  const bytes=new Uint8Array(await response.arrayBuffer());
+  if(bytes.length<1000||String.fromCharCode(...bytes.slice(0,5))!=='%PDF-')
+   throw new Error('PDF file missing or invalid');
+  console.log('PASS downloadable PDF resume',bytes.length+' bytes');
+  return true;
+ }catch(error){
+  console.error('FAIL downloadable PDF resume',error.message);
+  return false;
+ }
+}
 const results = [];
+results.push(await checkResumePdf());
 for (const [path, assets] of showcasePages) results.push(await checkShowcaseMarkup(path, assets));
 for (const [path, text] of pages) results.push(await check(path, text));
 results.push(await checkNotFound());
