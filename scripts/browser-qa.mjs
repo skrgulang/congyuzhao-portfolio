@@ -7,6 +7,7 @@ const base = (process.argv[2] || 'https://congyuzhao.com').replace(/\/$/, '');
 const cases = [
   { name: 'home', path: '/' },
   { name: 'projects', path: '/projects' },
+  { name: 'resume', path: '/resume' },
   { name: 'aspire', path: '/projects/aspire-101' },
   { name: 'fish', path: '/projects/fish-and-ships' },
   { name: 'wildfire', path: '/projects/wildfire-evacuation-simulator' },
@@ -114,6 +115,14 @@ try {
           await page.getByText('Showing 6 of 6 projects').waitFor({state:'visible'});
           await page.waitForURL(url=>!url.searchParams.has('category'));
           await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+        }
+        if(test.name==='resume'){
+          await page.getByRole('heading',{name:/Resume/}).waitFor({state:'visible'});
+          await page.getByText('Expected May 2028').waitFor({state:'visible'});
+          await page.getByText('Purdue Data Mine').waitFor({state:'visible'});
+          const logo=page.locator('.newLogo img');
+          if(!(await logo.evaluate(el=>el.complete&&el.naturalWidth>0)))
+            throw new Error('Resume CZ monogram failed to load');
         }
         if(test.name==='fish'){
           const gallery=page.getByRole('region',{name:'Fish and Ships game images'});
