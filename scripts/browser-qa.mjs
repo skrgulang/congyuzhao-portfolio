@@ -134,6 +134,14 @@ try {
           const primaryResume=page.locator('.heroButtons a').filter({hasText:'Resume'});
           if((await primaryResume.getAttribute('href'))!=='/Congyu_Zhao_Resume_Uploaded.pdf')
             throw new Error('Homepage Resume CTA must open the supplied PDF directly');
+          const headerResume=page.locator('.newNav a.navResume');
+          if((await headerResume.getAttribute('href'))!=='/Congyu_Zhao_Resume_Uploaded.pdf')
+            throw new Error('Header Resume button must target the PDF');
+          const resumeVisible=await headerResume.isVisible();
+          if(device.isMobile&&!resumeVisible)
+            throw new Error('Resume button must be visible in the mobile top bar without opening the menu');
+          if(!device.isMobile&&resumeVisible)
+            throw new Error('Mobile Resume shortcut must not duplicate desktop navigation');
           const footerResume=page.locator('.newFooter a.footerResume');
           if((await footerResume.getAttribute('href'))!=='/Congyu_Zhao_Resume_Uploaded.pdf')
             throw new Error('Footer Resume link must open the supplied PDF directly');
