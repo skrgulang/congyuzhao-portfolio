@@ -901,3 +901,20 @@ html{scroll-padding-top:24px}
 .resumePdfPreview{color:var(--lime);font-weight:650;font-size:14px;text-decoration:underline;text-underline-offset:5px}
 .resumePdfPreview:focus-visible,.resumePdfDownload:focus-visible{outline:2px solid var(--lime);outline-offset:5px}
 @media(max-width:440px){.resumeDownloadActions{align-items:stretch;flex-direction:column}.resumeDownloadActions .resumePdfDownload{width:100%}.resumePdfPreview{padding:10px 0}}
+
+/* Resume is a direct, visible action on narrow phones (without opening navigation). */
+.navResume{display:none;align-items:center;justify-content:center;gap:9px;white-space:nowrap;min-height:42px;padding:10px 16px;border:1px solid rgba(206,184,136,.6);border-radius:999px;color:#f2e4bf;background:rgba(206,184,136,.09);font-size:13px;font-weight:700;text-decoration:none;transition:background .2s,border-color .2s}
+.navResume:hover{background:rgba(206,184,136,.2);border-color:#ceb888}
+.navResume:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+.footerResume{color:var(--lime);text-decoration:underline;text-underline-offset:5px;white-space:nowrap}
+.footerResume:hover,.footerResume:focus-visible{color:#f0e0b9}
+@media(max-width:650px){
+ .newNav .navContact{display:none}
+ .newNav .navResume{display:inline-flex;margin-left:auto}
+ .newNav .newLogo{flex:0 0 auto}
+ .newNav .menuToggle{flex:0 0 44px}
+}
+@media(max-width:350px){
+ .newNav .navResume{padding:10px 11px;font-size:12px}
+ .newNav{gap:9px}
+}
