@@ -121,14 +121,22 @@ try {
           await page.getByText('Expected May 2028').waitFor({state:'visible'});
           await page.getByText('Purdue Data Mine').waitFor({state:'visible'});
           const pdf=page.getByRole('link',{name:/Download PDF/});
-          if((await pdf.getAttribute('href'))!=='/Congyu_Zhao_Resume.pdf')
+          if((await pdf.getAttribute('href'))!=='/Congyu_Zhao_Resume_Uploaded.pdf')
             throw new Error('Download PDF link does not point to the public resume');
-          const pdfResponse=await page.request.get(base+'/Congyu_Zhao_Resume.pdf');
+          const pdfResponse=await page.request.get(base+'/Congyu_Zhao_Resume_Uploaded.pdf');
           if(!pdfResponse.ok()||!(pdfResponse.headers()['content-type']||'').includes('application/pdf'))
             throw new Error('Resume PDF failed to download in browser QA');
           const logo=page.locator('.newLogo img');
           if(!(await logo.evaluate(el=>el.complete&&el.naturalWidth>0)))
             throw new Error('Resume CZ monogram failed to load');
+        }
+        if(test.name==='home'){
+          const primaryResume=page.locator('.heroButtons a').filter({hasText:'Resume'});
+          if((await primaryResume.getAttribute('href'))!=='/Congyu_Zhao_Resume_Uploaded.pdf')
+            throw new Error('Homepage Resume CTA must open the supplied PDF directly');
+          const footerResume=page.locator('.newFooter a.footerResume');
+          if((await footerResume.getAttribute('href'))!=='/Congyu_Zhao_Resume_Uploaded.pdf')
+            throw new Error('Footer Resume link must open the supplied PDF directly');
         }
         if(test.name==='fish'){
           const gallery=page.getByRole('region',{name:'Fish and Ships game images'});
