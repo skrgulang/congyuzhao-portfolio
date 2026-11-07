@@ -32,4 +32,14 @@ for(const id of ['_tbFyFfGuR0','nZFQaNzNiXE'])assert(project.includes('embed/'+i
 for(const name of clips){
  assert(project.includes('tempus-'+name+'.mp4')&&project.includes('tempus-'+name+'-poster.webp'),'Missing local Tempus video or poster: '+name);
 }
+// iOS Safari may render an undecorated north-east arrow as a blue emoji glyph.
+// The text-variation selector U+FE0E keeps portfolio link arrows monochrome.
+for(const [name,source] of [
+ ['app/page.js',home],['app/projects/page.js',index],
+ ['app/projects/[slug]/page.js',project],['app/components/AspireCaseStudy.jsx',aspire],
+ ['app/components/ProjectMediaGallery.jsx',await read('app/components/ProjectMediaGallery.jsx')]
+]){
+ assert(!/↗(?!\uFE0E)/u.test(source),'Emoji-prone unqualified link arrow in '+name);
+}
+console.log('PASS text-only link arrows (no blue emoji glyphs).');
 console.log('PASS offline media audit: '+assets.length+' assets and page references.');
