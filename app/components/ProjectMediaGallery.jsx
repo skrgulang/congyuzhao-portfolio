@@ -68,7 +68,7 @@ export default function ProjectMediaGallery(){
     <div className="interactiveGalleryStage" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <button ref={openRef} className="galleryExpand" type="button" onClick={()=>{if(Date.now()-lastSwipeAt.current>450)setExpanded(true)}} aria-label={'View '+frames[active].title+' enlarged'}>
         <img key={frames[active].src} src={frames[active].src} alt={frames[active].title+' — actual work-in-progress footage'} width="1194" height="672" loading="lazy"/>
-        <span className="galleryExpandHint">View larger ↗</span>
+        <span className="galleryExpandHint">View larger ↗︎</span>
       </button>
       <div className="interactiveGalleryOverlay"><span aria-live="polite" aria-atomic="true">{String(active+1).padStart(2,'0')} / {String(frames.length).padStart(2,'0')}</span><strong>{frames[active].title}</strong></div>
       <div className="interactiveGalleryControls">
