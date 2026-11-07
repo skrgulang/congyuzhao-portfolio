@@ -918,3 +918,12 @@ html{scroll-padding-top:24px}
  .newNav .navResume{padding:10px 11px;font-size:12px}
  .newNav{gap:9px}
 }
+
+/* Recruiters can reach the same PDF from every project-page header. */
+.caseNav .caseResumeLink{margin-left:auto;min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border:1px solid rgba(206,184,136,.5);border-radius:999px;color:#eddbaf;font-weight:650;font-size:12px;white-space:nowrap;text-decoration:none}
+.caseNav .caseResumeLink:hover{border-color:#ceb888;background:rgba(206,184,136,.12)}
+.caseNav .caseResumeLink:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+@media(max-width:380px){
+ .caseNav .caseResumeLink{font-size:11px;padding:8px 10px}
+ .caseNav{gap:10px}
+}
