@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 64" role="img" aria-labelledby="title">
+<title id="title">CZ monogram — Congyu Zhao</title>
+<path fill="#f5f5ef" d="M33 9C19 9 10 18 10 32s9 23 23 23c10 0 18-5 22-13l-11-5c-2 5-6 7-11 7-7 0-11-5-11-12s4-12 11-12c5 0 9 3 11 7l11-5C51 14 43 9 33 9Z"/>
+<path fill="#f5f5ef" d="M60 10h51v11L79 44h32v11H59V44l32-23H60V10Z"/>
+<circle cx="121" cy="49" r="6" fill="#ceb888"/>
+</svg>
