@@ -1,0 +1,94 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Times-Roman /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Times-Bold /Encoding /WinAnsiEncoding >>
+endobj
+6 0 obj
+<< /Length 7073 >>
+stream
+0 0 0 rg
+BT /F2 14 Tf 100 Tz 256 754 Td (Congyu Zhao) Tj ET
+BT /F1 9.2 Tf 96 Tz 137 736 Td (West Lafayette, IN 47904 ï zhao1378@purdue.edu ï \(949\)560-8139 ï LinkedIn) Tj ET
+BT /F1 9.2 Tf 96 Tz 244 723 Td (http://congyuzhao.com/) Tj ET
+BT /F2 10.3 Tf 100 Tz 43 702 Td (EDUCATION) Tj ET
+BT /F2 9.2 Tf 100 Tz 43 686 Td (Purdue University | West Lafayette, IN) Tj ET
+BT /F1 9.2 Tf 100 Tz 43 673.95 Td (Bachelor of Science in Computer Graphics Technology; Minor in Management | May 2028) Tj ET
+BT /F1 9.2 Tf 100 Tz 43 661.9 Td (Major GPA: 3.6/4.0) Tj ET
+BT /F1 9.2 Tf 100 Tz 43 649.85 Td (Relevant Courses: Game Development, Computer Graphics, Computer Science, Management, Accounting, Economics.) Tj ET
+BT /F2 10.3 Tf 100 Tz 43 633.8 Td (TECHNICAL PROJECTS) Tj ET
+BT /F2 9.2 Tf 100 Tz 43 617.8 Td (Aspire 101 ó Founder & Technical / Product Lead | Sep 2026 ñ Present) Tj ET
+BT /F1 9.2 Tf 100 Tz 52 605.75 Td (ï  Lead development of a student-focused marketplace spanning web and React Native/Expo apps, using JavaScript and) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 593.6999999999999 Td (Supabase; coordinate product requirements, interface changes, and technical issue tracking across platforms.) Tj ET
+BT /F1 9.2 Tf 94 Tz 52 581.65 Td (ï  Implement and debug registration, email verification, login, listings, search, profiles, in-app messaging, notifications, and) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 569.5999999999999 Td (reporting workflows; review errors across user-facing screens.) Tj ET
+BT /F1 9.2 Tf 100 Tz 52 557.55 Td (ï  Integrate and test Stripe sandbox payments and webhook handling; investigate authentication loops, missing) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 545.4999999999999 Td (order/activity data, navigation defects, and database permission issues.) Tj ET
+BT /F1 9.2 Tf 100 Tz 52 533.4499999999999 Td (ï  Use GitHub to review changes, reproduce bugs, and evaluate web/mobile regression risks; check Supabase) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 521.3999999999999 Td (authentication and authorization behavior, including user-specific messaging and marketplace data access.) Tj ET
+BT /F2 9.2 Tf 100 Tz 43 509.3499999999999 Td (Fish and Ships ó Unity Game Development | Aug 2026 ñ Present) Tj ET
+BT /F1 9.2 Tf 100 Tz 52 497.2999999999999 Td (ï  Write C# gameplay scripts for character and boat movement, interactive objects, and a procedural mesh ocean with) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 485.2499999999999 Td (animated sectional waves rather than rigid whole-surface motion.) Tj ET
+BT /F1 9.2 Tf 100 Tz 52 473.1999999999999 Td (ï  Prototype procedural terrain and environmental systems; test playerñocean and boatñenvironment interactions, tune) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 461.14999999999986 Td (wave movement and collision behavior, and revise gameplay mechanics in response to in-class feedback.) Tj ET
+BT /F2 9.2 Tf 100 Tz 43 449.09999999999985 Td (Tempus Lineus ó Game Programmer, Purdue University | Jan 2025 ñ May 2025) Tj ET
+BT /F1 9.2 Tf 100 Tz 52 437.04999999999984 Td (ï  Program gameplay systems, narrative interactions, and player mechanics in Unreal Engine Blueprints, contributing to a) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 424.99999999999983 Td (team-developed game and coordinating feature integration.) Tj ET
+BT /F1 9.2 Tf 100 Tz 52 412.9499999999998 Td (ï  Playtest and debug gameplay mechanics through repeated team iterations, identify player-interaction issues, and) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 400.8999999999998 Td (collaborate with programming, design, art, and audio teammates on changes to level flow and overall experience.) Tj ET
+BT /F2 10.3 Tf 100 Tz 43 384.8499999999998 Td (WORK EXPERIENCE) Tj ET
+BT /F2 9.2 Tf 100 Tz 43 368.8499999999998 Td (ERP Systems and Web Design Intern at Belong Automotive Technology, LLC | Mar 2026 ñ Sep 2026) Tj ET
+BT /F1 9.2 Tf 100 Tz 52 356.7999999999998 Td (ï  Researched and compared ERP platforms supporting U.S.ñChina operations; mapped integration requirements for) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 344.7499999999998 Td (procurement, inventory, and financial data to improve cross-border workflows.) Tj ET
+BT /F1 9.2 Tf 100 Tz 52 332.69999999999976 Td (ï  Assisted with ERP module configuration and technical troubleshooting, including database migration, cross-system data) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 320.64999999999975 Td (synchronization, deployment compatibility, and version mismatches.) Tj ET
+BT /F2 9.2 Tf 100 Tz 43 308.59999999999974 Td (Undergraduate Data Researcher at Purdue Data Mine | Aug 2024 ñ Dec 2025) Tj ET
+BT /F1 9.2 Tf 99 Tz 52 296.5499999999997 Td (ï  Analyzed 100K+ rows of agricultural data with R, data.table, and Jupyter; contributed findings for Corteva Agriscience.) Tj ET
+BT /F1 9.2 Tf 100 Tz 52 284.4999999999997 Td (ï  Conducted research data collection, cleaning, and exploratory analysis; organized agricultural datasets and prepared) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 272.4499999999997 Td (interpretable summaries to communicate findings to interdisciplinary teammates and project stakeholders.) Tj ET
+BT /F2 9.2 Tf 100 Tz 43 260.39999999999975 Td (Graphic Designer Intern at Narb | Jul 2025 ñ Oct 2025) Tj ET
+BT /F1 9.2 Tf 100 Tz 52 248.3499999999998 Td (ï  Designed 15+ digital assets using Figma and Adobe tools, helping increase campaign engagement by 22%.) Tj ET
+BT /F1 9.2 Tf 100 Tz 52 236.29999999999984 Td (ï  Maintained a weekly social media content calendar with on-time publication across three platforms; used Tableau) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 224.2499999999999 Td (performance tracking to inform campaign improvements.) Tj ET
+BT /F2 9.2 Tf 100 Tz 43 212.19999999999993 Td (Marketing Research Intern at AXENTRA OS | Jun 2025 ñ Aug 2025) Tj ET
+BT /F1 9.2 Tf 99 Tz 52 200.14999999999998 Td (ï  Analyzed industry trends, Shopify product comparisons, and competitor activity using Excel; prepared comparative charts) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 188.10000000000002 Td (and market research reports, translated observations into campaign-positioning recommendations, and presented) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 176.05000000000007 Td (findings to senior marketing leadership.) Tj ET
+BT /F2 10.3 Tf 100 Tz 43 160.0000000000001 Td (ADDITIONAL INFORMATION) Tj ET
+BT /F1 9.2 Tf 100 Tz 43 144.0000000000001 Td (Skills: Python, Java, JavaScript, C# \(Unity\), R, HTML, CSS, SQL exposure; React Native, Expo, Supabase, Stripe test) Tj ET
+BT /F1 9.2 Tf 97 Tz 62 131.95000000000016 Td (payments/webhooks, GitHub, Unity, Unreal Engine Blueprints, Jupyter Notebook, R data.table, Tableau, Figma, Adobe Creative) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 119.9000000000002 Td (Cloud, Notion, Microsoft Office.) Tj ET
+BT /F1 9.2 Tf 100 Tz 43 107.85000000000025 Td (Engineering: Debugging, functional and regression testing, defect reproduction, API and webhook troubleshooting,) Tj ET
+BT /F1 9.2 Tf 100 Tz 62 95.8000000000003 Td (web/mobile QA, integration testing, cross-platform feature review, technical documentation.) Tj ET
+BT /F1 9.2 Tf 100 Tz 43 83.75000000000034 Td (Languages & Interests: Bilingual in English and Chinese; video games, game development, fitness, skiing, music, travel.) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Title (Congyu Zhao - Resume) /Author (Congyu Zhao) >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000257 00000 n 
+0000000356 00000 n 
+0000000454 00000 n 
+0000007578 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R /Info 7 0 R >>
+startxref
+7651
+%%EOF
