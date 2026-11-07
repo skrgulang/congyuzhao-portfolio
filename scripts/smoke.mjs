@@ -4,6 +4,7 @@ const base = (process.argv[2] || 'https://congyuzhao.com').replace(/\/$/, '');
 const pages = [
   ['/', 'Congyu Zhao'],
   ['/projects', 'Projects'],
+  ['/resume', 'Resume'],
   ['/projects/aspire-101', 'Aspire 101'],
   ['/projects/fish-and-ships', 'Fish and Ships'],
   ['/projects/wildfire-evacuation-simulator', 'Wildfire Evacuation Simulator'],
@@ -13,6 +14,7 @@ const pages = [
 ];
 const images = [
   '/images/hero-recovered.jpg',
+  '/cz-mark.svg',
   '/showcase/aspire-onboarding-hq.jpg',
   '/showcase/aspire-mobile-board.png',
   '/showcase/aspire-web-board.png',
@@ -140,6 +142,7 @@ for (const [path, assets] of showcasePages) results.push(await checkShowcaseMark
 for (const [path, text] of pages) results.push(await check(path, text));
 results.push(await checkNotFound());
 results.push(await checkCrawlerFile('/sitemap.xml', '/projects/aspire-101'));
+results.push(await checkCrawlerFile('/sitemap.xml', '/resume'));
 results.push(await checkCrawlerFile('/robots.txt', '/sitemap.xml'));
 for (const path of images) results.push(await check(path));
 for (const path of videos) results.push(await checkVideo(path));
