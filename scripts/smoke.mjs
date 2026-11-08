@@ -138,7 +138,7 @@ const showcasePages = [
   ['/projects/tempus-lineus', ['youtube-nocookie.com/embed/_tbFyFfGuR0','youtube-nocookie.com/embed/nZFQaNzNiXE',...['game-pov','building-lineart','geometry-test'].map(name=>'tempus-'+name+'.mp4')]],
 ];
 async function checkResumePdf(){
- const path='/Congyu_Zhao_Resume_Uploaded.pdf';
+ const path='/Congyu_Zhao_Resume.pdf';
  try{
   const response=await fetch(new URL(path,base),{signal:AbortSignal.timeout(15000)});
   if(!response.ok)throw new Error('HTTP '+response.status);
