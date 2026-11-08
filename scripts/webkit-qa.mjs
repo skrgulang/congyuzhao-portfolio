@@ -4,7 +4,7 @@ import {webkit} from 'playwright';
 import {mkdir} from 'node:fs/promises';
 
 const origin=(process.argv[2]||'http://127.0.0.1:3000').replace(/\/$/,'');
-const sizes=[320,390,768,1024];
+const sizes=[320,375,390,650,651,768,900,901,1024];
 await mkdir('qa-screenshots',{recursive:true});
 const browser=await webkit.launch({headless:true});
 let failures=0;
@@ -37,7 +37,22 @@ try{
       throw Error('Resume menu item points to stale PDF');
     await page.keyboard.press('Escape');
     if(await navLinks.isVisible())throw Error('Escape did not close mobile/tablet navigation');
-   }else if(await resume.isVisible())throw Error('Duplicate desktop Resume shortcut');
+   }else{
+    if(await resume.isVisible())throw Error('Duplicate desktop Resume shortcut');
+    const desktopNav=page.locator('#main-navigation');
+    if(!(await desktopNav.isVisible()))throw Error('Desktop navigation unexpectedly collapsed at '+width+'px');
+    const desktopResume=desktopNav.getByRole('link',{name:'Resume'});
+    if(!(await desktopResume.isVisible()))throw Error('Desktop Resume navigation item hidden');
+    if((await desktopResume.getAttribute('href'))!=='/Congyu_Zhao_Resume.pdf')
+      throw Error('Desktop Resume item points to wrong PDF');
+    const navBounds=await desktopNav.boundingBox();
+    const logoBounds=await page.locator('.newNav .newLogo').boundingBox();
+    const contactBounds=await page.locator('.newNav .navContact').boundingBox();
+    if(!navBounds||!logoBounds||!contactBounds||
+      navBounds.x<logoBounds.x+logoBounds.width-1 ||
+      navBounds.x+navBounds.width>contactBounds.x+1)
+      throw Error('Desktop nav overlaps logo or contact at '+width+'px');
+   }
    if((await resume.getAttribute('href'))!=='/Congyu_Zhao_Resume.pdf')
     throw Error('Header Resume points to wrong PDF');
    const pdf=await page.request.get(origin+'/Congyu_Zhao_Resume.pdf',{timeout:15000});
@@ -46,6 +61,8 @@ try{
    const bytes=await pdf.body();
    if(bytes.subarray(0,5).toString()!=='%PDF-')throw Error('Invalid PDF response header');
    await nav.screenshot({path:'qa-screenshots/webkit-header-'+width+'.png',animations:'disabled'});
+   if(width===320||width===768||width===901)
+     await page.screenshot({path:'qa-screenshots/webkit-home-'+width+'.png',fullPage:true,animations:'disabled'});
    console.log('PASS WebKit header / Resume '+width+'px');
   }catch(err){failures++;console.error('FAIL WebKit '+width+'px:',err.stack||err.message);}
   finally{await context.close();}
