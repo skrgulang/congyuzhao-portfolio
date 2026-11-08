@@ -118,7 +118,7 @@ try {
         }
         if(test.name==='projects'||test.name==='fish'||test.name==='wildfire'||test.name==='studio'||test.name==='tempus'||test.name==='gameplay'||test.name==='aspire'){
           const resumeLink=page.locator('.caseNav .caseResumeLink');
-          if((await resumeLink.getAttribute('href'))!=='/Congyu_Zhao_Resume_Uploaded.pdf')
+          if((await resumeLink.getAttribute('href'))!=='/Congyu_Zhao_Resume.pdf')
             throw new Error('Missing direct Resume PDF action in project header');
           if(!(await resumeLink.isVisible()))
             throw new Error('Project header Resume action not visible on '+device.name);
@@ -128,9 +128,9 @@ try {
           await page.getByText('Expected May 2028').waitFor({state:'visible'});
           await page.getByText('Purdue Data Mine').waitFor({state:'visible'});
           const pdf=page.getByRole('link',{name:/Download PDF/});
-          if((await pdf.getAttribute('href'))!=='/Congyu_Zhao_Resume_Uploaded.pdf')
+          if((await pdf.getAttribute('href'))!=='/Congyu_Zhao_Resume.pdf')
             throw new Error('Download PDF link does not point to the public resume');
-          const pdfResponse=await page.request.get(base+'/Congyu_Zhao_Resume_Uploaded.pdf');
+          const pdfResponse=await page.request.get(base+'/Congyu_Zhao_Resume.pdf');
           if(!pdfResponse.ok()||!(pdfResponse.headers()['content-type']||'').includes('application/pdf'))
             throw new Error('Resume PDF failed to download in browser QA');
           const logo=page.locator('.newLogo img');
@@ -139,10 +139,10 @@ try {
         }
         if(test.name==='home'){
           const primaryResume=page.locator('.heroButtons a').filter({hasText:'Resume'});
-          if((await primaryResume.getAttribute('href'))!=='/Congyu_Zhao_Resume_Uploaded.pdf')
+          if((await primaryResume.getAttribute('href'))!=='/Congyu_Zhao_Resume.pdf')
             throw new Error('Homepage Resume CTA must open the supplied PDF directly');
           const headerResume=page.locator('.newNav a.navResume');
-          if((await headerResume.getAttribute('href'))!=='/Congyu_Zhao_Resume_Uploaded.pdf')
+          if((await headerResume.getAttribute('href'))!=='/Congyu_Zhao_Resume.pdf')
             throw new Error('Header Resume button must target the PDF');
           const resumeVisible=await headerResume.isVisible();
           if(device.isMobile&&!resumeVisible)
@@ -150,7 +150,7 @@ try {
           if(!device.isMobile&&resumeVisible)
             throw new Error('Mobile Resume shortcut must not duplicate desktop navigation');
           const footerResume=page.locator('.newFooter a.footerResume');
-          if((await footerResume.getAttribute('href'))!=='/Congyu_Zhao_Resume_Uploaded.pdf')
+          if((await footerResume.getAttribute('href'))!=='/Congyu_Zhao_Resume.pdf')
             throw new Error('Footer Resume link must open the supplied PDF directly');
         }
         if(test.name==='fish'){
