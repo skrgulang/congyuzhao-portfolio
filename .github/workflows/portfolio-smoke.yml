@@ -80,7 +80,7 @@ jobs:
         run: |
           set -o pipefail
           node scripts/browser-qa.mjs http://127.0.0.1:3000 2>&1 | tee local-browser.log
-      - name: Test Safari-engine Resume navigation at 320px through 1024px
+      - name: Test Safari-engine Resume navigation across 320px–1024px and breakpoint edges
         id: webkit_check
         shell: bash
         run: |
@@ -98,8 +98,15 @@ jobs:
           echo "Chromium rendering and interactions: **$BROWSER_RESULT**" >> "$GITHUB_STEP_SUMMARY"
           echo "WebKit Resume navigation: **$WEBKIT_RESULT**" >> "$GITHUB_STEP_SUMMARY"
           if [ -f local-browser.log ]; then
+            echo '#### Chromium details' >> "$GITHUB_STEP_SUMMARY"
             echo '~~~text' >> "$GITHUB_STEP_SUMMARY"
             tail -n 40 local-browser.log >> "$GITHUB_STEP_SUMMARY"
+            echo '~~~' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ -f local-webkit.log ]; then
+            echo '#### WebKit / Safari-engine details' >> "$GITHUB_STEP_SUMMARY"
+            echo '~~~text' >> "$GITHUB_STEP_SUMMARY"
+            tail -n 40 local-webkit.log >> "$GITHUB_STEP_SUMMARY"
             echo '~~~' >> "$GITHUB_STEP_SUMMARY"
           fi
       - name: Upload local QA screenshots and logs
