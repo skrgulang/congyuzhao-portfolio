@@ -46,7 +46,7 @@ for(const [name,source] of [
  ['app/projects/[slug]/page.js',project],['app/components/AspireCaseStudy.jsx',aspire],
  ['app/components/ProjectMediaGallery.jsx',await read('app/components/ProjectMediaGallery.jsx')]
 ]){
- assert(!/↗(?!\uFE0E)/u.test(source),'Emoji-prone unqualified link arrow in '+name);
+ assert(!/[↗↘](?!\uFE0E)/u.test(source),'Emoji-prone diagonal arrow in '+name);
 }
 for(const [name,source] of [
  ['app/page.js',home],['app/projects/page.js',index],
