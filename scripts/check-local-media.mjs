@@ -20,8 +20,18 @@ const assets=[
  'public/showcase/fish-gameplay-hq.jpg'
 ];
 const resumePdf=await readFile(join(root,'public/Congyu_Zhao_Resume.pdf'));
-assert(resumePdf.subarray(0,5).toString()==='%PDF-','The public resume must be a valid PDF file');
-console.log('PASS downloadable resume PDF signature');
+assert(resumePdf.subarray(0,5).toString()==='%PDF-','The public resume must begin with a PDF signature');
+const pdfTail=resumePdf.subarray(Math.max(0,resumePdf.length-2048)).toString('latin1');
+assert(pdfTail.includes('%%EOF'),'Resume PDF is missing its end-of-file marker');
+const startXref=pdfTail.match(/startxref\s+(\d+)\s+%%EOF/);
+assert(startXref,'Resume PDF is missing its final cross-reference offset');
+const xrefOffset=Number(startXref[1]);
+assert(Number.isSafeInteger(xrefOffset)&&xrefOffset>0&&xrefOffset<resumePdf.length,
+ 'Resume PDF cross-reference offset is outside the file');
+const xrefLead=resumePdf.subarray(xrefOffset,xrefOffset+8).toString('latin1');
+assert(xrefLead.startsWith('xref')||/\d+ \d+ obj/.test(xrefLead),
+ 'Resume PDF cross-reference offset does not reference a valid structure');
+console.log('PASS downloadable resume PDF header, EOF and cross-reference structure');
 const legacyResumePdf=await readFile(join(root,'public/Congyu_Zhao_Resume_Uploaded.pdf'));
 assert(resumePdf.equals(legacyResumePdf),'Resume PDF aliases must contain the same exact bytes');
 for(const path of assets){
