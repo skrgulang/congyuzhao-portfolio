@@ -54,7 +54,8 @@ for(const name of clips){
 for(const [name,source] of [
  ['app/page.js',home],['app/projects/page.js',index],
  ['app/projects/[slug]/page.js',project],['app/components/AspireCaseStudy.jsx',aspire],
- ['app/components/ProjectMediaGallery.jsx',await read('app/components/ProjectMediaGallery.jsx')]
+ ['app/components/ProjectMediaGallery.jsx',await read('app/components/ProjectMediaGallery.jsx')],
+ ['app/not-found.js',await read('app/not-found.js')]
 ]){
  assert(!/[↗↘](?!\uFE0E)/u.test(source),'Emoji-prone diagonal arrow in '+name);
 }
@@ -65,6 +66,9 @@ for(const [name,source] of [
  assert(!source.includes('href="/Congyu_Zhao_Resume_Uploaded.pdf"'),
    'Old Resume URL remains in rendered navigation: '+name);
 }
+const notFound=await read('app/not-found.js');
+assert(notFound.includes('src="/cz-mark.svg"'),'404 page must use the current CZ logo');
+assert(notFound.includes('href="/Congyu_Zhao_Resume.pdf"'),'404 page must link to canonical PDF');
 console.log('PASS canonical resume links and identical PDF alias');
 console.log('PASS text-only link arrows (no blue emoji glyphs).');
 console.log('PASS offline media audit: '+assets.length+' assets and page references.');
