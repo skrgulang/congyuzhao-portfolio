@@ -9,6 +9,7 @@ on:
       - 'public/**'
       - 'scripts/smoke.mjs'
       - 'scripts/browser-qa.mjs'
+      - 'scripts/webkit-qa.mjs'
       - 'scripts/check-local-media.mjs'
       - 'package.json'
       - '.github/workflows/portfolio-smoke.yml'
@@ -51,6 +52,7 @@ jobs:
         run: |
           npm install --no-save playwright
           npx playwright install --with-deps chromium
+          npx playwright install --with-deps webkit
       - name: Start built website and wait for HTTP response
         shell: bash
         run: |
@@ -78,15 +80,23 @@ jobs:
         run: |
           set -o pipefail
           node scripts/browser-qa.mjs http://127.0.0.1:3000 2>&1 | tee local-browser.log
+      - name: Test Safari-engine Resume navigation at 320px through 1024px
+        id: webkit_check
+        shell: bash
+        run: |
+          set -o pipefail
+          node scripts/webkit-qa.mjs http://127.0.0.1:3000 2>&1 | tee local-webkit.log
       - name: Summarize locally rendered browser QA
         if: always()
         env:
           HTTP_RESULT: ${{ steps.local_http_check.outcome }}
           BROWSER_RESULT: ${{ steps.local_browser_check.outcome }}
+          WEBKIT_RESULT: ${{ steps.webkit_check.outcome }}
         run: |
           echo "### Local Next.js + Chromium QA" >> "$GITHUB_STEP_SUMMARY"
           echo "HTTP routes and assets: **$HTTP_RESULT**" >> "$GITHUB_STEP_SUMMARY"
           echo "Chromium rendering and interactions: **$BROWSER_RESULT**" >> "$GITHUB_STEP_SUMMARY"
+          echo "WebKit Resume navigation: **$WEBKIT_RESULT**" >> "$GITHUB_STEP_SUMMARY"
           if [ -f local-browser.log ]; then
             echo '~~~text' >> "$GITHUB_STEP_SUMMARY"
             tail -n 40 local-browser.log >> "$GITHUB_STEP_SUMMARY"
@@ -101,6 +111,7 @@ jobs:
             qa-screenshots/
             local-smoke.log
             local-browser.log
+            local-webkit.log
             local-next-server.log
           if-no-files-found: ignore
           retention-days: 14
