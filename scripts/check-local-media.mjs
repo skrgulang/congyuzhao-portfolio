@@ -13,6 +13,7 @@ const screens=['home','campus-pulse','browse','create-post','inbox','profile','s
 const clips=['game-pov','building-lineart','geometry-test'];
 const assets=[
  'public/Congyu_Zhao_Resume.pdf',
+ 'public/Congyu_Zhao_Resume_Uploaded.pdf',
  'public/showcase/aspire-ios-real-gallery.webp',
  ...screens.map(name=>'public/showcase/aspire-ios-'+name+'.webp'),
  ...clips.flatMap(name=>['public/showcase/tempus-'+name+'.mp4','public/showcase/tempus-'+name+'-poster.webp']),
@@ -21,6 +22,8 @@ const assets=[
 const resumePdf=await readFile(join(root,'public/Congyu_Zhao_Resume.pdf'));
 assert(resumePdf.subarray(0,5).toString()==='%PDF-','The public resume must be a valid PDF file');
 console.log('PASS downloadable resume PDF signature');
+const legacyResumePdf=await readFile(join(root,'public/Congyu_Zhao_Resume_Uploaded.pdf'));
+assert(resumePdf.equals(legacyResumePdf),'Resume PDF aliases must contain the same exact bytes');
 for(const path of assets){
  const file=await stat(join(root,path));
  assert(file.isFile()&&file.size>0,'Missing or empty media: '+path);
@@ -45,5 +48,13 @@ for(const [name,source] of [
 ]){
  assert(!/↗(?!\uFE0E)/u.test(source),'Emoji-prone unqualified link arrow in '+name);
 }
+for(const [name,source] of [
+ ['app/page.js',home],['app/projects/page.js',index],
+ ['app/projects/[slug]/page.js',project],['app/resume/page.js',await read('app/resume/page.js')]
+]){
+ assert(!source.includes('href="/Congyu_Zhao_Resume_Uploaded.pdf"'),
+   'Old Resume URL remains in rendered navigation: '+name);
+}
+console.log('PASS canonical resume links and identical PDF alias');
 console.log('PASS text-only link arrows (no blue emoji glyphs).');
 console.log('PASS offline media audit: '+assets.length+' assets and page references.');
