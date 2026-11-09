@@ -22,10 +22,10 @@ export default function WorkVideos(){
      <div className="videoArchiveActions"><button type="button" onClick={()=>setSelected(video.id)}>Play here</button><a href={'https://www.youtube.com/watch?v='+video.id} target="_blank" rel="noopener noreferrer">Open on YouTube ↗︎</a></div>
     </div>
    </article>)}</div>
-   {selected&&<div className="videoArchiveViewer" role="region" aria-label="Selected work video" id="selected-video">
+   {selected&&<div className="videoArchiveViewer" role="region" aria-label="Selected mini-game recording" id="selected-video">
      <div className="videoArchiveViewerHeading"><div><p className="newEyebrow">NOW VIEWING</p><h2>{workVideos.find(v=>v.id===selected)?.title}</h2></div><button type="button" className="videoArchiveClose" onClick={()=>setSelected(null)}>Close player ×</button></div>
      <iframe key={selected} src={'https://www.youtube-nocookie.com/embed/'+selected+'?rel=0'} title={workVideos.find(v=>v.id===selected)?.title||'Selected video'} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
-     <p>These videos were supplied by the portfolio owner. Some original YouTube titles are generic, so specific project attribution is not assumed. If a video is unavailable to embed, use its YouTube link above.</p>
+     <p>I built these six mini-games myself. They are numbered rather than given invented project names. If a recording cannot play here, use its original YouTube link above.</p>
    </div>}
  </div>;
 }
