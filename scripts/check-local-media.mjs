@@ -9,6 +9,16 @@ const [home,index,project,aspire]=await Promise.all([
  read('app/page.js'),read('app/projects/page.js'),
  read('app/projects/[slug]/page.js'),read('app/components/AspireCaseStudy.jsx')
 ]);
+const archiveData=await read('app/videos/data.js');
+const archivePage=await read('app/videos/page.js');
+const archiveComponent=await read('app/components/WorkVideos.jsx');
+const archiveIds=['EZ3jDLwVn3w','J74rR5jbsDQ','3z4tX81RsAE','TUWHsARcuf8','90YX1FazPbs','irsFHlyWK48'];
+for(const id of archiveIds)assert(count(archiveData,"id:'"+id+"'")===1,'Work video missing or duplicated: '+id);
+assert(home.includes('href="/videos"'),'Homepage must link to video archive');
+assert(index.includes('href="/videos"'),'Project directory must link to video archive');
+assert(archivePage.includes('<WorkVideos/>'),'Video archive must render the client gallery');
+assert(archiveComponent.includes('youtube-nocookie.com/embed/'),'Work video viewer must use privacy-enhanced embeds');
+console.log('PASS six owner-supplied video links and on-demand video gallery');
 const screens=['home','campus-pulse','browse','create-post','inbox','profile','settings'];
 const clips=['game-pov','building-lineart','geometry-test'];
 const assets=[
