@@ -4,7 +4,7 @@ const base = (process.argv[2] || 'https://congyuzhao.com').replace(/\/$/, '');
 const pages = [
   ['/', 'Congyu Zhao'],
   ['/projects', 'Projects'],
-  ['/videos', 'Work in'],
+  ['/videos', 'Small games.'],
   ['/resume', 'Resume'],
   ['/projects/aspire-101', 'Aspire 101'],
   ['/projects/fish-and-ships', 'Fish and Ships'],
@@ -163,7 +163,7 @@ async function checkVideoArchive(){
   const html=await response.text();
   const missing=ids.filter(id=>!html.includes(id));
   if(missing.length)throw new Error('Missing user-provided video IDs: '+missing.join(', '));
-  if(!html.includes('More Work')&&!html.includes('VIDEO ARCHIVE'))throw new Error('Archive title missing');
+  if(!html.includes('SOLO PROJECTS')&&!html.includes('SIX MINI GAMES'))throw new Error('Mini-games archive title missing');
   console.log('PASS six portfolio video links in /videos');
   return true;
  }catch(error){console.error('FAIL video archive',error.message);return false;}
