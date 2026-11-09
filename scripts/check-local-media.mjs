@@ -42,6 +42,9 @@ for(const path of assets){
 for(const slug of screens)assert(aspire.includes("slug:'"+slug+"'"),'Missing iOS gallery entry: '+slug);
 assert(aspire.includes('aspire-ios-real-gallery.webp')&&aspire.includes("'/showcase/aspire-ios-'"),'Missing real iOS gallery markup');
 assert(home.includes('aspire-ios-home.webp')&&index.includes('aspire-ios-home.webp'),'Real iOS Home screenshot missing from portfolio entry points');
+assert(home.includes('contribution:\'Blueprint gameplay · Playtesting · Team integration\''),'Homepage Tempus role drifted away from documented Blueprint work');
+assert(index.includes('Unreal Engine · Game programming'),'Project directory Tempus role drifted from resume');
+assert(project.includes('Game Programmer · Blueprint gameplay and narrative systems'),'Tempus case study must reflect Game Programmer role');
 assert(count(home,'<section className="tempusHome frame')===1,'Duplicate Tempus homepage section');
 assert(count(project,'<section className="tempusShowcase frame')===1,'Expected exactly one Tempus case study media section');
 assert(count(project,'<section className="tempusCaseStudy frame')===0,'Legacy duplicate Tempus case study section reintroduced');
