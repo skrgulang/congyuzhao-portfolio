@@ -4,6 +4,7 @@ const base = (process.argv[2] || 'https://congyuzhao.com').replace(/\/$/, '');
 const pages = [
   ['/', 'Congyu Zhao'],
   ['/projects', 'Projects'],
+  ['/videos', 'Work in'],
   ['/resume', 'Resume'],
   ['/projects/aspire-101', 'Aspire 101'],
   ['/projects/fish-and-ships', 'Fish and Ships'],
@@ -154,13 +155,28 @@ async function checkResumePdf(){
   return false;
  }
 }
+async function checkVideoArchive(){
+ const ids=['EZ3jDLwVn3w','J74rR5jbsDQ','3z4tX81RsAE','TUWHsARcuf8','90YX1FazPbs','irsFHlyWK48'];
+ try{
+  const response=await fetch(new URL('/videos',base),{signal:AbortSignal.timeout(15000)});
+  if(!response.ok)throw new Error('HTTP '+response.status);
+  const html=await response.text();
+  const missing=ids.filter(id=>!html.includes(id));
+  if(missing.length)throw new Error('Missing user-provided video IDs: '+missing.join(', '));
+  if(!html.includes('More Work')&&!html.includes('VIDEO ARCHIVE'))throw new Error('Archive title missing');
+  console.log('PASS six portfolio video links in /videos');
+  return true;
+ }catch(error){console.error('FAIL video archive',error.message);return false;}
+}
 const results = [];
 results.push(await checkResumePdf());
+results.push(await checkVideoArchive());
 for (const [path, assets] of showcasePages) results.push(await checkShowcaseMarkup(path, assets));
 for (const [path, text] of pages) results.push(await check(path, text));
 results.push(await checkNotFound());
 results.push(await checkCrawlerFile('/sitemap.xml', '/projects/aspire-101'));
 results.push(await checkCrawlerFile('/sitemap.xml', '/resume'));
+results.push(await checkCrawlerFile('/sitemap.xml', '/videos'));
 results.push(await checkCrawlerFile('/robots.txt', '/sitemap.xml'));
 for (const path of images) results.push(await check(path));
 for (const path of videos) results.push(await checkVideo(path));
