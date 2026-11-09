@@ -7,6 +7,7 @@ const base = (process.argv[2] || 'https://congyuzhao.com').replace(/\/$/, '');
 const cases = [
   { name: 'home', path: '/' },
   { name: 'projects', path: '/projects' },
+  { name: 'videos', path: '/videos' },
   { name: 'resume', path: '/resume' },
   { name: 'aspire', path: '/projects/aspire-101' },
   { name: 'fish', path: '/projects/fish-and-ships' },
@@ -122,6 +123,23 @@ try {
             throw new Error('Missing direct Resume PDF action in project header');
           if(!(await resumeLink.isVisible()))
             throw new Error('Project header Resume action not visible on '+device.name);
+        }
+        if(test.name==='videos'){
+          await page.getByRole('heading',{name:/Work in motion/}).waitFor({state:'visible'});
+          const archive=page.locator('.videoArchiveCard');
+          if(await archive.count()!==6)throw new Error('Expected six owner-supplied video cards');
+          const ids=['EZ3jDLwVn3w','J74rR5jbsDQ','3z4tX81RsAE','TUWHsARcuf8','90YX1FazPbs','irsFHlyWK48'];
+          for(const id of ids){
+            const link=page.locator('.videoArchiveCard a[href="https://www.youtube.com/watch?v='+id+'"]');
+            if(await link.count()!==1)throw new Error('Missing video link '+id);
+          }
+          if(await page.locator('.videoArchiveViewer iframe').count())
+            throw new Error('Do not pre-load YouTube iframes before video selection');
+          await archive.first().getByRole('button',{name:/Play .* on this page/}).click();
+          await page.locator('.videoArchiveViewer iframe[src*="EZ3jDLwVn3w"]').waitFor({state:'attached'});
+          await page.getByRole('button',{name:'Close player ×'}).click();
+          if(await page.locator('.videoArchiveViewer iframe').count())
+            throw new Error('Video player was not removed after close');
         }
         if(test.name==='resume'){
           await page.getByRole('heading',{name:/Resume/}).waitFor({state:'visible'});
