@@ -987,3 +987,9 @@ html{scroll-padding-top:24px}
 .homeVideoArchiveCards a:hover{border-color:var(--lime)}
 @media(max-width:1050px){.videoArchiveGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.videoArchiveGrid{grid-template-columns:1fr}.homeVideoArchiveCards{grid-template-columns:1fr}.videoArchiveSection{padding-top:35px}.videoArchiveInfo{padding:20px}.videoArchiveViewer{padding:14px}.videoArchiveViewerHeading{flex-direction:column}.homeVideoArchive{padding:65px 0}}
+
+.allProjectsVideoLink{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-top:56px;padding-bottom:56px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.allProjectsVideoLink h2{font:650 clamp(28px,4vw,48px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-.05em;margin:12px 0}
+.allProjectsVideoLink p:not(.newEyebrow){color:#b5c1b5;max-width:690px;font-size:15px;line-height:1.7}
+.allProjectsVideoLink>a{color:var(--lime);font-size:14px;text-decoration:underline;text-underline-offset:6px;white-space:nowrap}
+@media(max-width:650px){.allProjectsVideoLink{padding-top:42px;padding-bottom:42px}}
