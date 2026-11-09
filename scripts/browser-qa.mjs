@@ -125,7 +125,7 @@ try {
             throw new Error('Project header Resume action not visible on '+device.name);
         }
         if(test.name==='videos'){
-          await page.getByRole('heading',{name:/Work in motion/}).waitFor({state:'visible'});
+          await page.getByRole('heading',{name:/Small games.*My own work/}).waitFor({state:'visible'});
           const archive=page.locator('.videoArchiveCard');
           if(await archive.count()!==6)throw new Error('Expected six owner-supplied video cards');
           const ids=['EZ3jDLwVn3w','J74rR5jbsDQ','3z4tX81RsAE','TUWHsARcuf8','90YX1FazPbs','irsFHlyWK48'];
