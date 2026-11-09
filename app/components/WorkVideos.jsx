@@ -1,9 +1,16 @@
 'use client';
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import {workVideos} from '../videos/data';
 
 export default function WorkVideos(){
  const [selected,setSelected]=useState(null);
+ useEffect(()=>{
+  if(!selected)return;
+  const section=document.getElementById('selected-video');
+  if(!section)return;
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  section.scrollIntoView({behavior:reduced?'instant':'smooth',block:'start'});
+ },[selected]);
  return <div className="videoArchiveWrap">
    <div className="videoArchiveGrid">{workVideos.map((video,index)=><article className="videoArchiveCard" key={video.id}>
     <button type="button" className="videoArchiveCover" onClick={()=>setSelected(video.id)} aria-label={'Play '+video.title+' on this page'} aria-pressed={selected===video.id}>
