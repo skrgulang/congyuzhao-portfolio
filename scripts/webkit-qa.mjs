@@ -63,7 +63,36 @@ try{
    await nav.screenshot({path:'qa-screenshots/webkit-header-'+width+'.png',animations:'disabled'});
    if(width===320||width===768||width===901)
      await page.screenshot({path:'qa-screenshots/webkit-home-'+width+'.png',fullPage:true,animations:'disabled'});
-   console.log('PASS WebKit header / Resume '+width+'px');
+   // Inspect actual secondary pages too: mobile portfolio isn't just the homepage.
+   for(const route of ['/projects','/videos','/resume','/projects/aspire-101','/projects/fish-and-ships']){
+    const secondary=await page.goto(origin+route,{waitUntil:'domcontentloaded',timeout:30000});
+    if(!secondary?.ok())throw Error('HTTP '+secondary?.status()+' on '+route);
+    const geometry=await page.evaluate(()=>({
+      viewport:document.documentElement.clientWidth,
+      content:document.documentElement.scrollWidth
+    }));
+    if(geometry.content>geometry.viewport+2)
+      throw Error('Horizontal overflow at '+width+'px on '+route+': '+JSON.stringify(geometry));
+    if(width<=390){
+      const allLinks=page.locator('.caseNav a');
+      if(await allLinks.count()<2)throw Error('Secondary page navigation missing on '+route);
+    }
+    if(route==='/videos'){
+      const cards=page.locator('.videoArchiveCard');
+      if(await cards.count()!==6)throw Error('Expected six mini-game cards on '+route);
+      if(width<=650){
+       const first=await cards.nth(0).boundingBox();
+       const second=await cards.nth(1).boundingBox();
+       if(!first||!second||second.y<first.y+first.height-1)
+         throw Error('Mobile mini-game cards do not stack vertically at '+width+'px');
+      }
+    }
+    if(width===320||width===390||width===768){
+      const name=route.replaceAll('/','-').replace(/^-/, '');
+      await page.screenshot({path:'qa-screenshots/webkit-'+name+'-'+width+'.png',fullPage:route==='/videos',animations:'disabled'});
+    }
+   }
+   console.log('PASS WebKit header / Resume and inner pages '+width+'px');
   }catch(err){failures++;console.error('FAIL WebKit '+width+'px:',err.stack||err.message);}
   finally{await context.close();}
  }
