@@ -5,7 +5,8 @@ export const metadata={
  title:'Mini Games — Solo Projects',
  description:'Six mini-games independently created by Congyu Zhao, with original gameplay and prototype videos.',
  alternates:{canonical:'https://congyuzhao.com/videos'},
- openGraph:{title:'Mini Games — Solo Projects | Congyu Zhao',description:'Six independent mini-game projects by Congyu Zhao, shown through original recordings.',url:'https://congyuzhao.com/videos',type:'website'},
+ openGraph:{title:'Mini Games — Solo Projects | Congyu Zhao',description:'Six independent mini-game projects by Congyu Zhao, shown through original recordings.',url:'https://congyuzhao.com/videos',type:'website',images:[{url:'https://i.ytimg.com/vi/EZ3jDLwVn3w/hqdefault.jpg',width:480,height:360,alt:'Mini Game 01 — solo game prototype recording'}]},
+ twitter:{card:'summary_large_image',title:'Six Mini Games | Congyu Zhao',description:'Six independent mini-game projects with original video recordings.',images:['https://i.ytimg.com/vi/EZ3jDLwVn3w/hqdefault.jpg']},
 };
 export default function VideosPage(){
  return <main className="videoArchivePage">
