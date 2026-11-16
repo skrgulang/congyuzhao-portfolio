@@ -1,5 +1,9 @@
 import './globals.css';
 
+// Explicit mobile viewport for iOS Safari and Android Chrome.
+export const viewport = { width: 'device-width', initialScale: 1 };
+
+
 export const metadata = {
   metadataBase: new URL('https://congyuzhao.com'),
   title: { default: 'Congyu Zhao — Software, Games & Aspire 101', template: '%s | Congyu Zhao' },
