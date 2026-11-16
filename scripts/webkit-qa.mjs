@@ -27,6 +27,17 @@ try{
       hamburger:rect('.newNav .menuToggle'),nav:rect('.newNav')};
    });
    if(measurements.scrollWidth>measurements.viewport+2)throw Error('Horizontal overflow '+JSON.stringify(measurements));
+   if(width<=650){
+    const clipped=await page.evaluate(()=>{
+     const selectors=['.heroButtons a','.filters button','.newProjectGrid article'];
+     const viewport=document.documentElement.clientWidth;
+     return selectors.flatMap(selector=>[...document.querySelectorAll(selector)].filter(element=>{
+      const rect=element.getBoundingClientRect();
+      return rect.width>0&&(rect.left< -2||rect.right>viewport+2);
+     }).map(element=>({selector,label:element.textContent?.slice(0,40),left:element.getBoundingClientRect().left,right:element.getBoundingClientRect().right})));
+    });
+    if(clipped.length)throw Error('Clipped home CTA/filter/project cards at '+width+'px: '+JSON.stringify(clipped));
+   }
    if(width<=1100){
     if(!(await resume.isVisible())||!(await menu.isVisible()))throw Error('Resume/menu shortcuts missing at '+width+'px');
     const {logo,resume:r,hamburger}=measurements;
