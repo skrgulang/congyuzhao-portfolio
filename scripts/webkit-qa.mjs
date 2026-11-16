@@ -16,6 +16,9 @@ try{
    const response=await page.goto(origin+'/',{waitUntil:'domcontentloaded',timeout:30000});
    if(!response?.ok())throw Error('Home response HTTP '+response?.status());
    await page.locator('.newNav').waitFor({state:'visible'});
+   const viewportDeclaration=await page.locator('meta[name="viewport"]').getAttribute('content');
+   if(!viewportDeclaration||!viewportDeclaration.includes('width=device-width'))
+     throw Error('Missing width=device-width mobile viewport declaration');
    const nav=page.locator('.newNav'),resume=page.locator('.newNav .navResume'),menu=page.getByRole('button',{name:'Open navigation menu'});
    const measurements=await page.evaluate(()=>{
     const rect=selector=>{const el=document.querySelector(selector);if(!el)return null;const r=el.getBoundingClientRect();return {x:r.x,right:r.right,width:r.width,top:r.top,bottom:r.bottom};};
