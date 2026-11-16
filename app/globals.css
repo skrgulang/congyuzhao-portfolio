@@ -993,3 +993,37 @@ html{scroll-padding-top:24px}
 .allProjectsVideoLink p:not(.newEyebrow){color:#b5c1b5;max-width:690px;font-size:15px;line-height:1.7}
 .allProjectsVideoLink>a{color:var(--lime);font-size:14px;text-decoration:underline;text-underline-offset:6px;white-space:nowrap}
 @media(max-width:650px){.allProjectsVideoLink{padding-top:42px;padding-bottom:42px}}
+
+/* Small-screen finish: keep media and controls usable down to 320px. */
+html,body{max-width:100%;overflow-x:clip}
+.videoArchivePage,.newSite,.allProjectsPage,.resumePage{min-width:0}
+.videoArchivePage img,.videoArchivePage iframe,.homeVideoArchive img{max-width:100%}
+.videoArchiveIntro h1,.homeVideoArchiveHead h2{overflow-wrap:break-word}
+.videoArchiveViewer iframe{aspect-ratio:16/9;min-height:0}
+.videoArchiveCover{touch-action:manipulation}
+.videoArchiveActions button,.videoArchiveActions a{min-height:44px;display:inline-flex;align-items:center}
+.videoArchiveClose{touch-action:manipulation}
+@media(max-width:700px){
+ .videoArchiveIntro{padding-top:58px;padding-bottom:38px}
+ .videoArchiveIntro h1{font-size:clamp(42px,12vw,72px);line-height:1.04;letter-spacing:-.065em}
+ .videoArchiveIntro>p:not(.newEyebrow){font-size:16px;line-height:1.65}
+ .videoArchiveGrid{gap:18px}
+ .videoArchiveCard{border-radius:12px}
+ .videoArchiveInfo h2{font-size:21px}
+ .videoArchiveCover{aspect-ratio:16/9}
+ .videoArchiveViewer{margin-top:24px}
+ .homeVideoArchiveHead h2{font-size:clamp(38px,11vw,65px);line-height:1.06}
+ .homeVideoArchiveHead>a,.videoArchiveIntroActions a{min-height:44px;display:inline-flex;align-items:center}
+ .homeVideoArchiveCards a{min-height:44px}
+}
+@media(max-width:380px){
+ .videoArchiveIntro h1{font-size:clamp(38px,11.5vw,46px)}
+ .videoArchiveInfo{padding:16px}
+ .videoArchiveViewerHeading h2{font-size:21px}
+ .homeVideoArchiveHead h2{font-size:38px}
+ .newNav .newLogo img{max-width:72px;height:auto}
+ .caseNav .newLogo img{max-width:72px;height:auto}
+}
+@media(prefers-reduced-motion:reduce){
+ .videoArchiveCard,.videoArchiveCover img{transition:none}
+}
