@@ -145,8 +145,10 @@ try {
           await page.getByRole('button',{name:'Close player ×'}).click();
           if(await page.locator('.videoArchiveViewer iframe').count())
             throw new Error('Video player was not removed after close');
-          if(!(await firstPlay.evaluate(el=>document.activeElement===el)))
-            throw new Error('Closing video did not return keyboard focus to the originating button');
+          await page.waitForFunction(()=>{
+            const button=document.querySelector('.videoArchiveCard .videoArchiveActions button');
+            return button&&document.activeElement===button;
+          },null,{timeout:3000}).catch(()=>{throw new Error('Closing video did not return keyboard focus to the originating button')});
           await archive.last().getByRole('button',{name:/Play .* on this page/}).click();
           await page.locator('.videoArchiveViewer iframe[src*="irsFHlyWK48"]').waitFor({state:'attached'});
           await page.keyboard.press('Escape');
