@@ -4,7 +4,7 @@ import {webkit} from 'playwright';
 import {mkdir} from 'node:fs/promises';
 
 const origin=(process.argv[2]||'http://127.0.0.1:3000').replace(/\/$/,'');
-const sizes=[320,375,390,650,651,768,900,901,1024];
+const sizes=[320,375,390,650,651,768,900,901,1024,1100,1101,1280];
 await mkdir('qa-screenshots',{recursive:true});
 const browser=await webkit.launch({headless:true});
 let failures=0;
@@ -27,7 +27,7 @@ try{
       hamburger:rect('.newNav .menuToggle'),nav:rect('.newNav')};
    });
    if(measurements.scrollWidth>measurements.viewport+2)throw Error('Horizontal overflow '+JSON.stringify(measurements));
-   if(width<=900){
+   if(width<=1100){
     if(!(await resume.isVisible())||!(await menu.isVisible()))throw Error('Resume/menu shortcuts missing at '+width+'px');
     const {logo,resume:r,hamburger}=measurements;
     if(logo.right>r.x+1||r.right>hamburger.x+1||hamburger.right>measurements.viewport+2)
@@ -64,7 +64,7 @@ try{
    const bytes=await pdf.body();
    if(bytes.subarray(0,5).toString()!=='%PDF-')throw Error('Invalid PDF response header');
    await nav.screenshot({path:'qa-screenshots/webkit-header-'+width+'.png',animations:'disabled'});
-   if(width===320||width===768||width===901)
+   if(width===320||width===768||width===1101)
      await page.screenshot({path:'qa-screenshots/webkit-home-'+width+'.png',fullPage:true,animations:'disabled'});
    // Inspect actual secondary pages too: mobile portfolio isn't just the homepage.
    for(const route of ['/projects','/videos','/resume','/projects/aspire-101','/projects/fish-and-ships']){
@@ -88,6 +88,19 @@ try{
        const second=await cards.nth(1).boundingBox();
        if(!first||!second||second.y<first.y+first.height-1)
          throw Error('Mobile mini-game cards do not stack vertically at '+width+'px');
+      }
+      if(width===320||width===390){
+       const firstButton=cards.first().getByRole('button',{name:/Play .* on this page/});
+       await firstButton.click();
+       const player=page.locator('.videoArchiveViewer');
+       await player.waitFor({state:'visible'});
+       const playerRect=await player.boundingBox();
+       const gridRect=await page.locator('.videoArchiveGrid').boundingBox();
+       if(!playerRect||!gridRect||playerRect.y>=gridRect.y)
+         throw Error('Mobile video player must be visible above the card grid');
+       await player.getByRole('button',{name:'Close player ×'}).click();
+       if(await page.locator('.videoArchiveViewer iframe').count())
+         throw Error('Mini-game iframe remains mounted after closing player');
       }
     }
     if(width===320||width===390||width===768){
