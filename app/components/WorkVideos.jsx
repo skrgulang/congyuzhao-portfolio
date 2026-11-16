@@ -16,6 +16,18 @@ export default function WorkVideos(){
  };
  useEffect(()=>{
   if(!selected)return;
+  const onKeyDown=event=>{
+   if(event.key==='Escape'){
+    event.preventDefault();
+    setSelected(null);
+    requestAnimationFrame(()=>lastTrigger.current?.focus({preventScroll:true}));
+   }
+  };
+  window.addEventListener('keydown',onKeyDown);
+  return()=>window.removeEventListener('keydown',onKeyDown);
+ },[selected]);
+ useEffect(()=>{
+  if(!selected)return;
   const frame=requestAnimationFrame(()=>{
    const section=document.getElementById('selected-video');
    if(!section)return;
