@@ -135,11 +135,23 @@ try {
           }
           if(await page.locator('.videoArchiveViewer iframe').count())
             throw new Error('Do not pre-load YouTube iframes before video selection');
-          await archive.first().getByRole('button',{name:/Play .* on this page/}).click();
+          const firstPlay=archive.first().getByRole('button',{name:/Play .* on this page/});
+          await firstPlay.click();
           await page.locator('.videoArchiveViewer iframe[src*="EZ3jDLwVn3w"]').waitFor({state:'attached'});
+          const playerRect=await page.locator('.videoArchiveViewer').boundingBox();
+          const gridRect=await page.locator('.videoArchiveGrid').boundingBox();
+          if(!playerRect||!gridRect||playerRect.y>=gridRect.y)
+            throw new Error('Video player should appear above the cards, not after six items');
           await page.getByRole('button',{name:'Close player ×'}).click();
           if(await page.locator('.videoArchiveViewer iframe').count())
             throw new Error('Video player was not removed after close');
+          if(!(await firstPlay.evaluate(el=>document.activeElement===el)))
+            throw new Error('Closing video did not return keyboard focus to the originating button');
+          await archive.last().getByRole('button',{name:/Play .* on this page/}).click();
+          await page.locator('.videoArchiveViewer iframe[src*="irsFHlyWK48"]').waitFor({state:'attached'});
+          await page.keyboard.press('Escape');
+          if(await page.locator('.videoArchiveViewer iframe').count())
+            throw new Error('Escape must close mini-game playback');
         }
         if(test.name==='resume'){
           await page.getByRole('heading',{name:/Resume/}).waitFor({state:'visible'});
