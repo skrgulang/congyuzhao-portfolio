@@ -161,6 +161,12 @@ try {
           if((await viewer.getByRole('link',{name:/Shareable link to Mini Game 01/}).getAttribute('href'))!=='/videos?game=01')
             throw new Error('Incorrect direct mini-game URL');
           await viewer.getByRole('button',{name:'Copy link to Mini Game 01'}).waitFor({state:'visible'});
+          const supportsNativeShare=await page.evaluate(()=>typeof navigator.share==='function');
+          const nativeShareButton=viewer.getByRole('button',{name:'Share Mini Game 01 using device share sheet'});
+          if(supportsNativeShare && !(await nativeShareButton.isVisible()))
+            throw new Error('Mobile native share action missing despite Web Share API support');
+          if(!supportsNativeShare && await nativeShareButton.count())
+            throw new Error('Unsupported native share control should not be displayed');
           await page.waitForFunction(()=>document.activeElement?.id==='selected-video',null,{timeout:3000});
           await page.keyboard.press('ArrowRight');
           await page.locator('.videoArchiveViewer iframe[src*="J74rR5jbsDQ"]').waitFor({state:'attached'});
