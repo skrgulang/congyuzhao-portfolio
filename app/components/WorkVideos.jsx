@@ -29,11 +29,15 @@ export default function WorkVideos(){
     :document.querySelector('.videoArchiveCover')?.focus({preventScroll:true}));
   }
  };
- const updateUrl=id=>{
+ const updateUrl=(id,{replace=false}={})=>{
   const url=new URL(window.location.href);
   if(id)url.searchParams.set('game',String(workVideos.findIndex(video=>video.id===id)+1).padStart(2,'0'));
   else url.searchParams.delete('game');
-  window.history.pushState(null,'',url.pathname+url.search+url.hash);
+  const next=url.pathname+url.search+url.hash;
+  if(next===window.location.pathname+window.location.search+window.location.hash)return;
+  // An initial open creates one browser history entry. Switching/closing
+  // reuses that entry so Back never returns to a player just dismissed.
+  window.history[replace?'replaceState':'pushState'](null,'',next);
  };
  useEffect(()=>{
   syncFromUrl();
@@ -51,7 +55,7 @@ export default function WorkVideos(){
   setSelected(null);
   setCopied(false);
   setCopyError(false);
-  updateUrl(null);
+  updateUrl(null,{replace:true});
   requestAnimationFrame(()=>(lastTrigger.current?.isConnected
    ?lastTrigger.current:document.querySelector('.videoArchiveCover'))?.focus({preventScroll:true}));
  };
@@ -61,7 +65,7 @@ export default function WorkVideos(){
   setSelected(workVideos[next].id);
   setCopied(false);
   setCopyError(false);
-  updateUrl(workVideos[next].id);
+  updateUrl(workVideos[next].id,{replace:true});
  };
  const [nativeShareAvailable,setNativeShareAvailable]=useState(false);
  useEffect(()=>setNativeShareAvailable(typeof navigator.share==='function'),[]);
@@ -96,7 +100,7 @@ export default function WorkVideos(){
     setSelected(null);
     setCopied(false);
     setCopyError(false);
-    updateUrl(null);
+    updateUrl(null,{replace:true});
     requestAnimationFrame(()=>(lastTrigger.current?.isConnected
    ?lastTrigger.current:document.querySelector('.videoArchiveCover'))?.focus({preventScroll:true}));
    }else if((event.key==='ArrowRight'||event.key==='ArrowLeft')&&
