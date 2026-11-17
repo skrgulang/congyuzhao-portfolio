@@ -94,7 +94,7 @@ export default function WorkVideos(){
  return <div className="videoArchiveWrap">
    {current&&<div className="videoArchiveViewer" role="region" aria-label="Selected mini-game recording" id="selected-video" tabIndex={-1}>
      <div className="videoArchiveViewerHeading">
-       <div><p className="newEyebrow">NOW VIEWING / SOLO MINI GAME {String(currentIndex+1).padStart(2,'0')} OF {workVideos.length}</p><h2>{current.title}</h2></div>
+       <div aria-live="polite" aria-atomic="true"><p className="newEyebrow" data-testid="mini-game-position">NOW VIEWING / SOLO MINI GAME {String(currentIndex+1).padStart(2,'0')} OF {workVideos.length}</p><h2>{current.title}</h2></div>
        <button type="button" className="videoArchiveClose" onClick={closeVideo}>Close player ×</button>
      </div>
      <iframe key={current.id} src={'https://www.youtube-nocookie.com/embed/'+current.id+'?rel=0'} title={current.title} loading="eager" referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/>
