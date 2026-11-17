@@ -129,7 +129,7 @@ export default function WorkVideos(){
    </div>}
    <div className="videoArchiveGrid">{workVideos.map((video,index)=><article className="videoArchiveCard" key={video.id}>
     <button type="button" className="videoArchiveCover" onClick={event=>openVideo(video.id,event)} aria-label={'Play '+video.title+' on this page'} aria-controls={selected?'selected-video':undefined} aria-expanded={selected===video.id}>
-     {video.thumbnail&&!failedThumbs.includes(video.id)?<img src={'https://i.ytimg.com/vi/'+video.id+'/hqdefault.jpg'} alt="" loading="lazy" decoding="async" onError={()=>setFailedThumbs(previous=>previous.includes(video.id)?previous:[...previous,video.id])}/>:<span className="videoArchiveMissing" aria-hidden="true">MINI GAME {String(index+1).padStart(2,'0')}<small>Original recording · Play to watch</small></span>}
+     <img src={video.thumbnail&&!failedThumbs.includes(video.id)?'https://i.ytimg.com/vi/'+video.id+'/hqdefault.jpg':'/videos/og/'+String(index+1).padStart(2,'0')} alt="" loading="lazy" decoding="async" onError={()=>setFailedThumbs(previous=>previous.includes(video.id)?previous:[...previous,video.id])}/>
      <span className="videoArchivePlay" aria-hidden="true">▶</span>
     </button>
     <div className="videoArchiveInfo"><span className="videoArchiveTag">{String(index+1).padStart(2,'0')} / {video.label}</span>
