@@ -15,7 +15,7 @@ export async function generateMetadata({searchParams}){
  const description=selected?
   selected.title+' is one of six independently created mini-games by Congyu Zhao. Watch the original prototype recording.':
   archiveDescription;
- // Share images are hosted by the portfolio, including the currently private YouTube recording.
+ // First-party social preview images do not depend on YouTube availability or verification.
  const image=number?'https://congyuzhao.com/videos/og/'+number:'https://congyuzhao.com/videos/og/01';
  return {
   title,description,
