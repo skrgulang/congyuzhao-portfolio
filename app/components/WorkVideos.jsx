@@ -63,6 +63,19 @@ export default function WorkVideos(){
   setCopyError(false);
   updateUrl(workVideos[next].id);
  };
+ const [nativeShareAvailable,setNativeShareAvailable]=useState(false);
+ useEffect(()=>setNativeShareAvailable(typeof navigator.share==='function'),[]);
+ const shareNative=async()=>{
+  if(!current || !nativeShareAvailable)return;
+  const url=new URL(videoUrl(current.id),window.location.origin).href;
+  try{
+   await navigator.share({title:current.title+' | Congyu Zhao',url});
+   setCopyError(false);
+  }catch(error){
+   // Users cancelling a system share sheet should not see an error.
+   if(error?.name!=='AbortError')setCopyError(true);
+  }
+ };
  const shareVideo=async()=>{
   if(!current)return;
   const url=new URL(videoUrl(current.id),window.location.origin).href;
@@ -129,7 +142,7 @@ export default function WorkVideos(){
      </div>
      <div className="videoArchiveShare">
        <a href={videoUrl(current.id)}>Shareable link to {current.title}</a>
-       <button type="button" onClick={shareVideo} aria-label={'Copy link to '+current.title}>{copied?'Copied link ✓':'Copy video link'}</button>
+       {nativeShareAvailable&&<button type="button" onClick={shareNative} aria-label={'Share '+current.title+' using device share sheet'}>Share…</button>}<button type="button" onClick={shareVideo} aria-label={'Copy link to '+current.title}>{copied?'Copied link ✓':'Copy video link'}</button>
        <span className="videoArchiveCopyStatus" role="status">{copied?'Link copied to clipboard':copyError?'Clipboard unavailable — use the shareable link above':''}</span>
      </div>
      <p>These are my six independently created mini-games, numbered rather than given invented project titles. If YouTube blocks embedded playback, open the original recording above.</p>
