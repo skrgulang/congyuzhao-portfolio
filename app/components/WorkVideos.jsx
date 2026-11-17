@@ -134,7 +134,7 @@ export default function WorkVideos(){
     </button>
     <div className="videoArchiveInfo"><span className="videoArchiveTag">{String(index+1).padStart(2,'0')} / {video.label}</span>
      <h2>{video.title}</h2><p>{video.note}</p>
-     <div className="videoArchiveActions"><button type="button" onClick={event=>openVideo(video.id,event)} aria-controls={selected?'selected-video':undefined} aria-expanded={selected===video.id}>Play here</button><a href={'https://www.youtube.com/watch?v='+video.id} target="_blank" rel="noopener noreferrer">Open on YouTube ↗︎</a></div>
+     <div className="videoArchiveActions"><button type="button" onClick={event=>openVideo(video.id,event)} aria-controls={selected?'selected-video':undefined} aria-expanded={selected===video.id}>Play here</button><a href={videoUrl(video.id)} aria-label={'Share '+video.title+' portfolio page'}>Share this game ↗︎</a><a href={'https://www.youtube.com/watch?v='+video.id} target="_blank" rel="noopener noreferrer">YouTube ↗︎</a></div>
     </div>
    </article>)}</div>
  </div>;
