@@ -157,6 +157,7 @@ try {
           await firstPlay.click();
           await page.locator('.videoArchiveViewer iframe[src*="EZ3jDLwVn3w"]').waitFor({state:'attached'});
           await page.waitForURL(/game=01/);
+          const openedHistoryLength=await page.evaluate(()=>history.length);
           const viewer=page.locator('#selected-video');
           if((await viewer.getByRole('link',{name:/Shareable link to Mini Game 01/}).getAttribute('href'))!=='/videos?game=01')
             throw new Error('Incorrect direct mini-game URL');
@@ -171,6 +172,8 @@ try {
           await page.keyboard.press('ArrowRight');
           await page.locator('.videoArchiveViewer iframe[src*="J74rR5jbsDQ"]').waitFor({state:'attached'});
           await page.waitForURL(/game=02/);
+          if(await page.evaluate(()=>history.length)!==openedHistoryLength)
+            throw new Error('Switching mini-games must not add browser history entries');
           await page.keyboard.press('ArrowLeft');
           await page.locator('.videoArchiveViewer iframe[src*="EZ3jDLwVn3w"]').waitFor({state:'attached'});
           await page.waitForURL(/game=01/);
@@ -209,6 +212,8 @@ try {
           },null,{timeout:3000}).catch(()=>{throw new Error('Closing video did not return keyboard focus to the originating cover button')});
           if(new URL(page.url()).searchParams.has('game'))
             throw new Error('Closing video must clear the deep-link parameter');
+          if(await page.evaluate(()=>history.length)!==openedHistoryLength)
+            throw new Error('Closing player should not add a ghost browser history entry');
           await page.goto(base+'/videos?game=03',{waitUntil:'domcontentloaded'});
           await page.locator('.videoArchiveViewer iframe[src*="3z4tX81RsAE"]').waitFor({state:'attached'});
           await page.goBack();
