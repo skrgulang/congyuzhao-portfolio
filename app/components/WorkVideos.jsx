@@ -86,6 +86,12 @@ export default function WorkVideos(){
     updateUrl(null);
     requestAnimationFrame(()=>(lastTrigger.current?.isConnected
    ?lastTrigger.current:document.querySelector('.videoArchiveCover'))?.focus({preventScroll:true}));
+   }else if((event.key==='ArrowRight'||event.key==='ArrowLeft')&&
+     document.activeElement?.closest('#selected-video')&&
+     !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&
+     !document.activeElement.isContentEditable){
+    event.preventDefault();
+    selectAdjacent(event.key==='ArrowRight'?1:-1);
    }
   };
   window.addEventListener('keydown',onKeyDown);
@@ -115,6 +121,7 @@ export default function WorkVideos(){
        <button type="button" className="videoArchiveClose" onClick={closeVideo}>Close player ×</button>
      </div>
      <iframe key={current.id} src={'https://www.youtube-nocookie.com/embed/'+current.id+'?rel=0'} title={current.title} loading="eager" referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/>
+     <p className="videoArchiveKeyboardHint">Keyboard: use ← / → to browse mini-games, Esc to close the player. If YouTube requests verification, open the original on YouTube.</p>
      <div className="videoArchivePlaybackActions">
        <button type="button" onClick={()=>selectAdjacent(-1)} aria-label="Play previous mini game">← Previous</button>
        <a href={'https://www.youtube.com/watch?v='+current.id} target="_blank" rel="noopener noreferrer">Watch original on YouTube ↗︎</a>
