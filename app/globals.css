@@ -1055,3 +1055,11 @@ html,body{max-width:100%;overflow-x:clip}
  .videoArchivePlaybackActions a{grid-column:1/-1;grid-row:1;text-align:center}
  .videoArchivePlaybackActions button{min-width:0}
 }
+
+
+/* Shareable video deep-links: visible fallback when browser clipboard is denied. */
+.videoArchiveShare{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:14px;border-top:1px solid rgba(255,255,255,.13);padding-top:16px}
+.videoArchiveShare a{color:#cfddba;font-size:13px;overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:4px}
+.videoArchiveShare button{min-height:44px;padding:9px 16px;border:1px solid rgba(206,184,136,.55);border-radius:9px;background:transparent;color:#f1dfb8;font-size:13px;font-weight:650;touch-action:manipulation}
+.videoArchiveShare button:hover{background:rgba(206,184,136,.15)}
+.videoArchiveShare a:focus-visible,.videoArchiveShare button:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
