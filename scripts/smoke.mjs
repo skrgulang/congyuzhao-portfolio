@@ -170,18 +170,30 @@ async function checkVideoArchive(){
  }catch(error){console.error('FAIL video archive',error.message);return false;}
 }
 async function checkMiniGameSocialMetadata(){
- try{
-  const resp=await fetch(new URL('/videos?game=03',base),{signal:AbortSignal.timeout(15000)});
-  if(!resp.ok())throw Error('HTTP '+resp.status);
-  const html=await resp.text();
-  if(!html.includes('Mini Game 03 — Solo Project'))throw Error('Missing unique video social title');
-  if(!html.includes('https://congyuzhao.com/videos?game=03') &&
-    !html.includes(new URL('/videos?game=03',base).href))
-    throw Error('Missing canonical video-specific URL');
-  if(!html.includes('property="og:title"'))throw Error('Missing Open Graph title');
-  console.log('PASS video-specific social metadata');
-  return true;
- }catch(error){console.error('FAIL mini-game social metadata',error.message);return false;}
+ const ids=['EZ3jDLwVn3w','J74rR5jbsDQ','3z4tX81RsAE','TUWHsARcuf8','90YX1FazPbs','irsFHlyWK48'];
+ let passed=true;
+ for(let i=0;i<ids.length;i++){
+  const num=String(i+1).padStart(2,'0');
+  const path='/videos?game='+num;
+  try{
+   const response=await fetch(new URL(path,base),{signal:AbortSignal.timeout(15000)});
+   if(!response.ok)throw new Error('HTTP '+response.status);
+   const html=await response.text();
+   const expectedTitle='Mini Game '+num+' — Solo Project';
+   const canonical='https://congyuzhao.com'+path;
+   if(!html.includes(expectedTitle))throw new Error('Missing video-specific social title');
+   if(!html.includes('rel="canonical"')||!html.includes(canonical))
+    throw new Error('Missing video-specific canonical');
+   if(!html.includes('property="og:title"')||!html.includes('property="og:url"'))
+    throw new Error('Missing Open Graph metadata');
+   if(!html.includes(ids[i]))throw new Error('Missing original video reference');
+   console.log('PASS video social metadata',path);
+  }catch(error){
+   passed=false;
+   console.error('FAIL video social metadata',path,error.message);
+  }
+ }
+ return passed;
 }
 const results = [];
 results.push(await checkResumePdf());
