@@ -53,7 +53,36 @@ export default function Home(){
    setProgress();window.addEventListener('scroll',setProgress,{passive:true});window.addEventListener('resize',setProgress);
    return()=>{observer?.disconnect();contentObserver.disconnect();if(rafRef.current)cancelAnimationFrame(rafRef.current);rafRef.current=0;window.removeEventListener('scroll',setProgress);window.removeEventListener('resize',setProgress);document.documentElement.classList.remove('has-motion')};
  },[]);
- useEffect(()=>{if(!menu)return;const escape=e=>{if(e.key==='Escape'){setMenu(false);document.querySelector('.menuToggle')?.focus()}};const closeOnDesktop=()=>{if(window.innerWidth>1100)setMenu(false)};const closeOutside=e=>{if(!e.target.closest('#main-navigation, .menuToggle'))setMenu(false)};window.addEventListener('keydown',escape);window.addEventListener('resize',closeOnDesktop);document.addEventListener('pointerdown',closeOutside);if(window.innerWidth<=1100)document.querySelector('#main-navigation a')?.focus();return()=>{window.removeEventListener('keydown',escape);window.removeEventListener('resize',closeOnDesktop);document.removeEventListener('pointerdown',closeOutside)}},[menu]);
+ useEffect(()=>{
+   if(!menu)return;
+   const nav=document.getElementById('main-navigation');
+   const toggle=document.querySelector('.menuToggle');
+   const escape=e=>{
+     if(e.key==='Escape'){
+       e.preventDefault();
+       setMenu(false);
+       toggle?.focus({preventScroll:true});
+     }
+   };
+   const closeOnDesktop=()=>{if(window.innerWidth>1100)setMenu(false)};
+   const closeOutside=e=>{if(!e.target.closest('#main-navigation, .menuToggle'))setMenu(false)};
+   // The navigation is a disclosure, not a modal: Tab should move naturally.
+   // Dismiss it when keyboard focus leaves instead of trapping focus.
+   const closeOnFocusOut=e=>{
+     if(!nav?.contains(e.relatedTarget)&&e.relatedTarget!==toggle)setMenu(false);
+   };
+   window.addEventListener('keydown',escape);
+   window.addEventListener('resize',closeOnDesktop);
+   document.addEventListener('pointerdown',closeOutside);
+   nav?.addEventListener('focusout',closeOnFocusOut);
+   if(window.innerWidth<=1100)nav?.querySelector('a')?.focus({preventScroll:true});
+   return()=>{
+     window.removeEventListener('keydown',escape);
+     window.removeEventListener('resize',closeOnDesktop);
+     document.removeEventListener('pointerdown',closeOutside);
+     nav?.removeEventListener('focusout',closeOnFocusOut);
+   };
+ },[menu]);
  const onArtMove=(event)=>{if(event.pointerType==='touch'||!artRef.current||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const box=artRef.current.getBoundingClientRect();const x=(event.clientX-box.left)/box.width-.5;const y=(event.clientY-box.top)/box.height-.5;artRef.current.style.setProperty('--main-x',`${(-x*22).toFixed(1)}px`);artRef.current.style.setProperty('--main-y',`${(-y*18).toFixed(1)}px`);artRef.current.style.setProperty('--side-x',`${(x*23).toFixed(1)}px`);artRef.current.style.setProperty('--side-y',`${(y*20).toFixed(1)}px`);};
  const onArtLeave=()=>{if(artRef.current){artRef.current.style.setProperty('--main-x','0px');artRef.current.style.setProperty('--main-y','0px');artRef.current.style.setProperty('--side-x','0px');artRef.current.style.setProperty('--side-y','0px')}};
  const closeAndFocusSection=(event)=>{
