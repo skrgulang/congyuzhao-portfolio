@@ -32,7 +32,7 @@ export default function WorkVideos(){
    const section=document.getElementById('selected-video');
    if(!section)return;
    const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-   section.scrollIntoView({behavior:reduced?'instant':'smooth',block:'start'});
+   section.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});
    // Make the newly inserted player discoverable to keyboard and screen-reader users.
    // Prevent focus itself from overriding the intentional scroll position.
    section.focus({preventScroll:true});
