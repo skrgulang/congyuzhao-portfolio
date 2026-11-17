@@ -182,10 +182,24 @@ async function checkMiniGameSocialMetadata(){
    const expectedTitle='Mini Game '+num+' — Solo Project';
    const canonical='https://congyuzhao.com'+path;
    if(!html.includes(expectedTitle))throw new Error('Missing video-specific social title');
-   if(!html.includes('rel="canonical"')||!html.includes(canonical))
-    throw new Error('Missing video-specific canonical');
-   if(!html.includes('property="og:title"')||!html.includes('property="og:url"'))
-    throw new Error('Missing Open Graph metadata');
+   const attr=(tag,name)=>tag.match(new RegExp('\\\\b'+name+'="([^"]*)"'))?.[1]||'';
+   const metas=[...html.matchAll(/<meta\\b[^>]*>/g)].map(x=>x[0]);
+   const links=[...html.matchAll(/<link\\b[^>]*>/g)].map(x=>x[0]);
+   const canonicalTags=links.filter(tag=>attr(tag,'rel')==='canonical');
+   if(canonicalTags.length!==1||attr(canonicalTags[0],'href')!==canonical)
+    throw new Error('Wrong canonical: '+canonicalTags.map(tag=>attr(tag,'href')).join(','));
+   const meta=(key,value)=>metas.find(tag=>attr(tag,key)===value);
+   const expectedOpenGraphTitle=expectedTitle+' | Congyu Zhao';
+   if(attr(meta('property','og:title')||'','content')!==expectedOpenGraphTitle)
+    throw new Error('Incorrect og:title');
+   if(attr(meta('property','og:url')||'','content')!==canonical)
+    throw new Error('Incorrect og:url');
+   if(!attr(meta('property','og:image')||'','content'))
+    throw new Error('Missing og:image');
+   if(attr(meta('name','twitter:card')||'','content')!=='summary_large_image')
+    throw new Error('Missing Twitter card metadata');
+   if(!attr(meta('name','description')||'','content'))
+    throw new Error('Missing description meta');
    if(!html.includes(ids[i]))throw new Error('Missing original video reference');
    console.log('PASS video social metadata',path);
   }catch(error){
