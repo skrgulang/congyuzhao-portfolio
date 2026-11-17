@@ -243,6 +243,14 @@ try {
           const pdf=page.getByRole('link',{name:/Download PDF/});
           if((await pdf.getAttribute('href'))!=='/Congyu_Zhao_Resume.pdf')
             throw new Error('Download PDF link does not point to the public resume');
+          const onlineResume=page.getByRole('link',{name:/Read the resume on this page/});
+          if((await onlineResume.getAttribute('href'))!=='#resume-education')
+            throw new Error('Missing HTML resume fallback when browser PDF preview is unavailable');
+          await onlineResume.click();
+          await page.waitForURL(/#resume-education$/);
+          const education=page.locator('#resume-education');
+          if(!(await education.isVisible()))
+            throw new Error('On-page resume fallback did not reach the education section');
           const pdfResponse=await page.request.get(base+'/Congyu_Zhao_Resume.pdf');
           if(!pdfResponse.ok()||!(pdfResponse.headers()['content-type']||'').includes('application/pdf'))
             throw new Error('Resume PDF failed to download in browser QA');
