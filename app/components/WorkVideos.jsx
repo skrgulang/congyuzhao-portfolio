@@ -6,6 +6,7 @@ export default function WorkVideos(){
  const [selected,setSelected]=useState(null);
  const [failedThumbs,setFailedThumbs]=useState([]);
  const [copied,setCopied]=useState(false);
+ const [copyError,setCopyError]=useState(false);
  const lastTrigger=useRef(null);
  const currentIndex=workVideos.findIndex(video=>video.id===selected);
  const current=currentIndex===-1?null:workVideos[currentIndex];
@@ -34,11 +35,13 @@ export default function WorkVideos(){
   if(event?.currentTarget)lastTrigger.current=event.currentTarget;
   setSelected(id);
   setCopied(false);
+  setCopyError(false);
   updateUrl(id);
  };
  const closeVideo=()=>{
   setSelected(null);
   setCopied(false);
+  setCopyError(false);
   updateUrl(null);
   requestAnimationFrame(()=>lastTrigger.current?.focus({preventScroll:true}));
  };
@@ -47,6 +50,7 @@ export default function WorkVideos(){
   const next=(currentIndex+direction+workVideos.length)%workVideos.length;
   setSelected(workVideos[next].id);
   setCopied(false);
+  setCopyError(false);
   updateUrl(workVideos[next].id);
  };
  const shareVideo=async()=>{
@@ -55,9 +59,10 @@ export default function WorkVideos(){
   try{
    await navigator.clipboard.writeText(url);
    setCopied(true);
+   setCopyError(false);
   }catch{
-   // If clipboard access is blocked, a normal shareable link remains available below.
    setCopied(false);
+   setCopyError(true);
   }
  };
  useEffect(()=>{
@@ -67,6 +72,7 @@ export default function WorkVideos(){
     event.preventDefault();
     setSelected(null);
     setCopied(false);
+    setCopyError(false);
     updateUrl(null);
     requestAnimationFrame(()=>lastTrigger.current?.focus({preventScroll:true}));
    }
@@ -106,6 +112,7 @@ export default function WorkVideos(){
      <div className="videoArchiveShare">
        <a href={videoUrl(current.id)}>Shareable link to {current.title}</a>
        <button type="button" onClick={shareVideo} aria-label={'Copy link to '+current.title}>{copied?'Copied link ✓':'Copy video link'}</button>
+       <span className="videoArchiveCopyStatus" role="status">{copied?'Link copied to clipboard':copyError?'Clipboard unavailable — use the shareable link above':''}</span>
      </div>
      <p>These are my six independently created mini-games, numbered rather than given invented project titles. If YouTube blocks embedded playback, open the original recording above.</p>
    </div>}
