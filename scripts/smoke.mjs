@@ -182,7 +182,7 @@ async function checkMiniGameSocialMetadata(){
    const expectedTitle='Mini Game '+num+' — Solo Project';
    const canonical='https://congyuzhao.com'+path;
    if(!html.includes(expectedTitle))throw new Error('Missing video-specific social title');
-   const attr=(tag,name)=>tag.match(new RegExp('\\\\b'+name+'="([^"]*)"'))?.[1]||'';
+   const attr=(tag,name)=>tag.match(new RegExp('\\b'+name+'="([^"]*)"'))?.[1]||'';
    const metas=[...html.matchAll(/<meta\\b[^>]*>/g)].map(x=>x[0]);
    const links=[...html.matchAll(/<link\\b[^>]*>/g)].map(x=>x[0]);
    const canonicalTags=links.filter(tag=>attr(tag,'rel')==='canonical');
