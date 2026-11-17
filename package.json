@@ -8,7 +8,8 @@
     "start": "next start",
     "check:live": "node scripts/smoke.mjs",
     "check:media": "node scripts/check-local-media.mjs",
-    "restore:resume": "node scripts/restore-original-resume.mjs"
+    "restore:resume": "node scripts/restore-original-resume.mjs",
+    "check:resume:live": "node scripts/audit-live-resume.mjs"
   },
   "dependencies": {
     "next": "15.5.24",
