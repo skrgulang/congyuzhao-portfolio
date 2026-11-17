@@ -1066,3 +1066,9 @@ html,body{max-width:100%;overflow-x:clip}
 
 .videoArchiveCopyStatus{flex-basis:100%;min-height:0;color:#c6d5c4;font-size:12px;line-height:1.5}
 .videoArchiveCopyStatus:empty{display:none}
+
+/* Recruiter-friendly attribution in the project directory. */
+.projectIndexRole{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 12px;padding:13px 0 10px;margin-top:13px;border-top:1px solid rgba(255,255,255,.12)}
+.projectIndexRole span{font-size:10px;font-weight:750;letter-spacing:.12em;color:var(--lime)}
+.projectIndexRole strong{font-size:13px;line-height:1.55;font-weight:600;color:#ebe8df}
+@media(max-width:650px){.projectIndexRole{display:flex;flex-direction:column;gap:5px}.projectIndexRole strong{font-size:12px}}
