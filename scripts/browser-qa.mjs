@@ -228,6 +228,17 @@ try {
           await page.locator('.videoArchiveViewer iframe[src*="J74rR5jbsDQ"]').waitFor({state:'attached'});
           await page.getByRole('button',{name:'Close player ×'}).click();
           await page.waitForFunction(()=>document.activeElement?.classList.contains('videoArchiveCover'),null,{timeout:3000});
+          // Switching directly between cards must replace URL history, not
+          // recreate a dismissed video when the visitor presses Back.
+          await archive.nth(0).getByRole('button',{name:/Play .* on this page/}).click();
+          await page.waitForURL(/game=01/);
+          const cardOpenHistory=await page.evaluate(()=>history.length);
+          await archive.nth(1).getByRole('button',{name:/Play .* on this page/}).click();
+          await page.waitForURL(/game=02/);
+          if(await page.evaluate(()=>history.length)!==cardOpenHistory)
+            throw new Error('Switching to another gallery card added a ghost history entry');
+          await page.getByRole('button',{name:'Close player ×'}).click();
+          await page.waitForURL(url=>!url.searchParams.has('game'));
           await archive.last().getByRole('button',{name:/Play .* on this page/}).click();
           await page.locator('.videoArchiveViewer iframe[src*="irsFHlyWK48"]').waitFor({state:'attached'});
           await page.locator('#selected-video').getByRole('button',{name:'Play next mini game'}).click();
