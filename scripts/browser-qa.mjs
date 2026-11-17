@@ -262,6 +262,9 @@ try {
           const education=page.locator('#resume-education');
           if(!(await education.isVisible()))
             throw new Error('On-page resume fallback did not reach the education section');
+          const educationOffset=await education.evaluate(el=>el.getBoundingClientRect().top);
+          if(educationOffset<65)
+            throw new Error('Resume fallback Education heading is hidden under navigation: '+educationOffset+'px');
           const pdfResponse=await page.request.get(base+'/Congyu_Zhao_Resume.pdf');
           if(!pdfResponse.ok()||!(pdfResponse.headers()['content-type']||'').includes('application/pdf'))
             throw new Error('Resume PDF failed to download in browser QA');
