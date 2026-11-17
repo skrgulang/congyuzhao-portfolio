@@ -51,7 +51,7 @@ export default function WorkVideos(){
    </div>}
    <div className="videoArchiveGrid">{workVideos.map((video,index)=><article className="videoArchiveCard" key={video.id}>
     <button type="button" className="videoArchiveCover" onClick={event=>openVideo(video.id,event)} aria-label={'Play '+video.title+' on this page'} aria-controls="selected-video" aria-expanded={selected===video.id}>
-     {video.thumbnail?<img src={'https://i.ytimg.com/vi/'+video.id+'/hqdefault.jpg'} alt="" loading="lazy" decoding="async"/>:<span className="videoArchiveMissing" aria-hidden="true">VIDEO {String(index+1).padStart(2,'0')}<small>Preview unavailable</small></span>}
+     {video.thumbnail?<img src={'https://i.ytimg.com/vi/'+video.id+'/hqdefault.jpg'} alt="" loading="lazy" decoding="async"/>:<span className="videoArchiveMissing" aria-hidden="true">MINI GAME {String(index+1).padStart(2,'0')}<small>Original recording · Play to watch</small></span>}
      <span className="videoArchivePlay" aria-hidden="true">▶</span>
     </button>
     <div className="videoArchiveInfo"><span className="videoArchiveTag">{String(index+1).padStart(2,'0')} / {video.label}</span>
