@@ -19,6 +19,15 @@ export default function WorkVideos(){
   const index=Number(requested);
   const match=/^(0?[1-6])$/.test(requested||'')?workVideos[index-1]:null;
   setSelected(match?.id||null);
+  setCopied(false);
+  setCopyError(false);
+  // Browser Back/Forward can dismiss the selected player without a click.
+  // Restore a useful focus target when the viewer is about to disappear.
+  if(!match && document.activeElement?.closest('#selected-video')){
+   requestAnimationFrame(()=>lastTrigger.current?.isConnected
+    ?lastTrigger.current.focus({preventScroll:true})
+    :document.querySelector('.videoArchiveCover')?.focus({preventScroll:true}));
+  }
  };
  const updateUrl=id=>{
   const url=new URL(window.location.href);
@@ -43,7 +52,8 @@ export default function WorkVideos(){
   setCopied(false);
   setCopyError(false);
   updateUrl(null);
-  requestAnimationFrame(()=>lastTrigger.current?.focus({preventScroll:true}));
+  requestAnimationFrame(()=>(lastTrigger.current?.isConnected
+   ?lastTrigger.current:document.querySelector('.videoArchiveCover'))?.focus({preventScroll:true}));
  };
  const selectAdjacent=(direction)=>{
   if(currentIndex<0)return;
@@ -74,7 +84,8 @@ export default function WorkVideos(){
     setCopied(false);
     setCopyError(false);
     updateUrl(null);
-    requestAnimationFrame(()=>lastTrigger.current?.focus({preventScroll:true}));
+    requestAnimationFrame(()=>(lastTrigger.current?.isConnected
+   ?lastTrigger.current:document.querySelector('.videoArchiveCover'))?.focus({preventScroll:true}));
    }
   };
   window.addEventListener('keydown',onKeyDown);
