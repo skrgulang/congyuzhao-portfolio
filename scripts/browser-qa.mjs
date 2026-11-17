@@ -148,6 +148,8 @@ try {
             throw new Error('Player fallback link must target current original recording');
           await viewer.getByRole('button',{name:'Play next mini game'}).click();
           await page.locator('.videoArchiveViewer iframe[src*="J74rR5jbsDQ"]').waitFor({state:'attached'});
+          if(!(await viewer.getByRole('button',{name:'Play next mini game'}).evaluate(el=>document.activeElement===el)))
+            throw new Error('Next mini-game moved keyboard focus away from playlist navigation');
           await viewer.getByRole('button',{name:'Play previous mini game'}).click();
           await page.locator('.videoArchiveViewer iframe[src*="EZ3jDLwVn3w"]').waitFor({state:'attached'});
           const playerRect=await page.locator('.videoArchiveViewer').boundingBox();
