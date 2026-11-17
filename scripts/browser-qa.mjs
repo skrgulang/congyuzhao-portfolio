@@ -138,7 +138,11 @@ try {
           const firstPlay=archive.first().getByRole('button',{name:/Play .* on this page/});
           await firstPlay.click();
           await page.locator('.videoArchiveViewer iframe[src*="EZ3jDLwVn3w"]').waitFor({state:'attached'});
+          await page.waitForURL(/game=01/);
           const viewer=page.locator('#selected-video');
+          if((await viewer.getByRole('link',{name:/Shareable link to Mini Game 01/}).getAttribute('href'))!=='/videos?game=01')
+            throw new Error('Incorrect direct mini-game URL');
+          await viewer.getByRole('button',{name:'Copy link to Mini Game 01'}).waitFor({state:'visible'});
           await page.waitForFunction(()=>document.activeElement?.id==='selected-video',null,{timeout:3000});
           const thirdCard=archive.nth(2);
           if(!(await thirdCard.locator('.videoArchiveMissing').isVisible()))
@@ -148,6 +152,7 @@ try {
             throw new Error('Player fallback link must target current original recording');
           await viewer.getByRole('button',{name:'Play next mini game'}).click();
           await page.locator('.videoArchiveViewer iframe[src*="J74rR5jbsDQ"]').waitFor({state:'attached'});
+          await page.waitForURL(/game=02/);
           if(!(await viewer.getByRole('button',{name:'Play next mini game'}).evaluate(el=>document.activeElement===el)))
             throw new Error('Next mini-game moved keyboard focus away from playlist navigation');
           await viewer.getByRole('button',{name:'Play previous mini game'}).click();
@@ -163,6 +168,15 @@ try {
             const button=document.querySelector('.videoArchiveCard .videoArchiveCover');
             return button&&document.activeElement===button;
           },null,{timeout:3000}).catch(()=>{throw new Error('Closing video did not return keyboard focus to the originating cover button')});
+          if(new URL(page.url()).searchParams.has('game'))
+            throw new Error('Closing video must clear the deep-link parameter');
+          await page.goto(base+'/videos?game=03',{waitUntil:'domcontentloaded'});
+          await page.locator('.videoArchiveViewer iframe[src*="3z4tX81RsAE"]').waitFor({state:'attached'});
+          await page.goBack();
+          await page.locator('.videoArchiveViewer iframe[src*="3z4tX81RsAE"]').waitFor({state:'detached'});
+          await page.goForward();
+          await page.locator('.videoArchiveViewer iframe[src*="3z4tX81RsAE"]').waitFor({state:'attached'});
+          await page.getByRole('button',{name:'Close player ×'}).click();
           await archive.last().getByRole('button',{name:/Play .* on this page/}).click();
           await page.locator('.videoArchiveViewer iframe[src*="irsFHlyWK48"]').waitFor({state:'attached'});
           await page.locator('#selected-video').getByRole('button',{name:'Play next mini game'}).click();
