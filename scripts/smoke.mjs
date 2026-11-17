@@ -183,8 +183,8 @@ async function checkMiniGameSocialMetadata(){
    const canonical='https://congyuzhao.com'+path;
    if(!html.includes(expectedTitle))throw new Error('Missing video-specific social title');
    const attr=(tag,name)=>tag.match(new RegExp('\\b'+name+'="([^"]*)"'))?.[1]||'';
-   const metas=[...html.matchAll(/<meta\\b[^>]*>/g)].map(x=>x[0]);
-   const links=[...html.matchAll(/<link\\b[^>]*>/g)].map(x=>x[0]);
+   const metas=[...html.matchAll(/<meta\b[^>]*>/g)].map(x=>x[0]);
+   const links=[...html.matchAll(/<link\b[^>]*>/g)].map(x=>x[0]);
    const canonicalTags=links.filter(tag=>attr(tag,'rel')==='canonical');
    if(canonicalTags.length!==1||attr(canonicalTags[0],'href')!==canonical)
     throw new Error('Wrong canonical: '+canonicalTags.map(tag=>attr(tag,'href')).join(','));
