@@ -1,13 +1,35 @@
 import Link from 'next/link';
 import WorkVideos from '../components/WorkVideos';
 
-export const metadata={
- title:'Mini Games — Solo Projects',
- description:'Six mini-games independently created by Congyu Zhao, with original gameplay and prototype videos.',
- alternates:{canonical:'https://congyuzhao.com/videos'},
- openGraph:{title:'Mini Games — Solo Projects | Congyu Zhao',description:'Six independent mini-game projects by Congyu Zhao, shown through original recordings.',url:'https://congyuzhao.com/videos',type:'website',images:[{url:'https://i.ytimg.com/vi/EZ3jDLwVn3w/hqdefault.jpg',width:480,height:360,alt:'Mini Game 01 — solo game prototype recording'}]},
- twitter:{card:'summary_large_image',title:'Six Mini Games | Congyu Zhao',description:'Six independent mini-game projects with original video recordings.',images:['https://i.ytimg.com/vi/EZ3jDLwVn3w/hqdefault.jpg']},
-};
+import {workVideos} from './data';
+
+const archiveDescription='Six mini-games independently created by Congyu Zhao, with original gameplay and prototype videos.';
+export async function generateMetadata({searchParams}){
+ const query=await searchParams;
+ const requested=typeof query?.game==='string'?query.game:'';
+ const index=/^0?[1-6]$/.test(requested)?Number(requested)-1:-1;
+ const selected=index>=0?workVideos[index]:null;
+ const number=selected?String(index+1).padStart(2,'0'):null;
+ const url='https://congyuzhao.com/videos'+(number?'?game='+number:'');
+ const title=selected?selected.title+' — Solo Project':'Mini Games — Solo Projects';
+ const description=selected?
+  selected.title+' is one of six independently created mini-games by Congyu Zhao. Watch the original prototype recording.':
+  archiveDescription;
+ // Not every source video supplies an externally usable thumbnail.
+ const image=selected?.thumbnail?
+  'https://i.ytimg.com/vi/'+selected.id+'/hqdefault.jpg':
+  selected? 'https://congyuzhao.com/images/hero-recovered.jpg':
+  'https://i.ytimg.com/vi/EZ3jDLwVn3w/hqdefault.jpg';
+ return {
+  title,description,
+  alternates:{canonical:url},
+  openGraph:{
+   title:title+' | Congyu Zhao',description,url,type:'website',
+   images:[{url:image,alt:selected?title:'Six solo mini-game projects by Congyu Zhao'}]
+  },
+  twitter:{card:'summary_large_image',title:title+' | Congyu Zhao',description,images:[image]},
+ };
+}
 export default function VideosPage(){
  return <main className="videoArchivePage">
   <a className="skipLink" href="#video-work">Skip to work videos</a>
