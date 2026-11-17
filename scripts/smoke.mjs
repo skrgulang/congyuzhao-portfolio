@@ -194,8 +194,17 @@ async function checkMiniGameSocialMetadata(){
     throw new Error('Incorrect og:title');
    if(attr(meta('property','og:url')||'','content')!==canonical)
     throw new Error('Incorrect og:url');
-   if(!attr(meta('property','og:image')||'','content'))
-    throw new Error('Missing og:image');
+   const imageUrl='https://congyuzhao.com/videos/og/'+num;
+   if(attr(meta('property','og:image')||'','content')!==imageUrl)
+    throw new Error('Incorrect first-party og:image');
+   if(attr(meta('name','twitter:image')||'','content')!==imageUrl)
+    throw new Error('Incorrect first-party twitter:image');
+   const imageResponse=await fetch(new URL('/videos/og/'+num,base),{signal:AbortSignal.timeout(15000)});
+   if(!imageResponse.ok||!(imageResponse.headers.get('content-type')||'').includes('image/png'))
+    throw new Error('Video social preview failed to return PNG');
+   const imageBytes=new Uint8Array(await imageResponse.arrayBuffer());
+   if(imageBytes.length<1000||imageBytes[0]!==137||imageBytes[1]!==80||imageBytes[2]!==78||imageBytes[3]!==71)
+    throw new Error('Video social preview is not a valid PNG');
    if(attr(meta('name','twitter:card')||'','content')!=='summary_large_image')
     throw new Error('Missing Twitter card metadata');
    if(!attr(meta('name','description')||'','content'))
