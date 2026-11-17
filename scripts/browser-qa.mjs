@@ -177,8 +177,10 @@ try {
           await page.keyboard.press('ArrowLeft');
           await page.locator('.videoArchiveViewer iframe[src*="EZ3jDLwVn3w"]').waitFor({state:'attached'});
           await page.waitForURL(/game=01/);
-          if(!(await viewer.getByText('Keyboard: use', {exact:false}).isVisible()))
+          if(!(await viewer.getByText('Keyboard: ← / → to switch games', {exact:false}).isVisible()))
             throw new Error('Keyboard navigation help should be visible in player');
+          if(!(await viewer.getByText('this does not mean the video is private', {exact:false}).isVisible()))
+            throw new Error('YouTube verification warning and playback fallback must be visible');
           const thirdCard=archive.nth(2);
           const thirdThumb=thirdCard.locator('.videoArchiveCover img');
           if((await thirdThumb.getAttribute('src'))!=='/videos/og/03')
