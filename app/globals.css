@@ -870,6 +870,10 @@ html{scroll-padding-top:24px}
 .resumeLeadLinks{display:flex;gap:16px 28px;flex-wrap:wrap;margin-top:35px}
 .resumeLeadLinks a,.resumeEnd a{color:var(--lime);font-size:14px;text-decoration:underline;text-underline-offset:7px;min-height:36px;display:inline-flex;align-items:center}
 .resumeSection{display:grid;grid-template-columns:minmax(175px,.3fr) minmax(0,1fr);gap:clamp(24px,5vw,75px);padding:47px 0;border-top:1px solid rgba(235,242,224,.17)}
+/* The HTML resume fallback links to Education; keep it clear of sticky navigation. */
+#resume-education{scroll-margin-top:100px}
+#resume-education:focus{outline:none}
+#resume-education:focus-visible{outline:2px solid var(--lime);outline-offset:6px}
 .resumeSectionLabel{color:var(--lime);font-size:11px;font-weight:750;letter-spacing:.16em;padding-top:7px}
 .resumeSection h2{font:650 clamp(25px,3.2vw,38px)/1.15 'Space Grotesk',sans-serif;letter-spacing:-.043em;margin:0 0 13px}
 .resumeSection p,.resumeSection li{font-size:15px;line-height:1.72;color:#c5cfc3}
