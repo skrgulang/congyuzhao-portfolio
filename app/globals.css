@@ -1072,3 +1072,7 @@ html,body{max-width:100%;overflow-x:clip}
 .projectIndexRole span{font-size:10px;font-weight:750;letter-spacing:.12em;color:var(--lime)}
 .projectIndexRole strong{font-size:13px;line-height:1.55;font-weight:600;color:#ebe8df}
 @media(max-width:650px){.projectIndexRole{display:flex;flex-direction:column;gap:5px}.projectIndexRole strong{font-size:12px}}
+
+/* Subtle keyboard hint for the selected video, readable in light and dark themes. */
+.videoArchiveKeyboardHint{font-size:12px;line-height:1.6;color:#cac5ba;margin:12px 0 0;overflow-wrap:anywhere}
+@media(max-width:650px){.videoArchiveKeyboardHint{font-size:12px;margin-top:10px}}
