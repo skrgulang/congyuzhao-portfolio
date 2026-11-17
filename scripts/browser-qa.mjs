@@ -162,6 +162,14 @@ try {
             throw new Error('Incorrect direct mini-game URL');
           await viewer.getByRole('button',{name:'Copy link to Mini Game 01'}).waitFor({state:'visible'});
           await page.waitForFunction(()=>document.activeElement?.id==='selected-video',null,{timeout:3000});
+          await page.keyboard.press('ArrowRight');
+          await page.locator('.videoArchiveViewer iframe[src*="J74rR5jbsDQ"]').waitFor({state:'attached'});
+          await page.waitForURL(/game=02/);
+          await page.keyboard.press('ArrowLeft');
+          await page.locator('.videoArchiveViewer iframe[src*="EZ3jDLwVn3w"]').waitFor({state:'attached'});
+          await page.waitForURL(/game=01/);
+          if(!(await viewer.getByText('Keyboard: use', {exact:false}).isVisible()))
+            throw new Error('Keyboard navigation help should be visible in player');
           const thirdCard=archive.nth(2);
           const thirdThumb=thirdCard.locator('.videoArchiveCover img');
           if((await thirdThumb.getAttribute('src'))!=='/videos/og/03')
