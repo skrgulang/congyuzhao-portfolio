@@ -1,7 +1,7 @@
 // Checks the actual public production resume bytes, not just the PDF headers.
 // Usage: npm run check:resume:live -- https://congyuzhao.com
 import {createHash} from 'node:crypto';
-const base=(process.argv[2]||'https://congyuzhao.com').replace(/\\/$/,'');
+const base=process.argv[2]||'https://congyuzhao.com';
 const expected='375deed86cca7d8bf23bc23f92151e11a8cf40a30245107039157a95c5d5cced';
 const paths=['/Congyu_Zhao_Resume.pdf','/Congyu_Zhao_Resume_Uploaded.pdf'];
 let failed=false;
