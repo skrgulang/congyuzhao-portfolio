@@ -39,3 +39,12 @@ In addition to the HTTP checks, it launches Chromium with 320px small-mobile, 39
 These automated checks cannot establish a full visual quality pass or verify authenticated product screens. A human should inspect screenshots and test Safari/iOS separately. GitHub Actions must be enabled for this repository for the workflow to run.
 
 On pushes to main, the workflow pauses briefly before checking the public production URL so Vercel has time to publish. This is a best-effort delay, not a guarantee that the newly pushed commit is live; always distinguish GitHub Actions results from Vercel deployment status.
+
+## Release handoff: remaining owner-side items (2026-11-17)
+
+- **Resume original PDF:** The exact uploaded file `Congyu Zhao — Resume (5)(1).pdf` has SHA-256 `375deed86cca7d8bf23bc23f92151e11a8cf40a30245107039157a95c5d5cced`. Replace both `public/Congyu_Zhao_Resume.pdf` and `public/Congyu_Zhao_Resume_Uploaded.pdf` with its *identical binary bytes* (do not re-export or regenerate). Run `npm run check:media` and `npm run check:live`, and verify that the public download serves the same bytes. The existing check warns when the main PDF differs from the uploaded original.
+- **Mini Game 03 access:** A public browser inspection on 2026-11-17 observed a YouTube embed message **“This video is private”** for ID `3z4tX81RsAE`. The owner needs to check the video's YouTube Studio visibility and use **Unlisted** or **Public** if viewers should watch it. Retest in a signed-out/private browser window; neither portfolio UI code nor an embed fallback can override YouTube access settings.
+- **Actual mobile devices:** Complete a hands-on visual and interaction check using iPhone Safari and Android Chrome for `/`, `/projects`, `/videos?game=03`, `/resume` and `/projects/aspire-101`. Existing Playwright WebKit and Chromium jobs are engine-based checks, not physical-device testing.
+- **Social share validation:** Run `npm run check:live` and verify all six `/videos?game=NN` pages serve distinct canonical, Open Graph and Twitter metadata. This does not guarantee immediate updates in LinkedIn's cached previews.
+
+Do not mark the release handoff fully complete until the PDF, YouTube visibility and physical-device tasks are verified.
