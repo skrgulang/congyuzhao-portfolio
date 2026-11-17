@@ -1,6 +1,7 @@
 // Offline portfolio media audit: no network, browser, or credentials required.
 import {readFile,stat} from 'node:fs/promises';
 import {join} from 'node:path';
+import {createHash} from 'node:crypto';
 const root=process.cwd();
 const read=name=>readFile(join(root,name),'utf8');
 const assert=(value,message)=>{if(!value)throw new Error(message)};
@@ -42,6 +43,15 @@ const xrefLead=resumePdf.subarray(xrefOffset,xrefOffset+8).toString('latin1');
 assert(xrefLead.startsWith('xref')||/\d+ \d+ obj/.test(xrefLead),
  'Resume PDF cross-reference offset does not reference a valid structure');
 console.log('PASS downloadable resume PDF header, EOF and cross-reference structure');
+// Compare exact bytes with the user's uploaded Nov 2026 original, not a recreated PDF.
+// Warning-only until the original binary can be replaced through GitHub.
+const originalResumeSha256='375deed86cca7d8bf23bc23f92151e11a8cf40a30245107039157a95c5d5cced';
+const resumeSha256=createHash('sha256').update(resumePdf).digest('hex');
+if(resumeSha256===originalResumeSha256){
+ console.log('PASS exact original uploaded Resume PDF (SHA-256 match)');
+}else{
+ console.warn('WARN public Resume PDF differs from the uploaded original; restore exact original bytes into public/Congyu_Zhao_Resume.pdf and the legacy alias');
+}
 const legacyResumePdf=await readFile(join(root,'public/Congyu_Zhao_Resume_Uploaded.pdf'));
 assert(resumePdf.equals(legacyResumePdf),'Resume PDF aliases must contain the same exact bytes');
 for(const path of assets){
