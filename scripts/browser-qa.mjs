@@ -153,6 +153,8 @@ try {
           await viewer.getByRole('button',{name:'Play next mini game'}).click();
           await page.locator('.videoArchiveViewer iframe[src*="J74rR5jbsDQ"]').waitFor({state:'attached'});
           await page.waitForURL(/game=02/);
+          await viewer.locator('[data-testid="mini-game-position"]').getByText('NOW VIEWING / SOLO MINI GAME 02 OF 6').waitFor({state:'visible'});
+          await viewer.getByRole('heading',{name:'Mini Game 02'}).waitFor({state:'visible'});
           if(!(await viewer.getByRole('button',{name:'Play next mini game'}).evaluate(el=>document.activeElement===el)))
             throw new Error('Next mini-game moved keyboard focus away from playlist navigation');
           await viewer.getByRole('button',{name:'Play previous mini game'}).click();
