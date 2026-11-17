@@ -15,17 +15,14 @@ export async function generateMetadata({searchParams}){
  const description=selected?
   selected.title+' is one of six independently created mini-games by Congyu Zhao. Watch the original prototype recording.':
   archiveDescription;
- // Not every source video supplies an externally usable thumbnail.
- const image=selected?.thumbnail?
-  'https://i.ytimg.com/vi/'+selected.id+'/hqdefault.jpg':
-  selected? 'https://congyuzhao.com/images/hero-recovered.jpg':
-  'https://i.ytimg.com/vi/EZ3jDLwVn3w/hqdefault.jpg';
+ // Share images are hosted by the portfolio, including the currently private YouTube recording.
+ const image=number?'https://congyuzhao.com/videos/og/'+number:'https://congyuzhao.com/videos/og/01';
  return {
   title,description,
   alternates:{canonical:url},
   openGraph:{
    title:title+' | Congyu Zhao',description,url,type:'website',
-   images:[{url:image,alt:selected?title:'Six solo mini-game projects by Congyu Zhao'}]
+   images:[{url:image,width:1200,height:630,alt:selected?title:'Six solo mini-game projects by Congyu Zhao'}]
   },
   twitter:{card:'summary_large_image',title:title+' | Congyu Zhao',description,images:[image]},
  };
