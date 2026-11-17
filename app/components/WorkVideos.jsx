@@ -5,21 +5,60 @@ import {workVideos} from '../videos/data';
 export default function WorkVideos(){
  const [selected,setSelected]=useState(null);
  const [failedThumbs,setFailedThumbs]=useState([]);
+ const [copied,setCopied]=useState(false);
  const lastTrigger=useRef(null);
  const currentIndex=workVideos.findIndex(video=>video.id===selected);
  const current=currentIndex===-1?null:workVideos[currentIndex];
+ const videoUrl=id=>{
+  const index=workVideos.findIndex(video=>video.id===id);
+  return '/videos?game='+String(index+1).padStart(2,'0');
+ };
+ const syncFromUrl=()=>{
+  const requested=new URL(window.location.href).searchParams.get('game');
+  const index=Number(requested);
+  const match=/^(0?[1-6])$/.test(requested||'')?workVideos[index-1]:null;
+  setSelected(match?.id||null);
+ };
+ const updateUrl=id=>{
+  const url=new URL(window.location.href);
+  if(id)url.searchParams.set('game',String(workVideos.findIndex(video=>video.id===id)+1).padStart(2,'0'));
+  else url.searchParams.delete('game');
+  window.history.pushState(null,'',url.pathname+url.search+url.hash);
+ };
+ useEffect(()=>{
+  syncFromUrl();
+  window.addEventListener('popstate',syncFromUrl);
+  return()=>window.removeEventListener('popstate',syncFromUrl);
+ },[]);
  const openVideo=(id,event)=>{
   if(event?.currentTarget)lastTrigger.current=event.currentTarget;
   setSelected(id);
+  setCopied(false);
+  updateUrl(id);
  };
  const closeVideo=()=>{
   setSelected(null);
+  setCopied(false);
+  updateUrl(null);
   requestAnimationFrame(()=>lastTrigger.current?.focus({preventScroll:true}));
  };
  const selectAdjacent=(direction)=>{
   if(currentIndex<0)return;
   const next=(currentIndex+direction+workVideos.length)%workVideos.length;
   setSelected(workVideos[next].id);
+  setCopied(false);
+  updateUrl(workVideos[next].id);
+ };
+ const shareVideo=async()=>{
+  if(!current)return;
+  const url=new URL(videoUrl(current.id),window.location.origin).href;
+  try{
+   await navigator.clipboard.writeText(url);
+   setCopied(true);
+  }catch{
+   // If clipboard access is blocked, a normal shareable link remains available below.
+   setCopied(false);
+  }
  };
  useEffect(()=>{
   if(!selected)return;
@@ -27,6 +66,8 @@ export default function WorkVideos(){
    if(event.key==='Escape'){
     event.preventDefault();
     setSelected(null);
+    setCopied(false);
+    updateUrl(null);
     requestAnimationFrame(()=>lastTrigger.current?.focus({preventScroll:true}));
    }
   };
@@ -61,6 +102,10 @@ export default function WorkVideos(){
        <button type="button" onClick={()=>selectAdjacent(-1)} aria-label="Play previous mini game">← Previous</button>
        <a href={'https://www.youtube.com/watch?v='+current.id} target="_blank" rel="noopener noreferrer">Watch original on YouTube ↗︎</a>
        <button type="button" onClick={()=>selectAdjacent(1)} aria-label="Play next mini game">Next →</button>
+     </div>
+     <div className="videoArchiveShare">
+       <a href={videoUrl(current.id)}>Shareable link to {current.title}</a>
+       <button type="button" onClick={shareVideo} aria-label={'Copy link to '+current.title}>{copied?'Copied link ✓':'Copy video link'}</button>
      </div>
      <p>These are my six independently created mini-games, numbered rather than given invented project titles. If YouTube blocks embedded playback, open the original recording above.</p>
    </div>}
