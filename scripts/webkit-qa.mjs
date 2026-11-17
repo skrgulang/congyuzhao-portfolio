@@ -51,6 +51,13 @@ try{
       throw Error('Resume menu item points to stale PDF');
     await page.keyboard.press('Escape');
     if(await navLinks.isVisible())throw Error('Escape did not close mobile/tablet navigation');
+    // Shift+Tab from the first disclosed link moves focus outside navigation.
+    // The menu must close without trapping keyboard users.
+    await menu.click();
+    await navLinks.waitFor({state:'visible'});
+    await page.keyboard.press('Shift+Tab');
+    await navLinks.waitFor({state:'hidden',timeout:3000});
+    if(await navLinks.isVisible())throw Error('Menu remained open when keyboard focus left navigation');
    }else{
     if(await resume.isVisible())throw Error('Duplicate desktop Resume shortcut');
     const desktopNav=page.locator('#main-navigation');
