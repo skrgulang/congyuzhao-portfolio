@@ -1041,3 +1041,17 @@ html,body{max-width:100%;overflow-x:clip}
  .videoArchiveCover:focus-visible{outline-offset:-4px}
  .videoArchiveInfo p{overflow-wrap:anywhere}
 }
+
+
+/* Mini-game viewer controls: touch-friendly, keyboard-visible and safe at 320px. */
+.videoArchivePlaybackActions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:18px}
+.videoArchivePlaybackActions button,.videoArchivePlaybackActions a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border:1px solid rgba(206,184,136,.5);border-radius:9px;background:rgba(206,184,136,.08);color:#f1dfb8;font-size:13px;font-weight:650;text-decoration:none;touch-action:manipulation}
+.videoArchivePlaybackActions button:hover,.videoArchivePlaybackActions a:hover{background:rgba(206,184,136,.18);border-color:#ceb888}
+.videoArchivePlaybackActions button:focus-visible,.videoArchivePlaybackActions a:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+.videoArchiveMissing{max-width:100%;padding:16px;overflow-wrap:anywhere}
+.videoArchiveMissing small{line-height:1.5}
+@media(max-width:450px){
+ .videoArchivePlaybackActions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .videoArchivePlaybackActions a{grid-column:1/-1;grid-row:1;text-align:center}
+ .videoArchivePlaybackActions button{min-width:0}
+}
