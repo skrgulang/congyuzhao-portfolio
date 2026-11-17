@@ -158,8 +158,13 @@ try {
           await viewer.getByRole('button',{name:'Copy link to Mini Game 01'}).waitFor({state:'visible'});
           await page.waitForFunction(()=>document.activeElement?.id==='selected-video',null,{timeout:3000});
           const thirdCard=archive.nth(2);
-          if(!(await thirdCard.locator('.videoArchiveMissing').isVisible()))
-            throw new Error('Mini Game 03 intentional thumbnail fallback is missing');
+          const thirdThumb=thirdCard.locator('.videoArchiveCover img');
+          if((await thirdThumb.getAttribute('src'))!=='/videos/og/03')
+            throw new Error('Mini Game 03 must use its first-party branded thumbnail fallback');
+          await thirdThumb.scrollIntoViewIfNeeded();
+          await thirdThumb.evaluate(async image=>{if(!image.complete)await new Promise(resolve=>{image.addEventListener('load',resolve,{once:true});image.addEventListener('error',resolve,{once:true});});});
+          if(!(await thirdThumb.evaluate(image=>image.naturalWidth>0)))
+            throw new Error('First-party Mini Game 03 fallback did not load');
           const external=viewer.getByRole('link',{name:/Watch original on YouTube/});
           if((await external.getAttribute('href'))!=='https://www.youtube.com/watch?v=EZ3jDLwVn3w')
             throw new Error('Player fallback link must target current original recording');
