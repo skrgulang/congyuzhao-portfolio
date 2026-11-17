@@ -5,6 +5,7 @@ const pages = [
   ['/', 'Congyu Zhao'],
   ['/projects', 'Projects'],
   ['/videos', 'Small games.'],
+  ['/videos?game=03', 'Mini Game 03'],
   ['/resume', 'Resume'],
   ['/projects/aspire-101', 'Aspire 101'],
   ['/projects/fish-and-ships', 'Fish and Ships'],
@@ -168,9 +169,24 @@ async function checkVideoArchive(){
   return true;
  }catch(error){console.error('FAIL video archive',error.message);return false;}
 }
+async function checkMiniGameSocialMetadata(){
+ try{
+  const resp=await fetch(new URL('/videos?game=03',base),{signal:AbortSignal.timeout(15000)});
+  if(!resp.ok())throw Error('HTTP '+resp.status);
+  const html=await resp.text();
+  if(!html.includes('Mini Game 03 — Solo Project'))throw Error('Missing unique video social title');
+  if(!html.includes('https://congyuzhao.com/videos?game=03') &&
+    !html.includes(new URL('/videos?game=03',base).href))
+    throw Error('Missing canonical video-specific URL');
+  if(!html.includes('property="og:title"'))throw Error('Missing Open Graph title');
+  console.log('PASS video-specific social metadata');
+  return true;
+ }catch(error){console.error('FAIL mini-game social metadata',error.message);return false;}
+}
 const results = [];
 results.push(await checkResumePdf());
 results.push(await checkVideoArchive());
+results.push(await checkMiniGameSocialMetadata());
 for (const [path, assets] of showcasePages) results.push(await checkShowcaseMarkup(path, assets));
 for (const [path, text] of pages) results.push(await check(path, text));
 results.push(await checkNotFound());
