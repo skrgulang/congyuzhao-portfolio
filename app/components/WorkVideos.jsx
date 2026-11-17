@@ -79,8 +79,9 @@ export default function WorkVideos(){
   const url=new URL(videoUrl(current.id),window.location.origin).href;
   try{
    await navigator.share({title:current.title+' | Congyu Zhao',url});
+   setCopied(false);
    setCopyError(false);
-  setNativeShareError(false);
+   setNativeShareError(false);
   }catch(error){
    // Users cancelling a system share sheet should not see an error.
    if(error?.name!=='AbortError')setNativeShareError(true);
@@ -146,7 +147,7 @@ export default function WorkVideos(){
        <button type="button" className="videoArchiveClose" onClick={closeVideo}>Close player ×</button>
      </div>
      <iframe key={current.id} src={'https://www.youtube-nocookie.com/embed/'+current.id+'?rel=0'} title={current.title} loading="eager" referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/>
-     <p className="videoArchiveKeyboardHint">Keyboard: use ← / → to browse mini-games, Esc to close the player. If YouTube requests verification, open the original on YouTube.</p>
+     <p className="videoArchiveKeyboardHint">Keyboard: ← / → to switch games, Esc to close. YouTube may ask some visitors to sign in to confirm they are not a bot; this does not mean the video is private. If the embed is blocked, use Watch original on YouTube below.</p>
      <div className="videoArchivePlaybackActions">
        <button type="button" onClick={()=>selectAdjacent(-1)} aria-label="Play previous mini game">← Previous</button>
        <a href={'https://www.youtube.com/watch?v='+current.id} target="_blank" rel="noopener noreferrer">Watch original on YouTube ↗︎</a>
