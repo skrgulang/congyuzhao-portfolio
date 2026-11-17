@@ -112,6 +112,16 @@ try{
        await firstButton.click();
        const player=page.locator('.videoArchiveViewer');
        await player.waitFor({state:'visible'});
+       await page.locator('#selected-video').waitFor({state:'visible'});
+       const playerSource=page.locator('#selected-video iframe');
+       if(!(await playerSource.getAttribute('src')).includes('EZ3jDLwVn3w'))
+         throw Error('Wrong first mini-game embedded');
+       await player.getByRole('button',{name:'Play next mini game'}).click();
+       if(!(await playerSource.getAttribute('src')).includes('J74rR5jbsDQ'))
+         throw Error('Next mini-game failed on WebKit '+width+'px');
+       await player.getByRole('button',{name:'Play previous mini game'}).click();
+       if(!(await playerSource.getAttribute('src')).includes('EZ3jDLwVn3w'))
+         throw Error('Previous mini-game failed on WebKit '+width+'px');
        const playerRect=await player.boundingBox();
        const gridRect=await page.locator('.videoArchiveGrid').boundingBox();
        if(!playerRect||!gridRect||playerRect.y>=gridRect.y)
