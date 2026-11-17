@@ -7,6 +7,7 @@ export default function WorkVideos(){
  const [failedThumbs,setFailedThumbs]=useState([]);
  const [copied,setCopied]=useState(false);
  const [copyError,setCopyError]=useState(false);
+ const [nativeShareError,setNativeShareError]=useState(false);
  const lastTrigger=useRef(null);
  const currentIndex=workVideos.findIndex(video=>video.id===selected);
  const current=currentIndex===-1?null:workVideos[currentIndex];
@@ -21,6 +22,7 @@ export default function WorkVideos(){
   setSelected(match?.id||null);
   setCopied(false);
   setCopyError(false);
+  setNativeShareError(false);
   // Browser Back/Forward can dismiss the selected player without a click.
   // Restore a useful focus target when the viewer is about to disappear.
   if(!match && document.activeElement?.closest('#selected-video')){
@@ -49,12 +51,14 @@ export default function WorkVideos(){
   setSelected(id);
   setCopied(false);
   setCopyError(false);
+  setNativeShareError(false);
   updateUrl(id);
  };
  const closeVideo=()=>{
   setSelected(null);
   setCopied(false);
   setCopyError(false);
+  setNativeShareError(false);
   updateUrl(null,{replace:true});
   requestAnimationFrame(()=>(lastTrigger.current?.isConnected
    ?lastTrigger.current:document.querySelector('.videoArchiveCover'))?.focus({preventScroll:true}));
@@ -65,6 +69,7 @@ export default function WorkVideos(){
   setSelected(workVideos[next].id);
   setCopied(false);
   setCopyError(false);
+  setNativeShareError(false);
   updateUrl(workVideos[next].id,{replace:true});
  };
  const [nativeShareAvailable,setNativeShareAvailable]=useState(false);
@@ -75,9 +80,10 @@ export default function WorkVideos(){
   try{
    await navigator.share({title:current.title+' | Congyu Zhao',url});
    setCopyError(false);
+  setNativeShareError(false);
   }catch(error){
    // Users cancelling a system share sheet should not see an error.
-   if(error?.name!=='AbortError')setCopyError(true);
+   if(error?.name!=='AbortError')setNativeShareError(true);
   }
  };
  const shareVideo=async()=>{
@@ -87,6 +93,7 @@ export default function WorkVideos(){
    await navigator.clipboard.writeText(url);
    setCopied(true);
    setCopyError(false);
+   setNativeShareError(false);
   }catch{
    setCopied(false);
    setCopyError(true);
@@ -100,6 +107,7 @@ export default function WorkVideos(){
     setSelected(null);
     setCopied(false);
     setCopyError(false);
+  setNativeShareError(false);
     updateUrl(null,{replace:true});
     requestAnimationFrame(()=>(lastTrigger.current?.isConnected
    ?lastTrigger.current:document.querySelector('.videoArchiveCover'))?.focus({preventScroll:true}));
@@ -147,7 +155,7 @@ export default function WorkVideos(){
      <div className="videoArchiveShare">
        <a href={videoUrl(current.id)}>Shareable link to {current.title}</a>
        {nativeShareAvailable&&<button type="button" onClick={shareNative} aria-label={'Share '+current.title+' using device share sheet'}>Share…</button>}<button type="button" onClick={shareVideo} aria-label={'Copy link to '+current.title}>{copied?'Copied link ✓':'Copy video link'}</button>
-       <span className="videoArchiveCopyStatus" role="status">{copied?'Link copied to clipboard':copyError?'Clipboard unavailable — use the shareable link above':''}</span>
+       <span className="videoArchiveCopyStatus" role="status">{copied?'Link copied to clipboard':copyError?'Clipboard unavailable — use the shareable link above':nativeShareError?'System sharing unavailable — use Copy video link or the shareable link above':''}</span>
      </div>
      <p>These are my six independently created mini-games, numbered rather than given invented project titles. If YouTube blocks embedded playback, open the original recording above.</p>
    </div>}
