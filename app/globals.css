@@ -1063,3 +1063,6 @@ html,body{max-width:100%;overflow-x:clip}
 .videoArchiveShare button{min-height:44px;padding:9px 16px;border:1px solid rgba(206,184,136,.55);border-radius:9px;background:transparent;color:#f1dfb8;font-size:13px;font-weight:650;touch-action:manipulation}
 .videoArchiveShare button:hover{background:rgba(206,184,136,.15)}
 .videoArchiveShare a:focus-visible,.videoArchiveShare button:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+
+.videoArchiveCopyStatus{flex-basis:100%;min-height:0;color:#c6d5c4;font-size:12px;line-height:1.5}
+.videoArchiveCopyStatus:empty{display:none}
