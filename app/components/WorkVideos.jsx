@@ -52,7 +52,9 @@ export default function WorkVideos(){
   setCopied(false);
   setCopyError(false);
   setNativeShareError(false);
-  updateUrl(id);
+  // Picking a different gallery card while the player is already open is a
+  // switch, not a new history entry. Preserve Back for the initial open only.
+  updateUrl(id,{replace:Boolean(selected)});
  };
  const closeVideo=()=>{
   setSelected(null);
