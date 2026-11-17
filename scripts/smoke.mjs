@@ -228,6 +228,8 @@ results.push(await checkNotFound());
 results.push(await checkCrawlerFile('/sitemap.xml', '/projects/aspire-101'));
 results.push(await checkCrawlerFile('/sitemap.xml', '/resume'));
 results.push(await checkCrawlerFile('/sitemap.xml', '/videos'));
+for(let i=1;i<=6;i++)
+ results.push(await checkCrawlerFile('/sitemap.xml', '/videos?game='+String(i).padStart(2,'0')));
 results.push(await checkCrawlerFile('/robots.txt', '/sitemap.xml'));
 for (const path of images) results.push(await check(path));
 for (const path of videos) results.push(await checkVideo(path));
