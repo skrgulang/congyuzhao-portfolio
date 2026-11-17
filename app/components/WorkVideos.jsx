@@ -39,8 +39,13 @@ export default function WorkVideos(){
    const section=document.getElementById('selected-video');
    if(!section)return;
    const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-   section.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});
-   section.focus({preventScroll:true});
+   // Keep focus on Previous/Next while advancing the playlist. When a
+   // gallery card opens the player, focus the region to announce the change.
+   const adjustingPlaylist=Boolean(document.activeElement?.closest('.videoArchivePlaybackActions'));
+   if(!adjustingPlaylist){
+    section.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});
+    section.focus({preventScroll:true});
+   }
   });
   return()=>cancelAnimationFrame(frame);
  },[selected]);
