@@ -179,6 +179,11 @@ try {
           await page.goForward();
           await page.locator('.videoArchiveViewer iframe[src*="3z4tX81RsAE"]').waitFor({state:'attached'});
           await page.getByRole('button',{name:'Close player ×'}).click();
+          await page.waitForFunction(()=>document.activeElement?.classList.contains('videoArchiveCover'),null,{timeout:3000});
+          await page.goto(base+'/videos?game=02',{waitUntil:'domcontentloaded'});
+          await page.locator('.videoArchiveViewer iframe[src*="J74rR5jbsDQ"]').waitFor({state:'attached'});
+          await page.getByRole('button',{name:'Close player ×'}).click();
+          await page.waitForFunction(()=>document.activeElement?.classList.contains('videoArchiveCover'),null,{timeout:3000});
           await archive.last().getByRole('button',{name:/Play .* on this page/}).click();
           await page.locator('.videoArchiveViewer iframe[src*="irsFHlyWK48"]').waitFor({state:'attached'});
           await page.locator('#selected-video').getByRole('button',{name:'Play next mini game'}).click();
