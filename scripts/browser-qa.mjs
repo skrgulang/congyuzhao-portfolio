@@ -142,9 +142,14 @@ try {
           const archive=page.locator('.videoArchiveCard');
           if(await archive.count()!==6)throw new Error('Expected six owner-supplied video cards');
           const ids=['EZ3jDLwVn3w','J74rR5jbsDQ','3z4tX81RsAE','TUWHsARcuf8','90YX1FazPbs','irsFHlyWK48'];
-          for(const id of ids){
+          for(let i=0;i<ids.length;i++){
+            const id=ids[i];
             const link=page.locator('.videoArchiveCard a[href="https://www.youtube.com/watch?v='+id+'"]');
             if(await link.count()!==1)throw new Error('Missing video link '+id);
+            const permalink='/videos?game='+String(i+1).padStart(2,'0');
+            const share=archive.nth(i).getByRole('link',{name:'Share Mini Game '+String(i+1).padStart(2,'0')+' portfolio page'});
+            if((await share.getAttribute('href'))!==permalink || !(await share.isVisible()))
+              throw new Error('Missing visible direct sharing link for Mini Game '+(i+1));
           }
           if(await page.locator('.videoArchiveViewer iframe').count())
             throw new Error('Do not pre-load YouTube iframes before video selection');
