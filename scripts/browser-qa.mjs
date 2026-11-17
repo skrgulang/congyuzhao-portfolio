@@ -117,6 +117,19 @@ try {
           await page.waitForURL(url=>!url.searchParams.has('category'));
           await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
         }
+        if(test.name==='projects'){
+          const cards=page.locator('.allProjectsItem');
+          if(await cards.count()!==6)throw new Error('Expected all six projects in recruitment directory');
+          const roleLabels=page.locator('.allProjectsItem .projectIndexRole');
+          if(await roleLabels.count()!==6)throw new Error('Every project should display its personal contribution');
+          for(let i=0;i<6;i++){
+            const role=cards.nth(i).locator('.projectIndexRole strong');
+            if(!(await role.isVisible())||!(await role.innerText()).trim())
+              throw new Error('Missing visible personal role on project card '+(i+1));
+          }
+          if(!(await cards.first().getByText('Sole founder', {exact:false}).isVisible()))
+            throw new Error('Aspire 101 founder contribution is not evident in project directory');
+        }
         if(test.name==='projects'||test.name==='fish'||test.name==='wildfire'||test.name==='studio'||test.name==='tempus'||test.name==='gameplay'||test.name==='aspire'){
           const resumeLink=page.locator('.caseNav .caseResumeLink');
           if((await resumeLink.getAttribute('href'))!=='/Congyu_Zhao_Resume.pdf')
