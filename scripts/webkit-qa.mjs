@@ -2,6 +2,7 @@
 // WebKit approximates Safari's rendering engine; this is not an iOS device test.
 import {webkit} from 'playwright';
 import {mkdir} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
 
 const origin=(process.argv[2]||'http://127.0.0.1:3000').replace(/\/$/,'');
 const sizes=[320,375,390,650,651,768,900,901,1024,1100,1101,1280];
@@ -76,11 +77,22 @@ try{
    }
    if((await resume.getAttribute('href'))!=='/Congyu_Zhao_Resume.pdf')
     throw Error('Header Resume points to wrong PDF');
-   const pdf=await page.request.get(origin+'/Congyu_Zhao_Resume.pdf',{timeout:15000});
-   if(!pdf.ok()||!(pdf.headers()['content-type']||'').includes('application/pdf'))
-    throw Error('Resume PDF inaccessible in WebKit QA');
-   const bytes=await pdf.body();
-   if(bytes.subarray(0,5).toString()!=='%PDF-')throw Error('Invalid PDF response header');
+   // Test both real public PDF aliases, not just the PDF signature. The
+   // uploaded original is exactly 80,611 bytes with this SHA-256 digest.
+   // One pass per build is enough; the response bytes do not depend on width.
+   if(width===320){
+    const expected='375deed86cca7d8bf23bc23f92151e11a8cf40a30245107039157a95c5d5cced';
+    for(const path of ['/Congyu_Zhao_Resume.pdf','/Congyu_Zhao_Resume_Uploaded.pdf']){
+     const pdf=await page.request.get(origin+path,{timeout:15000});
+     if(!pdf.ok()||!(pdf.headers()['content-type']||'').includes('application/pdf'))
+      throw Error('Resume PDF inaccessible in WebKit QA: '+path);
+     const bytes=await pdf.body();
+     if(bytes.length!==80611||bytes.subarray(0,5).toString()!=='%PDF-')
+      throw Error('Resume PDF size/signature mismatch: '+path+' ('+bytes.length+' bytes)');
+     const actual=createHash('sha256').update(bytes).digest('hex');
+     if(actual!==expected)throw Error('Resume PDF SHA-256 mismatch: '+path+' ('+actual+')');
+    }
+   }
    await nav.screenshot({path:'qa-screenshots/webkit-header-'+width+'.png',animations:'disabled'});
    if(width===320||width===768||width===1101)
      await page.screenshot({path:'qa-screenshots/webkit-home-'+width+'.png',fullPage:true,animations:'disabled'});
