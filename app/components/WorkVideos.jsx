@@ -9,6 +9,13 @@ export default function WorkVideos(){
  const [copyError,setCopyError]=useState(false);
  const [nativeShareError,setNativeShareError]=useState(false);
  const lastTrigger=useRef(null);
+ // A shared deep link has no originating click. Return keyboard focus to
+ // that specific game's cover, rather than unexpectedly jumping to Game 01.
+ const restoreGalleryFocus=(id)=>{
+  const trigger=lastTrigger.current?.isConnected ? lastTrigger.current :
+   Array.from(document.querySelectorAll('.videoArchiveCover')).find(button=>button.dataset.videoId===id);
+  requestAnimationFrame(()=>trigger?.focus({preventScroll:true}));
+ };
  const currentIndex=workVideos.findIndex(video=>video.id===selected);
  const current=currentIndex===-1?null:workVideos[currentIndex];
  const videoUrl=id=>{
@@ -26,9 +33,8 @@ export default function WorkVideos(){
   // Browser Back/Forward can dismiss the selected player without a click.
   // Restore a useful focus target when the viewer is about to disappear.
   if(!match && document.activeElement?.closest('#selected-video')){
-   requestAnimationFrame(()=>lastTrigger.current?.isConnected
-    ?lastTrigger.current.focus({preventScroll:true})
-    :document.querySelector('.videoArchiveCover')?.focus({preventScroll:true}));
+   const previouslySelected=document.querySelector('.videoArchiveCover[aria-expanded="true"]')?.dataset.videoId;
+   restoreGalleryFocus(previouslySelected);
   }
  };
  const updateUrl=(id,{replace=false}={})=>{
@@ -62,8 +68,7 @@ export default function WorkVideos(){
   setCopyError(false);
   setNativeShareError(false);
   updateUrl(null,{replace:true});
-  requestAnimationFrame(()=>(lastTrigger.current?.isConnected
-   ?lastTrigger.current:document.querySelector('.videoArchiveCover'))?.focus({preventScroll:true}));
+  restoreGalleryFocus(selected);
  };
  const selectAdjacent=(direction)=>{
   if(currentIndex<0)return;
@@ -112,8 +117,7 @@ export default function WorkVideos(){
     setCopyError(false);
   setNativeShareError(false);
     updateUrl(null,{replace:true});
-    requestAnimationFrame(()=>(lastTrigger.current?.isConnected
-   ?lastTrigger.current:document.querySelector('.videoArchiveCover'))?.focus({preventScroll:true}));
+    restoreGalleryFocus(selected);
    }else if((event.key==='ArrowRight'||event.key==='ArrowLeft')&&
      document.activeElement?.closest('#selected-video')&&
      !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&
@@ -163,7 +167,7 @@ export default function WorkVideos(){
      <p>These are my six independently created mini-games, numbered rather than given invented project titles. If YouTube blocks embedded playback, open the original recording above.</p>
    </div>}
    <div className="videoArchiveGrid">{workVideos.map((video,index)=><article className="videoArchiveCard" key={video.id}>
-    <button type="button" className="videoArchiveCover" onClick={event=>openVideo(video.id,event)} aria-label={'Play '+video.title+' on this page'} aria-controls={selected?'selected-video':undefined} aria-expanded={selected===video.id}>
+    <button type="button" className="videoArchiveCover" data-video-id={video.id} onClick={event=>openVideo(video.id,event)} aria-label={'Play '+video.title+' on this page'} aria-controls={selected?'selected-video':undefined} aria-expanded={selected===video.id}>
      <img src={video.thumbnail&&!failedThumbs.includes(video.id)?'https://i.ytimg.com/vi/'+video.id+'/hqdefault.jpg':'/videos/og/'+String(index+1).padStart(2,'0')} alt="" loading="lazy" decoding="async" onError={()=>setFailedThumbs(previous=>previous.includes(video.id)?previous:[...previous,video.id])}/>
      <span className="videoArchivePlay" aria-hidden="true">▶</span>
     </button>
