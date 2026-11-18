@@ -37,7 +37,8 @@ const personStructuredData = {
   url: 'https://congyuzhao.com',
   affiliation: { '@type': 'CollegeOrUniversity', name: 'Purdue University' },
   knowsAbout: ['Software development', 'Game development', 'Product engineering', 'Unity'],
-  sameAs: ['https://github.com/skrgulang', 'https://www.aspires101.com/']
+  sameAs: ['https://github.com/skrgulang', 'https://www.linkedin.com/in/congyu-zhao-5226b52b1/'],
+  founder: { '@type': 'Organization', name: 'Aspire 101', url: 'https://www.aspires101.com/' }
 };
 
 export default function RootLayout({ children }) {
