@@ -17,9 +17,9 @@ const cases = [
   { name: 'gameplay', path: '/projects/gameplay-systems' }
 ];
 const devices = [
-  {name:'small-mobile',viewport:{width:320,height:700},isMobile:true,deviceScaleFactor:1},
-  {name:'mobile',viewport:{width:390,height:844},isMobile:true,deviceScaleFactor:1},
-  {name:'desktop',viewport:{width:1440,height:900},isMobile:false,deviceScaleFactor:1}
+  {name:'small-mobile',viewport:{width:320,height:700},isMobile:true,hasTouch:true,deviceScaleFactor:1},
+  {name:'mobile',viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:1},
+  {name:'desktop',viewport:{width:1440,height:900},isMobile:false,hasTouch:false,deviceScaleFactor:1}
 ];
 async function menuOpenForAnchor(page){
   await page.getByRole('button',{name:'Open navigation menu'}).click();
@@ -264,6 +264,31 @@ try {
           await page.keyboard.press('Escape');
           if(await page.locator('.videoArchiveViewer iframe').count())
             throw new Error('Escape must close mini-game playback');
+          if(device.isMobile){
+            // Real Playwright touchscreen taps (rather than mouse clicks or
+            // synthetic TouchEvent dispatch) at iPhone/Android-like widths.
+            await page.goto(base+'/videos?game=03',{waitUntil:'domcontentloaded'});
+            const mobileViewer=page.locator('#selected-video');
+            await mobileViewer.waitFor({state:'visible'});
+            const tapControl=async locator=>{
+              await locator.scrollIntoViewIfNeeded();
+              const bounds=await locator.boundingBox();
+              if(!bounds||bounds.width<40||bounds.height<40)
+                throw new Error('Mini-game touch target smaller than 40px');
+              const viewport=await page.evaluate(()=>document.documentElement.clientWidth);
+              if(bounds.x < -1||bounds.x+bounds.width > viewport+1)
+                throw new Error('Mini-game touch target clipped: '+JSON.stringify(bounds));
+              await page.touchscreen.tap(bounds.x+bounds.width/2,bounds.y+bounds.height/2);
+            };
+            await tapControl(mobileViewer.getByRole('button',{name:'Play next mini game'}));
+            await page.waitForURL(/game=04/);
+            await mobileViewer.getByRole('heading',{name:'Mini Game 04'}).waitFor({state:'visible'});
+            await tapControl(mobileViewer.getByRole('button',{name:'Play previous mini game'}));
+            await page.waitForURL(/game=03/);
+            await tapControl(mobileViewer.getByRole('button',{name:'Close player ×'}));
+            await page.waitForURL(url=>!url.searchParams.has('game'));
+            await mobileViewer.waitFor({state:'detached'});
+          }
         }
         if(test.name==='resume'){
           await page.getByRole('heading',{name:/Resume/}).waitFor({state:'visible'});
