@@ -57,6 +57,14 @@ async function check(path, expectedText) {
         throw new Error('Expected one matching canonical link: ' + expectedCanonical.href);
       if (!html.includes('property="og:image"'))
         throw new Error('Missing social sharing image metadata');
+      if (path === '/resume') {
+        const ogImageTag=[...html.matchAll(/<meta\\b[^>]*>/g)]
+          .map(match=>match[0]).find(tag=>tag.includes('property="og:image"'));
+        if (!ogImageTag?.includes('https://congyuzhao.com/images/hero-recovered.jpg'))
+          throw new Error('Resume social preview must use the verified portfolio photo');
+        if (!html.includes('name="twitter:card"') || !html.includes('summary_large_image'))
+          throw new Error('Resume share preview is missing large-image Twitter metadata');
+      }
       if (html.includes(' | Congyu Zhao | Congyu Zhao'))
         throw new Error('Duplicate site name in page title');
     } else if (!contentType.startsWith('image/')) {
