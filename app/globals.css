@@ -1064,6 +1064,19 @@ html,body{max-width:100%;overflow-x:clip}
 }
 
 
+/* Keep video player controls inside 320px screens without masking overflow. */
+.videoArchiveViewer,.videoArchivePlaybackActions,.videoArchiveShare{min-width:0;max-width:100%}
+.videoArchivePlaybackActions > *,.videoArchiveShare > *{min-width:0;max-width:100%;overflow-wrap:anywhere}
+@media(max-width:450px){
+ .videoArchivePlaybackActions{width:100%}
+ .videoArchivePlaybackActions button,.videoArchivePlaybackActions a{white-space:normal;text-align:center}
+ .videoArchiveShare{justify-content:stretch;gap:10px}
+ .videoArchiveShare > a{flex:1 1 100%;line-height:1.5}
+ .videoArchiveShare > button{flex:1 1 125px}
+ .videoArchiveViewerHeading{min-width:0}
+ .videoArchiveViewerHeading > div{min-width:0;max-width:100%}
+}
+
 /* Shareable video deep-links: visible fallback when browser clipboard is denied. */
 .videoArchiveShare{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:14px;border-top:1px solid rgba(255,255,255,.13);padding-top:16px}
 .videoArchiveShare a{color:#cfddba;font-size:13px;overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:4px}
