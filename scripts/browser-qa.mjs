@@ -238,6 +238,14 @@ try {
           await page.locator('.videoArchiveViewer iframe[src*="J74rR5jbsDQ"]').waitFor({state:'attached'});
           await page.getByRole('button',{name:'Close player ×'}).click();
           await page.waitForFunction(()=>document.activeElement?.dataset?.videoId==='J74rR5jbsDQ',null,{timeout:3000});
+          // A visitor who opens Game 01 and switches with Next must return
+          // to the CURRENT Game 02 card on close, not the original Game 01.
+          await archive.first().getByRole('button',{name:/Play .* on this page/}).click();
+          await page.waitForURL(/game=01/);
+          await page.locator('#selected-video').getByRole('button',{name:'Play next mini game'}).click();
+          await page.waitForURL(/game=02/);
+          await page.locator('#selected-video').getByRole('button',{name:'Close player ×'}).click();
+          await page.waitForFunction(()=>document.activeElement?.dataset?.videoId==='J74rR5jbsDQ',null,{timeout:3000});
           // Switching directly between cards must replace URL history, not
           // recreate a dismissed video when the visitor presses Back.
           await archive.nth(0).getByRole('button',{name:/Play .* on this page/}).click();
