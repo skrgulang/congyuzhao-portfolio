@@ -173,6 +173,24 @@ try{
           'https://www.youtube.com/watch?v=3z4tX81RsAE')
         throw Error('Mini Game 03 fallback points to wrong YouTube recording');
        await page.screenshot({path:'qa-screenshots/webkit-video-03-'+width+'.png',fullPage:true,animations:'disabled'});
+       // The only trustworthy focus assertion is the browser's activeElement,
+       // not whether a golden border happened to render in a screenshot.
+       await thirdPlayer.getByRole('button',{name:'Close player ×'}).click();
+       await page.waitForURL(url=>!url.searchParams.has('game'));
+       await page.waitForFunction(()=>document.activeElement?.dataset?.videoId==='3z4tX81RsAE',
+         null,{timeout:4000});
+       const focus03=page.locator('.videoArchiveCover[data-video-id="3z4tX81RsAE"]');
+       await focus03.screenshot({path:'qa-screenshots/webkit-video-focus-03-'+width+'.png',animations:'disabled'});
+       // Repeat for Game 02 and keyboard Escape, the paths a mouse-only
+       // test would miss.
+       await page.goto(origin+'/videos?game=02',{waitUntil:'domcontentloaded',timeout:30000});
+       await page.locator('#selected-video').waitFor({state:'visible'});
+       await page.locator('#selected-video').focus();
+       await page.keyboard.press('Escape');
+       await page.waitForURL(url=>!url.searchParams.has('game'));
+       await page.waitForFunction(()=>document.activeElement?.dataset?.videoId==='J74rR5jbsDQ',
+         null,{timeout:4000});
+       await page.screenshot({path:'qa-screenshots/webkit-video-after-escape-'+width+'.png',fullPage:true,animations:'disabled'});
       }
     }
     if(width===320||width===390||width===768){
