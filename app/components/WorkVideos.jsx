@@ -12,8 +12,12 @@ export default function WorkVideos(){
  // A shared deep link has no originating click. Return keyboard focus to
  // that specific game's cover, rather than unexpectedly jumping to Game 01.
  const restoreGalleryFocus=(id)=>{
-  const trigger=lastTrigger.current?.isConnected ? lastTrigger.current :
-   Array.from(document.querySelectorAll('.videoArchiveCover')).find(button=>button.dataset.videoId===id);
+  // The visitor may have opened 01 and then advanced to 02 or 03.
+  // Prefer the CURRENT video's cover over the original click target.
+  const matching=id
+   ?Array.from(document.querySelectorAll('.videoArchiveCover')).find(button=>button.dataset.videoId===id)
+   :null;
+  const trigger=matching||(lastTrigger.current?.isConnected?lastTrigger.current:null);
   requestAnimationFrame(()=>trigger?.focus({preventScroll:true}));
  };
  const currentIndex=workVideos.findIndex(video=>video.id===selected);
