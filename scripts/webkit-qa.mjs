@@ -141,6 +141,38 @@ try{
        await player.getByRole('button',{name:'Close player ×'}).click();
        if(await page.locator('.videoArchiveViewer iframe').count())
          throw Error('Mini-game iframe remains mounted after closing player');
+       // Open the user-shareable third video directly, not only from the
+       // gallery. Check mobile controls against the real viewport width.
+       await page.goto(origin+'/videos?game=03',{waitUntil:'domcontentloaded',timeout:30000});
+       const thirdPlayer=page.locator('#selected-video');
+       await thirdPlayer.waitFor({state:'visible',timeout:5000});
+       const thirdIframe=thirdPlayer.locator('iframe');
+       if(!(await thirdIframe.getAttribute('src')).includes('3z4tX81RsAE'))
+         throw Error('Wrong video loaded from deep link at '+width+'px');
+       const thirdControls=[
+        thirdPlayer.getByRole('button',{name:'Play previous mini game'}),
+        thirdPlayer.getByRole('link',{name:/Watch original on YouTube/}),
+        thirdPlayer.getByRole('button',{name:'Play next mini game'}),
+        thirdPlayer.getByRole('button',{name:'Close player ×'}),
+        thirdPlayer.getByRole('link',{name:/Shareable link to Mini Game 03/})
+       ];
+       const mobileGeometry=await page.evaluate(()=>({
+        width:document.documentElement.clientWidth,
+        scrollWidth:document.documentElement.scrollWidth
+       }));
+       if(mobileGeometry.scrollWidth>mobileGeometry.width+2)
+        throw Error('Mini Game 03 mobile page overflows at '+width+'px: '+JSON.stringify(mobileGeometry));
+       for(const control of thirdControls){
+        if(!(await control.isVisible()))throw Error('Third video mobile control not visible at '+width+'px');
+        const bounds=await control.boundingBox();
+        if(!bounds||bounds.width<30||bounds.height<20||
+           bounds.x< -2||bounds.x+bounds.width>mobileGeometry.width+2)
+         throw Error('Third video control clipped at '+width+'px: '+JSON.stringify(bounds));
+       }
+       if((await thirdPlayer.getByRole('link',{name:/Watch original on YouTube/}).getAttribute('href'))!==
+          'https://www.youtube.com/watch?v=3z4tX81RsAE')
+        throw Error('Mini Game 03 fallback points to wrong YouTube recording');
+       await page.screenshot({path:'qa-screenshots/webkit-video-03-'+width+'.png',fullPage:true,animations:'disabled'});
       }
     }
     if(width===320||width===390||width===768){
