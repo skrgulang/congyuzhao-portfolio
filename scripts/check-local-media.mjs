@@ -43,17 +43,18 @@ const xrefLead=resumePdf.subarray(xrefOffset,xrefOffset+8).toString('latin1');
 assert(xrefLead.startsWith('xref')||/\d+ \d+ obj/.test(xrefLead),
  'Resume PDF cross-reference offset does not reference a valid structure');
 console.log('PASS downloadable resume PDF header, EOF and cross-reference structure');
-// Compare exact bytes with the user's uploaded Nov 2026 original, not a recreated PDF.
-// Warning-only until the original binary can be replaced through GitHub.
+// The original PDF has now been restored. Reject any build that silently
+// replaces the owner-supplied binary with a recreated/shortened document.
 const originalResumeSha256='375deed86cca7d8bf23bc23f92151e11a8cf40a30245107039157a95c5d5cced';
 const resumeSha256=createHash('sha256').update(resumePdf).digest('hex');
-if(resumeSha256===originalResumeSha256){
- console.log('PASS exact original uploaded Resume PDF (SHA-256 match)');
-}else{
- console.warn('WARN public Resume PDF differs from the uploaded original; restore exact original bytes into public/Congyu_Zhao_Resume.pdf and the legacy alias');
-}
+assert(resumeSha256===originalResumeSha256,
+ 'Original Resume PDF SHA-256 mismatch: expected '+originalResumeSha256+', got '+resumeSha256);
 const legacyResumePdf=await readFile(join(root,'public/Congyu_Zhao_Resume_Uploaded.pdf'));
+const legacySha256=createHash('sha256').update(legacyResumePdf).digest('hex');
+assert(legacySha256===originalResumeSha256,
+ 'Legacy Resume PDF SHA-256 mismatch: expected '+originalResumeSha256+', got '+legacySha256);
 assert(resumePdf.equals(legacyResumePdf),'Resume PDF aliases must contain the same exact bytes');
+console.log('PASS both Resume PDFs match the exact user-uploaded original (SHA-256)');
 for(const path of assets){
  const file=await stat(join(root,path));
  assert(file.isFile()&&file.size>0,'Missing or empty media: '+path);
