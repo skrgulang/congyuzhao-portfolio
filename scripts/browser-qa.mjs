@@ -197,6 +197,16 @@ try {
           await page.waitForURL(/game=02/);
           await page.waitForFunction(()=>document.querySelector('[data-testid="mini-game-position"]')?.textContent?.trim()==='NOW VIEWING / SOLO MINI GAME 02 OF 6',null,{timeout:3000});
           await viewer.getByRole('heading',{name:'Mini Game 02'}).waitFor({state:'visible'});
+          // Both accessible label and actual share destination must follow
+          // the currently selected game, including after Next/Previous.
+          const switchedShare=viewer.getByRole('link',{name:'Shareable link to Mini Game 02'});
+          await switchedShare.waitFor({state:'visible'});
+          if((await switchedShare.getAttribute('href'))!=='/videos?game=02')
+            throw new Error('Video share label and destination desynchronized after Next');
+          const switchedCopy=viewer.getByRole('button',{name:'Copy link to Mini Game 02'});
+          if(!(await switchedCopy.isVisible()))
+            throw new Error('Copy action still describes a previous mini-game');
+
           if(!(await viewer.getByRole('button',{name:'Play next mini game'}).evaluate(el=>document.activeElement===el)))
             throw new Error('Next mini-game moved keyboard focus away from playlist navigation');
           await viewer.getByRole('button',{name:'Play previous mini game'}).click();
