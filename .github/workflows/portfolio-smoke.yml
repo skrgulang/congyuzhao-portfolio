@@ -143,17 +143,30 @@ jobs:
         run: |
           set -o pipefail
           node scripts/smoke.mjs https://congyuzhao.com 2>&1 | tee smoke-results.log
-      - name: Summarize HTTP check
+      - name: Verify both public Resume PDFs match exact uploaded SHA-256
+        id: resume_pdf_check
+        shell: bash
+        run: |
+          set -o pipefail
+          node scripts/audit-live-resume.mjs https://congyuzhao.com 2>&1 | tee resume-pdf-results.log
+      - name: Summarize HTTP and Resume PDF checks
         if: always()
         env:
           CHECK_OUTCOME: ${{ steps.http_check.outcome }}
+          RESUME_OUTCOME: ${{ steps.resume_pdf_check.outcome }}
         run: |
           echo "### HTTP routes and assets" >> "$GITHUB_STEP_SUMMARY"
-          echo "Result: **$CHECK_OUTCOME**" >> "$GITHUB_STEP_SUMMARY"
+          echo "HTTP result: **$CHECK_OUTCOME**" >> "$GITHUB_STEP_SUMMARY"
+          echo "Original Resume PDFs (both URLs, exact SHA-256): **$RESUME_OUTCOME**" >> "$GITHUB_STEP_SUMMARY"
           echo "Coverage: public pages, SEO metadata, current screenshot files, local videos, project media references, 404 recovery, sitemap and robots." >> "$GITHUB_STEP_SUMMARY"
           if [ -f smoke-results.log ]; then
             echo '~~~text' >> "$GITHUB_STEP_SUMMARY"
             tail -n 8 smoke-results.log >> "$GITHUB_STEP_SUMMARY"
+            echo '~~~' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ -f resume-pdf-results.log ]; then
+            echo '~~~text' >> "$GITHUB_STEP_SUMMARY"
+            tail -n 12 resume-pdf-results.log >> "$GITHUB_STEP_SUMMARY"
             echo '~~~' >> "$GITHUB_STEP_SUMMARY"
           fi
 
