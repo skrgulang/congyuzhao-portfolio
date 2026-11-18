@@ -4,7 +4,19 @@ export const metadata={
   title:'Resume',
   description:'Congyu Zhao — Purdue University Computer Graphics Technology, Class of 2028. Experience in product engineering, game development, data research and design.',
   alternates:{canonical:'https://congyuzhao.com/resume'},
-  openGraph:{title:'Resume | Congyu Zhao',description:'Education, selected technical projects and work experience.',url:'https://congyuzhao.com/resume',type:'profile'},
+  openGraph:{
+    title:'Resume | Congyu Zhao',
+    description:'Education, selected technical projects and work experience.',
+    url:'https://congyuzhao.com/resume',
+    type:'profile',
+    images:[{url:'/images/hero-recovered.jpg',width:960,height:1200,alt:'Congyu Zhao — Purdue University student and founder'}]
+  },
+  twitter:{
+    card:'summary_large_image',
+    title:'Resume | Congyu Zhao',
+    description:'Purdue University · Product engineering · Games · Technical projects',
+    images:['/images/hero-recovered.jpg']
+  },
 };
 
 const projects=[
