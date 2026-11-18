@@ -58,7 +58,7 @@ async function check(path, expectedText) {
       if (!html.includes('property="og:image"'))
         throw new Error('Missing social sharing image metadata');
       if (path === '/resume') {
-        const ogImageTag=[...html.matchAll(/<meta\\b[^>]*>/g)]
+        const ogImageTag=[...html.matchAll(/<meta\b[^>]*>/g)]
           .map(match=>match[0]).find(tag=>tag.includes('property="og:image"'));
         if (!ogImageTag?.includes('https://congyuzhao.com/images/hero-recovered.jpg'))
           throw new Error('Resume social preview must use the verified portfolio photo');
