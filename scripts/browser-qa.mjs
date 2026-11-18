@@ -71,7 +71,13 @@ try {
           await page.getByRole('button',{name:'Open navigation menu'}).waitFor({state:'visible',timeout:5000});
           await menu.click();
           await page.getByRole('button',{name:'Close navigation menu'}).waitFor({state:'visible',timeout:5000});
-          await page.locator('.newHero').click({position:{x:20,y:20}});
+          // Click a visible point *outside* the sticky header and open
+          // dropdown. A click at (.newHero, 20,20) lands behind the sticky
+          // header and Playwright correctly refuses the intercepted click.
+          const outsideY=device.viewport.height-40;
+          const outsideTarget=await page.evaluate(y=>document.elementFromPoint(20,y)?.closest('#main-navigation,.menuToggle'),outsideY);
+          if(outsideTarget)throw new Error('No usable area outside mobile navigation');
+          await page.mouse.click(20,outsideY);
           await page.getByRole('button',{name:'Open navigation menu'}).waitFor({state:'visible',timeout:5000});
         }
         if(test.name==='home'){
